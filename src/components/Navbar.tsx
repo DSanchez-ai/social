@@ -104,8 +104,8 @@ const Navbar = () => {
                   width={20}
                   height={20}
                 />  
-              <Link href="/sign-in">
-                Login/Register
+              <Link href="/sign-in" className="text-xs md:text-sm">
+                Login
               </Link>            
             </div>
           </SignedOut>

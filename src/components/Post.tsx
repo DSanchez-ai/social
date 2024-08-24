@@ -35,7 +35,7 @@ export const Post = () => {
             className="object-cover rounded-md"
           />
         </div>
-        <p>
+        <p className="text-sm lg:text-normal xl:text-lg">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt molestias tempore quod sequi ab laborum necessitatibus enim excepturi veritatis debitis. Asperiores quis et ratione pariatur voluptates magnam possimus, nesciunt error.
         </p>
       </div> 

@@ -3,7 +3,7 @@ import Image from "next/image"
 const Options = [
   {
     title: "Photo",
-    img: "/addImage.png",
+    img: "/addimage.png",
   },
   {
     title: "Video",
@@ -11,7 +11,7 @@ const Options = [
   },
   {
     title: "Event",
-    img: "/addEvent.png",
+    img: "/addevent.png",
   },
   {
     title: "Poll",
@@ -21,7 +21,7 @@ const Options = [
 
 export const AddPost = () => {
   return (
-    <div className="p-4 bg-white shadow-md rounded-lg flex gap-4 justify-between text-sm">
+    <div className="p-2 md:p-4 bg-white shadow-md rounded-lg flex gap-2 md:gap-4 justify-between text-sm">
       { /* AVATAR */}
       <Image 
         src="/mara.png"
