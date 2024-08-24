@@ -6,7 +6,7 @@ export const Comments = () => {
       { /* WRITE */}
       <div className="flex items-center gap-4">
         <Image 
-          src="/sarah.png"
+          src="/Sarah.png"
           alt=""
           width={32}
           height={32}
