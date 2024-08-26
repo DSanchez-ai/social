@@ -36,7 +36,7 @@ export const Post = () => {
           />
         </div>
         <p className="text-sm lg:text-normal xl:text-lg">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt molestias tempore quod sequi ab laborum necessitatibus enim excepturi veritatis debitis. Asperiores quis et ratione pariatur voluptates magnam possimus, nesciunt error.
+          Dive into the world of Next.js, the React framework for building performant web applications. Our expert speakers will share insights on topics like server-side rendering, static site generation, and the latest features in Next.js 14.
         </p>
       </div> 
       { /* INTERACTION */}

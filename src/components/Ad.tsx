@@ -34,7 +34,7 @@ export const Ad = ({size}:{size: "sm" | "md" | "lg"}) => {
             <span className="text-blue-500 font-medium">Deep Learning</span>
         </div>
         <p className={size === "sm" ? "text-xs" : "text-sm"}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim dolorem ad ex iure dolores labore.
+          Deep learning is a powerful and rapidly evolving subfield of artificial intelligence (AI) that has revolutionized various industries and applications.
         </p>
         <button className="bg-gray-200 text-gray-500 p-2 text-xs rounded-lg">
           Learn more

@@ -29,13 +29,13 @@ export const FriendRequests = () => {
       <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Image 
-              src="/leon.png"
+              src="/mara.png"
               alt=""
               width={40}
               height={40}
               className="w-10 h-10 rounded-full object-cover"
             />
-            <span className="text-sm">Leon Katczinski</span>
+            <span className="text-sm">Mara VanAllan</span>
           </div>
           <div className="flex gap-3 justify-end">
             <Image src="/accept.png" alt="" width={20} height={20} className="cursor-pointer"/>
