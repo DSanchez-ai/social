@@ -1,3 +1,5 @@
+import { title } from "process";
+
 export const MenuItems = [
   {
     id: 1,
@@ -102,5 +104,38 @@ export const UserMedia = [
     src: "/media8.jpg",
     alt: "media8",
   },
+];
+
+export const Ads = [
+  {
+    id: 1,
+    title: "Deep Learning",
+    desc: "Deep learning is a powerful and rapidly evolving subfield of artificial intelligence (AI) that has revolutionized various industries and applications.",
+    img: "/ad1.png",
+  },
+  {
+    id: 2,
+    title: "Machine Learning",
+    desc: "Machine learning is a subset of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed.",
+    img: "/ad2.png",
+  },
+  {
+    id: 3,
+    title: "Data Science",
+    desc: "Data science is a multidisciplinary field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from structured and unstructured data.",
+    img: "/ad3.png",
+  },
+  {
+    id: 4,
+    title: "Web Development",
+    desc: "Web development is the work involved in developing a website for the Internet (World Wide Web) or an intranet (a private network).",
+    img: "/ad4.png",
+  },
+  {
+    id: 5,
+    title: "App Development",
+    desc: "App development is the process by which a mobile app is developed for mobile devices, such as personal digital assistants, enterprise digital assistants or mobile phones.",
+    img: "/ad5.png",
+  }
 ];
 

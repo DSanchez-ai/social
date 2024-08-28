@@ -36,7 +36,7 @@ export const Birthdays = () => {
           />
           <Link href="/" className="flex flex-col gap-1 text-xs">
             <span className="text-gray-700 font-semibold">Upcoming Birthdays</span>
-            <span className="text-gray-500">See all other upcoming Birthday</span>
+            <span className="text-gray-500">See all other upcoming Birthdays</span>
           </Link>      
       </div> 
     </div>

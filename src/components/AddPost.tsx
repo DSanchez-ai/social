@@ -52,7 +52,7 @@ export const AddPost = () => {
           />          
         </div>
         { /* POST OPTIONS */}
-        <div className="flex flex-wrap items-center gap-4 mt-4 text-gray-400">
+        <div className="flex flex-wrap items-center gap-4 mt-4 text-gray-500">
           {Options.map((option, index) => (
             <div 
               key={index}
