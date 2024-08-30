@@ -1,3 +1,5 @@
+import prisma from "@/lib/client";
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image"
 
 const Options = [
@@ -20,6 +22,27 @@ const Options = [
 ]
 
 export const AddPost = () => {
+
+  const { userId } = auth();
+
+  const testAction = async (formData:FormData) => {
+    "use server";
+    if(!userId) return;
+    const desc = formData.get("desc") as string;
+    try {
+      const res = await prisma.post.create({
+        data: {
+          userId: userId,
+          desc: desc,
+        }
+      })
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+      
+    }
+  };
+
   return (
     <div className="p-2 md:p-4 bg-white shadow-md rounded-lg flex gap-2 md:gap-4 justify-between text-sm">
       { /* AVATAR */}
@@ -34,9 +57,12 @@ export const AddPost = () => {
       { /* POST */}
       <div className="flex-1">
         { /* TEXT INPUT */}
-        <div className="flex flex-1 items-center justify-between bg-slate-100 rounded-xl text-sm px-6 py-2 w-full">
+        <form 
+          action={testAction}
+          className="flex flex-1 items-center justify-between bg-slate-100 rounded-xl text-sm px-6 py-2 w-full"
+        >
           <textarea 
-            name=""
+            name="desc"
             id=""
             placeholder="What's on your mind?"
             className="flex-1 bg-transparent outline-none rounded-lg"
@@ -49,8 +75,9 @@ export const AddPost = () => {
             width={20}
             height={20}
             className="w-5 h-5 cursor-pointer self-end ml-2"
-          />          
-        </div>
+          />   
+          <button className="ml-3 w-20 bg-blue-500 text-white p-2 rounded-md">Send</button>       
+        </form>
         { /* POST OPTIONS */}
         <div className="flex flex-wrap items-center gap-4 mt-4 text-gray-500">
           {Options.map((option, index) => (
