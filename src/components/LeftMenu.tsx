@@ -8,7 +8,7 @@ import { Ad } from "./Ad";
 export const LeftMenu = ({type}:{type: "home" | "profile"}) => {
   return (
     <div className="flex flex-col gap-6">
-      {type === "home" && <ProfileCard userId="1" />}
+      {type === "home" && <ProfileCard />}
       <div className="p-4 bg-white rounded-lg shadow-md text-sm text-gray-500 flex flex-col gap-2">
         {MenuItems.map((item) => (
           <Link
