@@ -1,17 +1,20 @@
 "use client";
 
+import { User } from "@prisma/client";
 import Link from "next/link";
 import { useState } from "react";
 
-const NavbarItems = [
-  { title: "Home", url: "/" },
-  { title: "Friends", url: "/friends" },
-  { title: "Groups", url: "/groups" },
-  { title: "Stories", url: "/stories" },
-  { title: "Login", url: "/login" },
-]
 
 const MobileMenu = () => {
+
+  const NavbarItems = [
+    { title: "Home", url: "/" },
+    { title: "Friends", url: "/friends" },
+    { title: "Groups", url: "/groups" },
+    { title: "Stories", url: "/stories" },
+    { title: "Login", url: "/login" },
+  ]
+  
   const [isOpen, setIsOpen] = useState(false)
   return (
     <div className="md:hidden">

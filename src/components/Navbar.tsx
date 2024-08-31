@@ -2,6 +2,8 @@ import Link from "next/link"
 import MobileMenu from "./MobileMenu"
 import Image from "next/image"
 import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
+import { auth } from "@clerk/nextjs/server"
+import prisma from "@/lib/client"
 
 const Links = [
   {
@@ -21,7 +23,8 @@ const Links = [
   },
 ]
 
-const Navbar = () => {
+const Navbar = async () => {
+
   return (
     <div className="h-24 flex items-center justify-between">
       {/* LEFT */}

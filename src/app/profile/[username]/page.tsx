@@ -63,7 +63,7 @@ const ProfilePage = async ({params}:{params:{username:string}}) => {
                 alt=""
                 width={128}
                 height={128}
-                className="w-32 h-32 rounded-full absolute left-0 right-0 mx-auto -bottom-16 object-contain ring-4 bg-slate-300 ring-white"
+                className="w-32 h-32 rounded-full absolute left-0 right-0 mx-auto -bottom-16 object-cover ring-4 bg-slate-300 ring-white"
               />              
             </div>
             <h1 className="mt-20 mb-4 text-xl md:text-2xl font-medium">
@@ -88,7 +88,7 @@ const ProfilePage = async ({params}:{params:{username:string}}) => {
       </div>  
       {/* RIGHT SIDE */}
       <div className="hidden lg:block w-[30%]">
-        <RightMenu userId="test"/>
+        <RightMenu user={user}/>
       </div>          
     </div>
   )

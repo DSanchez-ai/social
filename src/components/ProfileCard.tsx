@@ -27,7 +27,7 @@ export const ProfileCard = async () => {
     <div className="p-4 bg-white rounded-lg shadow-md text-sm flex flex-col gap-6">
       <div className="h-20 relative">
         <Image 
-          src={user.cover || "/noAvatar.png"}
+          src={user.cover || "/noCover.png"}
           alt=""
           fill
           className="object-cover rounded-md"
@@ -37,7 +37,7 @@ export const ProfileCard = async () => {
           alt=""
           width={48}
           height={48}
-          className="rounded-full object-contain bg-blue-700 w-16 h-16 absolute left-0 right-0 m-auto -bottom-6 ring-1 ring-white z-10"
+          className="rounded-full object-cover bg-slate-400 w-16 h-16 absolute left-0 right-0 m-auto -bottom-6 ring-2 ring-white z-10"
         />
       </div>
       <div className="h-20 flex flex-col gap-2 items-center mt-3">
