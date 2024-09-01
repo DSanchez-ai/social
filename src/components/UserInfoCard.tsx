@@ -54,7 +54,11 @@ export const UserInfoCard = async ({user}: {user:User}) => {
       { /* TOP */}
       <div className="flex justify-between items-center font-medium">
         <span className="text-gray-500">User Information</span>
-        <Link href="/" className="text-blue-500 text-xs">See all</Link>
+        {currentUserId === user.userId ? (
+          <Link href="/settings" className="text-blue-500 text-xs">Edit</Link>
+        ) : (
+          <Link href="/" className="text-blue-500 text-xs">See all</Link>
+        )}
       </div>
       { /* BOTTOM */}
       <div className="flex flex-col gap-4 text-gray-500">
@@ -85,15 +89,15 @@ export const UserInfoCard = async ({user}: {user:User}) => {
           <div className="flex items-center gap-2">
             <Image src="/work.png" alt="" width={16} height={16} />
             <span>
-              Works at <b>{user.work}</b>
+              Works as <b>{user.work}</b>
             </span>
           </div>
         )}
         <div className="flex items-center justify-between">
-        {user.website && (
+          {user.website && (
             <div className="flex gap-1 items-center">
               <Image src="/link.png" alt="" width={16} height={16} />
-              <Link href={user.website} className="text-blue-500 font-medium">
+              <Link href={user.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 font-medium">
                 @{user.username}
               </Link>
             </div>
@@ -108,12 +112,14 @@ export const UserInfoCard = async ({user}: {user:User}) => {
             <span>Joined {formattedDate}</span>
           </div>
         </div>
-        <UserInfoCardInteraction 
-          userId={user.userId} 
-          isUserBlocked={isUserBlocked}
-          isFollowing={isFollowing}
-          isFollowingSent={isFollowingSent}  
-        />
+        {currentUserId && currentUserId !== user.userId && (
+          <UserInfoCardInteraction 
+            userId={user.userId} 
+            isUserBlocked={isUserBlocked}
+            isFollowing={isFollowing}
+            isFollowingSent={isFollowingSent}  
+          />
+        )}
       </div>
     </div>
   )

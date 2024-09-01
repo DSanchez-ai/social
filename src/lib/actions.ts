@@ -47,10 +47,43 @@ export const switchFollow = async (userId: string) => {
         });
       }
     }
-
-    
   } catch (error) {
     console.log(error);
     throw new Error("Failed to switch follow status");
+  }
+};
+
+export const switchBlock = async (userId: string) => {
+  const { userId: currentUserId } = auth();
+
+  if(!currentUserId) {
+    throw new Error("User is not authenticated");
+  }
+
+  try {
+    const existingBlock = await prisma.block.findFirst({
+      where: {
+        blockerId: currentUserId,
+        blockedId: userId
+      }
+    });
+
+    if(existingBlock) {
+      await prisma.block.delete({
+        where: {
+          id: existingBlock.id
+        }
+      });
+    } else {
+      await prisma.block.create({
+        data: {
+          blockerId: currentUserId,
+          blockedId: userId
+        }
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to switch block status");
   }
 };

@@ -37,7 +37,7 @@ export const ProfileCard = async () => {
           alt=""
           width={48}
           height={48}
-          className="rounded-full object-cover bg-slate-400 w-16 h-16 absolute left-0 right-0 m-auto -bottom-6 ring-2 ring-white z-10"
+          className="rounded-full object-fill bg-slate-400 w-16 h-16 absolute left-0 right-0 m-auto -bottom-6 ring-2 ring-white z-10"
         />
       </div>
       <div className="h-20 flex flex-col gap-2 items-center mt-3">

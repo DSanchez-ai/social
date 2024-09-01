@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import prisma from "@/lib/client"
 import { auth } from "@clerk/nextjs/server"
 import Image from "next/image"
@@ -5,6 +6,8 @@ import Image from "next/image"
 import { Feed } from "@/components/Feed"
 import { LeftMenu } from "@/components/LeftMenu"
 import { RightMenu } from "@/components/RightMenu"
+import { UserInfoCard } from "@/components/UserInfoCard"
+import { FriendRequests } from "@/components/FriendRequests"
 
 const ProfilePage = async ({params}:{params:{username:string}}) => {
   const {userId: currentUser} = auth();
@@ -63,7 +66,7 @@ const ProfilePage = async ({params}:{params:{username:string}}) => {
                 alt=""
                 width={128}
                 height={128}
-                className="w-32 h-32 rounded-full absolute left-0 right-0 mx-auto -bottom-16 object-cover ring-4 bg-slate-300 ring-white"
+                className="w-32 h-32 rounded-full absolute left-0 right-0 mx-auto -bottom-16 object-fill ring-4 bg-slate-300 ring-white"
               />              
             </div>
             <h1 className="mt-20 mb-4 text-xl md:text-2xl font-medium">
@@ -82,6 +85,12 @@ const ProfilePage = async ({params}:{params:{username:string}}) => {
                 <span className="text-sm">Following</span>
               </div>              
             </div>
+          </div>
+          <div className="xl:hidden">
+            <Suspense fallback={<div>Loading...</div>} >
+              <UserInfoCard user={user} />
+            </Suspense>
+            <FriendRequests />
           </div>
           <Feed />
         </div>
