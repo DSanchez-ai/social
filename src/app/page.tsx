@@ -1,11 +1,16 @@
 import { AddPost } from "@/components/AddPost"
 import { Feed } from "@/components/Feed"
+import { Followers } from "@/components/Followers"
+import { Following } from "@/components/Following"
+import { FriendRequests } from "@/components/FriendRequests"
 import { LeftMenu } from "@/components/LeftMenu"
 import { ProfileCard } from "@/components/ProfileCard"
 import { RightMenu } from "@/components/RightMenu"
 import { Stories } from "@/components/Stories"
+import { auth } from "@clerk/nextjs/server"
 
 const Homepage = () => {
+
   return (
     <div className='flex gap-6 pt-6'>
       {/* LEFT SIDE */}
@@ -17,6 +22,15 @@ const Homepage = () => {
         <div className="flex flex-col gap-6">
           <div className="xl:hidden">
             <ProfileCard />
+            <div className="mt-2">
+              <FriendRequests />
+            </div>
+            <div className="mt-2">
+              <Followers />
+            </div>
+            <div className="mt-2">
+              <Following />
+            </div>    
           </div>
           <Stories />
           <AddPost />

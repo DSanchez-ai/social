@@ -8,6 +8,9 @@ import { LeftMenu } from "@/components/LeftMenu"
 import { RightMenu } from "@/components/RightMenu"
 import { UserInfoCard } from "@/components/UserInfoCard"
 import { FriendRequests } from "@/components/FriendRequests"
+import { Followers } from "@/components/Followers"
+import { Following } from "@/components/Following"
+import { UserMediaCard } from "@/components/UserMediaCard"
 
 const ProfilePage = async ({params}:{params:{username:string}}) => {
   const {userId: currentUser} = auth();
@@ -86,12 +89,27 @@ const ProfilePage = async ({params}:{params:{username:string}}) => {
               </div>              
             </div>
           </div>
-          <div className="xl:hidden">
-            <Suspense fallback={<div>Loading...</div>} >
-              <UserInfoCard user={user} />
-            </Suspense>
-            <FriendRequests />
-          </div>
+            <div className="xl:hidden">
+              <Suspense fallback={<div>Loading...</div>} >
+                <UserInfoCard user={user} />
+              </Suspense>
+              <Suspense fallback={<div>Loading...</div>} >
+                <UserMediaCard user={user}/>
+              </Suspense>                
+              {currentUser === user.userId && (
+                  <>
+                <div className="mt-2">
+                  <FriendRequests />
+                </div>
+                <div className="mt-2">
+                  <Followers />
+                </div>
+                <div className="mt-2">
+                  <Following />
+                </div>
+                </>
+              )}
+            </div>
           <Feed />
         </div>
       </div>  

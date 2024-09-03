@@ -5,10 +5,14 @@ import { Birthdays } from "./Birthdays"
 import { FriendRequests } from "./FriendRequests"
 import { UserInfoCard } from "./UserInfoCard"
 import { UserMediaCard } from "./UserMediaCard"
+import { Followers } from "./Followers"
+import { Following } from "./Following"
+import { auth } from "@clerk/nextjs/server"
 
 export const RightMenu = ({ user }:{ user?:User }) => {
+  const {userId: currentUser} = auth();
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       {user ? (
       <>
         <Suspense fallback={<div>Loading...</div>} >
@@ -18,8 +22,20 @@ export const RightMenu = ({ user }:{ user?:User }) => {
           <UserMediaCard user={user} />
         </Suspense>
       </>
+      ) : (
+        <>
+          <FriendRequests />
+          <Followers />
+          <Following />
+        </>        
+      )}
+      {currentUser === user?.userId ? (
+        <>
+          <FriendRequests />
+          <Followers />
+          <Following />
+        </>
       ) : null}
-      <FriendRequests />
       <Birthdays />
       <Ad size="lg"/>
     </div>
