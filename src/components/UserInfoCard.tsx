@@ -4,6 +4,7 @@ import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { UserInfoCardInteraction } from "./UserInfoCardInteraction";
+import { UpdateUser } from "./UpdateUser";
 
 export const UserInfoCard = async ({user}: {user:User}) => {
   const createdAtDate = new Date(user.createdAt);
@@ -55,7 +56,7 @@ export const UserInfoCard = async ({user}: {user:User}) => {
       <div className="flex justify-between items-center font-medium">
         <span className="text-gray-500">User Information</span>
         {currentUserId === user.userId ? (
-          <Link href="/settings" className="text-blue-500 text-xs">Edit</Link>
+          <UpdateUser user={user} />
         ) : (
           <Link href="/" className="text-blue-500 text-xs">See all</Link>
         )}
