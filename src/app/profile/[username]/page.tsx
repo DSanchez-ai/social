@@ -89,7 +89,7 @@ const ProfilePage = async ({params}:{params:{username:string}}) => {
               </div>              
             </div>
           </div>
-            <div className="xl:hidden">
+            <div className="lg:hidden">
               <Suspense fallback={<div>Loading...</div>} >
                 <UserInfoCard user={user} />
               </Suspense>

@@ -38,15 +38,15 @@ export const Followers = async () => {
               height={40}
               className="w-10 h-10 rounded-full object-fill"
             />
-            <span className="text-sm">
+            <span className="text-xs xl:text-sm">
               {request.follower.name && request.follower.surname
                 ? request.follower.surname + " " + request.follower.name
                 : request.follower.username}
             </span>
           </div>
-        <div className="flex gap-2 justify-end text-sm">
+        <div className="flex gap-2 justify-end text-xs xl:text-sm">
           <Link href={`/profile/${request.follower.username}`}>
-            <button className="bg-blue-500 text-white text-xs p-2 rounded-md">
+            <button className="bg-blue-500 text-white text-xs p-1 xl:p-2 rounded-md">
               View Profile
             </button>
           </Link>

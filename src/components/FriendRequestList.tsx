@@ -44,7 +44,7 @@ export const FriendRequestList = ({ requests }: { requests: RequestWithUser[] })
               height={40}
               className="w-10 h-10 rounded-full object-fill"
             />
-            <span className="text-sm">
+            <span className="text-xs xl:text-sm">
               {request.sender.name && request.sender.surname
                 ? request.sender.surname + " " + request.sender.name
                 : request.sender.username}

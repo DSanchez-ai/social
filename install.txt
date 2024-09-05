@@ -5,3 +5,4 @@ npx prisma db push
 npm install @prisma/client
 npm install svix // for clerk webhook
 npm install zod
+npm install next-cloudinary

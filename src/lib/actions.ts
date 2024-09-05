@@ -152,7 +152,10 @@ export const declineFollowRequest = async (userId: string) => {
   }
 };
 
-export const updateProfile = async (formData: FormData) => {
+export const updateProfile = async (
+  prevState:{success:boolean, error:boolean}, 
+  payload: {formData: FormData, cover:string}
+) => {
 
 /*   const name = formData.get("name") as string;
   const surname = formData.get("surname") as string;
@@ -162,7 +165,12 @@ export const updateProfile = async (formData: FormData) => {
   const work = formData.get("work") as string;
   const website = formData.get("website") as string; */
 
+  const { formData, cover } = payload;
   const fields = Object.fromEntries(formData);
+
+  const filteredFields = Object.fromEntries(
+    Object.entries(fields).filter(([_, value]) => value !== "")
+  );
 
   const Profile = z.object({
     cover: z.string().optional(),
@@ -175,7 +183,7 @@ export const updateProfile = async (formData: FormData) => {
     website: z.string().max(60).optional(),
   });
 
-  const validatedFields = Profile.safeParse(fields);
+  const validatedFields = Profile.safeParse({ cover, ...filteredFields });
 
   if(!validatedFields.success) {
     console.log(validatedFields.error.flatten().fieldErrors);
