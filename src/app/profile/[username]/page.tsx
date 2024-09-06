@@ -110,7 +110,7 @@ const ProfilePage = async ({params}:{params:{username:string}}) => {
                 </>
               )}
             </div>
-          <Feed />
+          <Feed username={user.username}/>
         </div>
       </div>  
       {/* RIGHT SIDE */}

@@ -7,6 +7,7 @@ import { User } from "@prisma/client";
 
 import { updateProfile } from "@/lib/actions";
 import { useRouter } from "next/navigation";
+import { UpdateButton } from "./UpdateButton";
 
 export const UpdateUser = ({user}: {user: User}) => {
   const [open, setOpen] = useState(false);
@@ -30,7 +31,7 @@ export const UpdateUser = ({user}: {user: User}) => {
         Edit
       </span>
       {open && (
-        <div className="absolute h-[110vh] w-screen md:h-screen top-0 left-0 bg-slate-800 bg-opacity-65 flex items-center justify-center z-50">
+        <div className="absolute h-[120vh] w-screen md:h-screen top-0 left-0 bg-slate-800 bg-opacity-65 flex items-center justify-center z-50">
           <form 
             action={(formData) => 
               formAction({formData, cover: cover?.secure_url || ""})
@@ -130,9 +131,7 @@ export const UpdateUser = ({user}: {user: User}) => {
                 />
               </div>
             </div>  
-            <button className="bg-blue-500 p-2 mt-2 rounded-md text-white hover:bg-blue-700">
-              Update
-            </button> 
+            <UpdateButton />  
             {state.success && (
               <div className="text-green-500 text-sm">
                 Profile updated successfully.

@@ -1,21 +1,34 @@
 import Image from "next/image";
+import { Post as PostType, User } from "@prisma/client";
+import { auth } from "@clerk/nextjs/server";
+
 import { Comments } from "./Comments";
 
-export const Post = () => {
+
+type FeedPostType = PostType & { user: User } & {
+  likes: [{ userId: string }];
+} & {
+  _count: { comments: number };
+};
+
+export const Post = ({ post }: { post: FeedPostType }) => {
+  const { userId: currentUserId } = auth();
   return (
     <div className="flex flex-col gap-4">
       { /* USER */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Image 
-            src="/leon.png"
+            src={post.user.avatar || "/noAvatar.png"}
             alt=""
             width={40}
             height={40}
             className="w-10 h-10 rounded-full"
           />
           <span className="font-medium">
-            Leon
+          {post.user.name && post.user.surname
+              ? post.user.surname + " " + post.user.name
+              : post.user.username}
           </span>
         </div>
         <Image 
@@ -29,14 +42,14 @@ export const Post = () => {
       <div className="flex flex-col gap-4">
         <div className="w-full min-h-96 relative">
           <Image 
-            src="/nextconf.webp"
+            src={post.img || "/noCover.png"}
             alt=""
             fill
             className="object-cover rounded-md"
           />
         </div>
         <p className="text-sm lg:text-normal xl:text-lg">
-          Dive into the world of Next.js, the React framework for building performant web applications. Our expert speakers will share insights on topics like server-side rendering, static site generation, and the latest features in Next.js 14.
+          {post.desc}
         </p>
       </div> 
       { /* INTERACTION */}
