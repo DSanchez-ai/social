@@ -30,7 +30,7 @@ export const UpdateUser = ({user}: {user: User}) => {
         Edit
       </span>
       {open && (
-        <div className="absolute h-[90vh] w-screen md:h-screen top-0 left-0 bg-slate-800 bg-opacity-65 flex items-center justify-center z-50">
+        <div className="absolute h-[110vh] w-screen md:h-screen top-0 left-0 bg-slate-800 bg-opacity-65 flex items-center justify-center z-50">
           <form 
             action={(formData) => 
               formAction({formData, cover: cover?.secure_url || ""})
@@ -69,7 +69,7 @@ export const UpdateUser = ({user}: {user: User}) => {
                 <input 
                   type="text" 
                   defaultValue={user.surname ?? "John"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
+                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
                   name="surname" 
                 />
               </div>
@@ -78,7 +78,7 @@ export const UpdateUser = ({user}: {user: User}) => {
                 <input 
                   type="text" 
                   defaultValue={user.name || "Spencer"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
+                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
                   name="name"
                 />
               </div>
@@ -86,7 +86,7 @@ export const UpdateUser = ({user}: {user: User}) => {
                 <label htmlFor="" className="text-xs text-gray-600">Description</label>
                 <textarea 
                   defaultValue={user.description || "Life is a journey..."}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm" 
+                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600" 
                   rows={4}
                   name="description"
                 />
@@ -96,7 +96,7 @@ export const UpdateUser = ({user}: {user: User}) => {
                 <input 
                   type="text" 
                   defaultValue={user.city || "New York"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm" 
+                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600" 
                   name="city"
                 />
               </div>
@@ -105,7 +105,7 @@ export const UpdateUser = ({user}: {user: User}) => {
                 <input 
                   type="text" 
                   defaultValue={user.school || "Harvard University"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
+                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
                   name="school"
                 />
               </div>
@@ -114,7 +114,7 @@ export const UpdateUser = ({user}: {user: User}) => {
                 <input 
                   type="text" 
                   defaultValue={user.work || "Software Engineer"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm"
+                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
                   name="work"
                 />
               </div>
@@ -125,12 +125,12 @@ export const UpdateUser = ({user}: {user: User}) => {
                 <input 
                   type="text" 
                   defaultValue={user.website || "https://www.example.com"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-sm" 
+                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600" 
                   name="website"
                 />
               </div>
             </div>  
-            <button className="bg-blue-500 p-2 mt-2 rounded-md text-white">
+            <button className="bg-blue-500 p-2 mt-2 rounded-md text-white hover:bg-blue-700">
               Update
             </button> 
             {state.success && (

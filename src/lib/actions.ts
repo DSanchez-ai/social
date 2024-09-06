@@ -183,7 +183,7 @@ export const updateProfile = async (
     website: z.string().max(60).optional(),
   });
 
-  const validatedFields = Profile.safeParse({ cover, ...filteredFields });
+  const validatedFields = cover !== '' ? Profile.safeParse({ cover, ...filteredFields }) : Profile.safeParse(filteredFields);
 
   if(!validatedFields.success) {
     console.log(validatedFields.error.flatten().fieldErrors);
