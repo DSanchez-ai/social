@@ -3,6 +3,8 @@ import { Post as PostType, User } from "@prisma/client";
 import { auth } from "@clerk/nextjs/server";
 
 import { Comments } from "./Comments";
+import { Suspense } from "react";
+import { PostInteraction } from "./PostInteraction";
 
 
 type FeedPostType = PostType & { user: User } & {
@@ -53,46 +55,14 @@ export const Post = ({ post }: { post: FeedPostType }) => {
         </p>
       </div> 
       { /* INTERACTION */}
-      <div className="flex items-center justify-between text-sm my-4">
-        <div className="flex gap-8">
-          <div className="flex items-center gap-4 bg-slate-100 p-2 rounded-xl">
-            <Image 
-              src="/like.png"
-              alt=""
-              width={16}
-              height={16}
-              className="cursor-pointer"
-            />
-            <span className="text-gray-400">|</span>
-            <span className="text-gray-500">123<span className="hidden md:inline">{' '}Likes</span></span>            
-          </div>
-          <div className="flex items-center gap-4 bg-slate-100 p-2 rounded-xl">
-            <Image 
-              src="/comment.png"
-              alt=""
-              width={16}
-              height={16}
-              className="cursor-pointer"
-            />
-            <span className="text-gray-400">|</span>
-            <span className="text-gray-500">44<span className="hidden md:inline">{' '}Comments</span></span>            
-          </div>          
-        </div>
-        <div className="">
-          <div className="flex items-center gap-4 bg-slate-100 p-2 rounded-xl">
-              <Image 
-                src="/share.png"
-                alt=""
-                width={16}
-                height={16}
-                className="cursor-pointer"
-              />
-              <span className="text-gray-400">|</span>
-              <span className="text-gray-500">78<span className="hidden md:inline">{' '}Shares</span></span>            
-            </div>          
-        </div>        
-      </div> 
-      <Comments />          
+      <Suspense fallback={<div>Loading...</div>}>
+        <PostInteraction 
+          postId={post.id} 
+          likes={post.likes.map((like) => like.userId)} 
+          commentNumber={post._count.comments}
+        />
+      </Suspense>
+      <Comments postId={post.id} />          
     </div>
   )
 };

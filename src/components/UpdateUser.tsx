@@ -31,7 +31,7 @@ export const UpdateUser = ({user}: {user: User}) => {
         Edit
       </span>
       {open && (
-        <div className="absolute h-[120vh] w-screen md:h-screen top-0 left-0 bg-slate-800 bg-opacity-65 flex items-center justify-center z-50">
+        <div className="absolute w-screen h-screen top-0 left-0 bg-slate-800 bg-opacity-65 flex flex-nowrap items-center justify-center z-50">
           <form 
             action={(formData) => 
               formAction({formData, cover: cover?.secure_url || ""})
