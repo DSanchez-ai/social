@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useOptimistic, useState } from "react";
 
 import { acceptFollowRequest, declineFollowRequest } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
 type RequestWithUser = FollowRequest & {
   sender: User;
@@ -12,6 +13,7 @@ type RequestWithUser = FollowRequest & {
 
 export const FriendRequestList = ({ requests }: { requests: RequestWithUser[] }) => {
   const [requestState, setRequestState] = useState(requests);
+  const router = useRouter();
 
   const accept = async (requestId: string, userId: string) => {
     removeOptimisticRequest(requestId);
@@ -19,6 +21,7 @@ export const FriendRequestList = ({ requests }: { requests: RequestWithUser[] })
       await acceptFollowRequest(userId);
       setRequestState((prev) => prev.filter((req) => req.id !== requestId));
     } catch (err) {}
+    router.refresh();
   };
   const decline = async (requestId: string, userId: string) => {
     removeOptimisticRequest(requestId);
@@ -26,6 +29,7 @@ export const FriendRequestList = ({ requests }: { requests: RequestWithUser[] })
       await declineFollowRequest(userId);
       setRequestState((prev) => prev.filter((req) => req.id !== requestId));
     } catch (err) {}
+    router.refresh();
   };
   const [optimisticRequests, removeOptimisticRequest] = useOptimistic(
     requestState,

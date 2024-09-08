@@ -47,7 +47,7 @@ export const Post = ({ post }: { post: FeedPostType }) => {
             src={post.img || "/noCover.png"}
             alt=""
             fill
-            className="object-cover rounded-md"
+            className="object-fill rounded-md"
           />
         </div>
         <p className="text-sm lg:text-normal xl:text-lg">

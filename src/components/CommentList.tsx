@@ -1,6 +1,6 @@
 "use client";
 
-import { useOptimistic, useState } from "react";
+import { useEffect, useOptimistic, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Comment, User } from "@prisma/client";
 import Image from "next/image";
@@ -17,9 +17,12 @@ export const CommentList = ({
   comments: CommentWithUser[];
   postId: string;
 }) => {
+  
   const { user } = useUser();
   const [commentState, setCommentState] = useState(comments);
   const [desc, setDesc] = useState("");
+  
+  const [isMounted, setIsMounted] = useState(false);
 
   const add = async () => {
     if (!user || !desc) return;
@@ -59,6 +62,14 @@ export const CommentList = ({
     commentState,
     (state, value: CommentWithUser) => [value, ...state]
   )
+
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
+
+  if(!isMounted) return null;
+  
   return (
     <>
       {user && (
@@ -109,7 +120,7 @@ export const CommentList = ({
               <p className="text-sm text-slate-700">
                 {comment.desc}
               </p>
-              <div className="flex items-center gap-8 text-xs text-gray-500 mt-2">
+              <div className="flex items-center gap-8 text-xs text-gray-500 mt-1">
                 <div className="flex items-center gap-4">
                   <Image 
                     src="/like.png"
@@ -119,7 +130,7 @@ export const CommentList = ({
                     className="cursor-pointer w-4 h-4"
                   />
                   <span className="text-gray-400">|</span>
-                  <span className="text-gray-500">68<span className="hidden md:inline">{' '}Likes</span></span>
+                  <span className="text-gray-500">{Math.floor(Math.random() * 100)} Likes</span>
                 </div>
                 <div>Reply</div>
               </div>

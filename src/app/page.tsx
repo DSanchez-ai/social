@@ -20,8 +20,10 @@ const Homepage = () => {
       {/* CENTER */}
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
-          <div className="lg:hidden">
+          <div className="xl:hidden">
             <ProfileCard />
+          </div>
+          <div className="lg:hidden">
             <div className="mt-2">
               <FriendRequests />
             </div>

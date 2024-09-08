@@ -1,12 +1,15 @@
-import prisma from "@/lib/client";
-import { auth } from "@clerk/nextjs/server";
+"use client";
+
 import Image from "next/image"
+import { useState } from "react";
+import prisma from "@/lib/client";
+import { useUser } from "@clerk/nextjs";
+import { CldUploadWidget } from "next-cloudinary";
+import { AddPostButton } from "./AddPostButton";
+import { addPost } from "@/lib/actions";
+
 
 const Options = [
-  {
-    title: "Photo",
-    img: "/addimage.png",
-  },
   {
     title: "Video",
     img: "/addVideo.png",
@@ -22,17 +25,22 @@ const Options = [
 ]
 
 export const AddPost = () => {
+  const { user, isLoaded } = useUser();
+  const [ desc, setDesc ] = useState("");
+  const [ img, setImg ] = useState<any>();
 
-  const { userId } = auth();
+  if(!isLoaded) {
+    return "Loading...";
+  }
 
-  const testAction = async (formData:FormData) => {
+/*   const testAction = async (formData:FormData) => {
     "use server";
-    if(!userId) return;
+    if(!user) return;
     const desc = formData.get("desc") as string;
     try {
       const res = await prisma.post.create({
         data: {
-          userId: userId,
+          userId: user.id,
           desc: desc,
         }
       })
@@ -41,13 +49,13 @@ export const AddPost = () => {
       console.error(error);
       
     }
-  };
+  }; */
 
   return (
     <div className="p-2 md:p-4 bg-white shadow-md rounded-lg flex gap-2 md:gap-4 justify-between text-sm">
       { /* AVATAR */}
       <Image 
-        src="/mara.png"
+        src={user?.imageUrl || "/noAvatar.png"}
         alt=""
         width={48}
         height={48}
@@ -58,7 +66,7 @@ export const AddPost = () => {
       <div className="flex-1">
         { /* TEXT INPUT */}
         <form 
-          action={testAction}
+          action={(formData) => addPost(formData, img?.secure_url || "")}
           className="flex flex-1 items-center justify-between bg-slate-100 rounded-xl text-sm px-6 py-2 w-full"
         >
           <textarea 
@@ -66,6 +74,7 @@ export const AddPost = () => {
             id=""
             placeholder="What's on your mind?"
             className="flex-1 bg-transparent outline-none rounded-lg"
+            onChange={(e) => setDesc(e.target.value)}
           >
 
           </textarea>
@@ -76,14 +85,36 @@ export const AddPost = () => {
             height={20}
             className="w-5 h-5 cursor-pointer self-end ml-2"
           />   
-          <button className="ml-3 w-20 bg-blue-500 text-white p-2 rounded-md">Send</button>       
+          <AddPostButton /> 
         </form>
         { /* POST OPTIONS */}
         <div className="flex flex-wrap items-center gap-4 mt-4 text-gray-500">
+        <CldUploadWidget 
+          uploadPreset="slsocial" 
+          onSuccess={(result, {widget}) => {setImg(result.info); widget.close();}}
+        >
+            {({ open }) => {
+              return (
+              <div 
+                className="flex items-center gap-2 cursor-pointer"
+                onClick={() => open()}
+              >
+                <Image 
+                  src="/addimage.png"
+                  alt=""
+                  width={20}
+                  height={20}
+                />
+                Photo
+              </div>
+              );
+            }}
+          </CldUploadWidget>  
           {Options.map((option, index) => (
             <div 
               key={index}
-              className="flex items-center gap-2 cursor-pointer">
+              className="flex items-center gap-2 cursor-pointer"
+            >
               <Image 
                 src={option.img}
                 alt=""

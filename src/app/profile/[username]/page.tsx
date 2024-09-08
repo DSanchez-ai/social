@@ -89,15 +89,15 @@ const ProfilePage = async ({params}:{params:{username:string}}) => {
               </div>              
             </div>
           </div>
-            <div className="lg:hidden">
-              <Suspense fallback={<div>Loading...</div>} >
-                <UserInfoCard user={user} />
-              </Suspense>
-              <Suspense fallback={<div>Loading...</div>} >
-                <UserMediaCard user={user}/>
-              </Suspense>                
-              {currentUser === user.userId && (
-                  <>
+          <div className="lg:hidden">
+            <Suspense fallback={<div>Loading...</div>} >
+              <UserInfoCard user={user} />
+            </Suspense>
+            <Suspense fallback={<div>Loading...</div>} >
+              <UserMediaCard user={user}/>
+            </Suspense>                
+            {currentUser === user.userId && (
+              <>
                 <div className="mt-2">
                   <FriendRequests />
                 </div>
@@ -107,9 +107,9 @@ const ProfilePage = async ({params}:{params:{username:string}}) => {
                 <div className="mt-2">
                   <Following />
                 </div>
-                </>
-              )}
-            </div>
+              </>
+            )}
+          </div>
           <Feed username={user.username}/>
         </div>
       </div>  
