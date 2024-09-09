@@ -67,25 +67,27 @@ export const AddPost = () => {
         { /* TEXT INPUT */}
         <form 
           action={(formData) => addPost(formData, img?.secure_url || "")}
-          className="flex flex-1 items-center justify-between bg-slate-100 rounded-xl text-sm px-6 py-2 w-full"
+          className="flex gap-4"
         >
           <textarea 
             name="desc"
             id=""
             placeholder="What's on your mind?"
-            className="flex-1 bg-transparent outline-none rounded-lg"
+            className="flex-1 bg-slate-100 rounded-lg p-2"
             onChange={(e) => setDesc(e.target.value)}
           >
 
           </textarea>
-          <Image 
-            src="/emoji.png"
-            alt=""
-            width={20}
-            height={20}
-            className="w-5 h-5 cursor-pointer self-end ml-2"
-          />   
-          <AddPostButton /> 
+          <div>
+            <Image 
+              src="/emoji.png"
+              alt=""
+              width={20}
+              height={20}
+              className="w-5 h-5 cursor-pointer self-end ml-2"
+            />   
+            <AddPostButton /> 
+          </div>
         </form>
         { /* POST OPTIONS */}
         <div className="flex flex-wrap items-center gap-4 mt-4 text-gray-500">

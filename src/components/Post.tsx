@@ -42,12 +42,13 @@ export const Post = ({ post }: { post: FeedPostType }) => {
       </div>
       { /* DESC */}
       <div className="flex flex-col gap-4">
-        <div className="w-full min-h-96 relative">
+        <div className="w-full relative">
           <Image 
-            src={post.img || "/noCover.png"}
+            src={post.img || ""}
             alt=""
-            fill
-            className="object-fill rounded-md"
+            width={650}
+            height={650}
+            className="object-contain rounded-md"
           />
         </div>
         <p className="text-sm lg:text-normal xl:text-lg">
