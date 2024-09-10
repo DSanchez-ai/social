@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import { Comments } from "./Comments";
 import { Suspense } from "react";
 import { PostInteraction } from "./PostInteraction";
+import { PostInfo } from "./PostInfo";
 
 
 type FeedPostType = PostType & { user: User } & {
@@ -33,12 +34,7 @@ export const Post = ({ post }: { post: FeedPostType }) => {
               : post.user.username}
           </span>
         </div>
-        <Image 
-          src="/more.png"
-          alt=""
-          width={16}
-          height={16}
-        />
+        {currentUserId === post.userId && <PostInfo postId={post.id} />}
       </div>
       { /* DESC */}
       <div className="flex flex-col gap-4">
@@ -56,7 +52,7 @@ export const Post = ({ post }: { post: FeedPostType }) => {
         </p>
       </div> 
       { /* INTERACTION */}
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback="Loading...">
         <PostInteraction 
           postId={post.id} 
           likes={post.likes.map((like) => like.userId)} 

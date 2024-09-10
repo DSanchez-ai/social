@@ -59,7 +59,7 @@ export const AddPost = () => {
         alt=""
         width={48}
         height={48}
-        className="w-12 h-12 object-cover rounded-full ring-2"
+        className="w-12 h-12 object-fill rounded-full "
       />
       <div className=""></div>
       { /* POST */}
