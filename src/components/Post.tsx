@@ -6,6 +6,7 @@ import { Comments } from "./Comments";
 import { Suspense } from "react";
 import { PostInteraction } from "./PostInteraction";
 import { PostInfo } from "./PostInfo";
+import Link from "next/link";
 
 
 type FeedPostType = PostType & { user: User } & {
@@ -47,9 +48,15 @@ export const Post = ({ post }: { post: FeedPostType }) => {
             className="object-contain rounded-md"
           />
         </div>
-        <p className="text-sm lg:text-normal xl:text-lg">
+        <p className="text-sm lg:text-normal xl:text-lg line-clamp-2">
           {post.desc}
         </p>
+        <a 
+          href={`/post/${post.id}`}
+          className="text-sm text-blue-500 hover:underline self-end"
+        >
+          more...
+        </a>
       </div> 
       { /* INTERACTION */}
       <Suspense fallback="Loading...">

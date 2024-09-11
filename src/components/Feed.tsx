@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { Post } from "./Post";
 import prisma from "@/lib/client";
-import { Span } from "next/dist/trace";
 
 export const Feed = async ({username}:{username?: string}) => {
   const { userId: currentUserId } = auth();
