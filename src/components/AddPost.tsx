@@ -2,7 +2,6 @@
 
 import Image from "next/image"
 import { useState } from "react";
-import prisma from "@/lib/client";
 import { useUser } from "@clerk/nextjs";
 import { CldUploadWidget } from "next-cloudinary";
 import { AddPostButton } from "./AddPostButton";

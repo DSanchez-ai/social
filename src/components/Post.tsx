@@ -6,7 +6,6 @@ import { Comments } from "./Comments";
 import { Suspense } from "react";
 import { PostInteraction } from "./PostInteraction";
 import { PostInfo } from "./PostInfo";
-import Link from "next/link";
 
 
 type FeedPostType = PostType & { user: User } & {

@@ -4,15 +4,25 @@ import { auth } from "@clerk/nextjs/server";
 
 import { PostInfo } from "./PostInfo";
 import prisma from "@/lib/client";
+import { Comments } from "./Comments";
+import { Suspense } from "react";
+import { PostInteraction } from "./PostInteraction";
+import { EditPost } from "./EditPost";
 
-export const ViewPost = async ({ post }: { post: PostType }) => {
+type ViewPostType = PostType &  {
+  likes: [{ userId: string }];
+} & {
+  _count: { comments: number };
+};
+
+export const ViewPost = async ({ post }: { post: ViewPostType }) => {
   const { userId: currentUserId } = auth();
 
   if(!currentUserId) return null;
 
   const user = await prisma.user.findFirst({
     where: {
-      userId: currentUserId
+      userId: post.userId
     },
     include: {
       _count: {
@@ -45,7 +55,6 @@ export const ViewPost = async ({ post }: { post: PostType }) => {
               : user.username}
           </span>
         </div>
-        {currentUserId === post.userId && <PostInfo postId={post.id} />}
       </div>
       { /* DESC */}
       <div className="flex flex-col gap-4">
@@ -58,10 +67,17 @@ export const ViewPost = async ({ post }: { post: PostType }) => {
             className="object-contain rounded-md"
           />
         </div>
-        <p className="text-sm lg:text-normal xl:text-lg">
-          {post.desc}
-        </p>
+        <EditPost post={post} />
       </div> 
+      { /* INTERACTION */}
+      <Suspense fallback="Loading...">
+        <PostInteraction
+          postId={post.id} 
+          likes={post.likes.map((like) => like.userId)} 
+          commentNumber={post._count.comments}
+        />
+      </Suspense>      
+      <Comments postId={post.id} />       
     </div>
   )
 };

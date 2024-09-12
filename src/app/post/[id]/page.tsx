@@ -5,12 +5,8 @@ import Image from "next/image"
 
 import { LeftMenu } from "@/components/LeftMenu"
 import { RightMenu } from "@/components/RightMenu"
-import { UserInfoCard } from "@/components/UserInfoCard"
-import { FriendRequests } from "@/components/FriendRequests"
-import { Followers } from "@/components/Followers"
-import { Following } from "@/components/Following"
-import { UserMediaCard } from "@/components/UserMediaCard"
 import { ViewPost } from "@/components/ViewPost"
+import { UserInfoCard } from "@/components/UserInfoCard"
 
 const PostIdPage = async ({params}:{params:{id:string}}) => {
   const {userId: currentUser} = auth();
@@ -23,7 +19,6 @@ const PostIdPage = async ({params}:{params:{id:string}}) => {
       id: postId,
     },
     include: {
-      user: true,
       likes: {
         select: {
           userId: true
@@ -102,25 +97,9 @@ const PostIdPage = async ({params}:{params:{id:string}}) => {
           <div className="lg:hidden">
             <Suspense fallback={<div>Loading...</div>} >
               <UserInfoCard user={user} />
-            </Suspense>
-            <Suspense fallback={<div>Loading...</div>} >
-              <UserMediaCard user={user}/>
-            </Suspense>                
-            {currentUser === user.userId && (
-              <>
-                <div className="mt-2">
-                  <FriendRequests />
-                </div>
-                <div className="mt-2">
-                  <Followers />
-                </div>
-                <div className="mt-2">
-                  <Following />
-                </div>
-              </>
-            )}
+            </Suspense>      
           </div>
-          <ViewPost post={post}/>
+          <ViewPost post={{ ...post, likes: [post.likes[0]] }}/>
         </div>
       </div>  
       {/* RIGHT SIDE */}
