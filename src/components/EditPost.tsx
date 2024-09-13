@@ -16,10 +16,10 @@ export const EditPost = ({post}:{post: Post}) => {
   const [ img, setImg ] = useState<any>();
   const [ desc, setDesc ] = useState("");  
   const { userId: currentUserId } = useAuth();
+  const router = useRouter();
 
   if (!currentUserId) return null;
 
-  const router = useRouter();
 
   const handleUpdatePost = (formData: FormData) => {
     updatePost(formData, img?.secure_url, post);
