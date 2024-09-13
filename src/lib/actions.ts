@@ -300,7 +300,7 @@ export const addPost = async (formData: FormData, img: string) => {
   }
 };
 
-export const updatePost = async (formData: FormData, post: Post) => {
+export const updatePost = async (formData: FormData, img: string, post: Post) => {
   const { userId } = auth();
 
   if (!userId) throw new Error("User is not authenticated!");
@@ -322,9 +322,10 @@ export const updatePost = async (formData: FormData, post: Post) => {
       },
       data: {
         desc: validatedDesc.data,
+        img,
       },
     });
-    revalidatePath("/")
+    revalidatePath(`/post/${post.id}`)
     
   } catch (err) {
     console.log(err);

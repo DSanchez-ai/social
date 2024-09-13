@@ -62,7 +62,7 @@ const PostIdPage = async ({params}:{params:{id:string}}) => {
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center justify-center">
-            <div className="w-full h-64 relative">
+            <div className="w-full h-32 md:h-64 relative">
               <Image 
                 src={user.cover || "/noCover.png"}
                 alt=""

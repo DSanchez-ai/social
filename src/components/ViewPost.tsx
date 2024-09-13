@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { Post as PostType, User } from "@prisma/client";
+import { Post as PostType } from "@prisma/client";
 import { auth } from "@clerk/nextjs/server";
 
-import { PostInfo } from "./PostInfo";
 import prisma from "@/lib/client";
 import { Comments } from "./Comments";
 import { Suspense } from "react";
@@ -58,15 +57,6 @@ export const ViewPost = async ({ post }: { post: ViewPostType }) => {
       </div>
       { /* DESC */}
       <div className="flex flex-col gap-4">
-        <div className="w-full relative">
-          <Image 
-            src={post.img || ""}
-            alt=""
-            width={650}
-            height={650}
-            className="object-contain rounded-md"
-          />
-        </div>
         <EditPost post={post} />
       </div> 
       { /* INTERACTION */}
@@ -77,7 +67,7 @@ export const ViewPost = async ({ post }: { post: ViewPostType }) => {
           commentNumber={post._count.comments}
         />
       </Suspense>      
-      <Comments postId={post.id} />       
+      <Comments postId={post.id} />
     </div>
   )
 };

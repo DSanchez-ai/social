@@ -89,9 +89,9 @@ export const StoryList = ({stories, userId}:{stories: StoryWithUser[], userId: s
                   <button className="text-xs bg-blue-500 rounded-md text-white p-1">Send</button>
                 </form>
               ) : (
-                <span className="font-medium">Add a Story</span>
+                <span className="font-medium" onClick={() => open()}>Add a Story</span>
               )}
-              <div className="absolute text-3xl text-gray-200 top-1">+</div>
+              <div className="absolute text-3xl text-gray-200 top-5" onClick={() => open()}>+</div>
             </div>    
           );
         }}
