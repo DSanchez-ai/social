@@ -99,7 +99,7 @@ const PostIdPage = async ({params}:{params:{id:string}}) => {
               <UserInfoCard user={user} />
             </Suspense>      
           </div>
-          <ViewPost post={{ ...post, likes: [post.likes[0]] }}/>
+          <ViewPost post={{ ...post, likes: post.likes }}/>
         </div>
       </div>  
       {/* RIGHT SIDE */}

@@ -9,7 +9,7 @@ import { PostInteraction } from "./PostInteraction";
 import { EditPost } from "./EditPost";
 
 type ViewPostType = PostType &  {
-  likes: [{ userId: string }];
+  likes: { userId: string }[];
 } & {
   _count: { comments: number };
 };
