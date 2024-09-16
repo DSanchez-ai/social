@@ -1,6 +1,6 @@
 import prisma from "@/lib/client";
 import { auth } from "@clerk/nextjs/server";
-import Link from "next/link"
+
 import { FollowersList } from "./FollowersList";
 
 export const Followers = async () => {

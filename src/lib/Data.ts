@@ -5,13 +5,13 @@ export const MenuItems = [
     id: 1,
     name: "Posts",
     img: "/posts.png",
-    href: "/posts"
+    href: "/"
   },
   {
     id: 2,
     name: "Activity",
     img: "/activity.png",
-    href: "/activity"
+    href: "/"
   },
   {
     id: 3,

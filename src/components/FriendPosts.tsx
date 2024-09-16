@@ -4,7 +4,7 @@ import Link from "next/link";
 import { User } from "@prisma/client";
 import prisma from "@/lib/client";
 
-export const UserMediaCard = async ({user}: {user:User}) => {
+export const FriendPosts = async ({user}: {user:User}) => {
 
   const postsWithMedia = await prisma.post.findMany({
     where: {
@@ -20,12 +20,7 @@ export const UserMediaCard = async ({user}: {user:User}) => {
   });
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md text-sm flex flex-col gap-4">
-      { /* TOP */}
-      <div className="flex justify-between items-center font-medium">
-        <span className="text-gray-500">User Media</span>
-        <Link href="/" className="text-blue-500 text-xs">See all</Link>
-      </div>
+    <div className="p-1 bg-white text-sm flex flex-col gap-4">
       { /* BOTTOM */}
       <div className="flex gap-4 justify-between flex-wrap">
         {postsWithMedia.length ? postsWithMedia.map((media) => (
@@ -35,12 +30,12 @@ export const UserMediaCard = async ({user}: {user:User}) => {
                 src={media.img!}
                 alt=""
                 fill
-                className="object-cover rounded-md"
+                className="object-fill rounded-md"
               />
             </Link>
           </div>
         ))
-        : <span className="text-gray-500">No media found</span>}
+        : <span className="text-gray-500 text-xs">No Posts</span>}
       </div>
     </div>
   )

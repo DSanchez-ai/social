@@ -26,7 +26,6 @@ export const PostInfo = ({ postId }: { postId: string }) => {
             <Link href={`/post/${postId}`}>
               <span className="cursor-pointer">Edit</span>
             </Link>
-            <span className="cursor-pointer">Re-post</span>
             <form action={deletePostWithId}>
               <button className="text-red-500">Delete</button>
             </form>
