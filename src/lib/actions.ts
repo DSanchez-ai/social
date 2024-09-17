@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "./client";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { Post } from "@prisma/client";
+import { Post, Story } from "@prisma/client";
 
 export const switchFollow = async (userId: string) => {
   const { userId: currentUserId} = auth();
@@ -356,7 +356,8 @@ export const addStory = async (img: string) => {
       data: {
         userId,
         img,
-        expiresAt: new Date(Date.now() + 48 * 60 * 60 * 1000),
+        desc: "",
+        expiresAt: new Date(Date.now() + 96 * 60 * 60 * 1000),
       },
       include: {
         user: true,
@@ -366,6 +367,39 @@ export const addStory = async (img: string) => {
     return createdStory;
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const UpdateStory = async (formData: FormData, img: string, story: Story) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const desc = formData.get("desc") as string;
+  const Desc = z.string().max(1024);
+
+  const validatedDesc = Desc.safeParse(desc);
+
+  if (!validatedDesc.success) {
+    console.log(validatedDesc.error.flatten().fieldErrors);
+    throw new Error("Invalid description");
+  }
+
+  try {
+    const updatedStory = await prisma.story.update({
+      where: {
+        id: story.id,
+      },
+      data: {
+        desc: validatedDesc.data,
+        img,
+      },
+    });
+    revalidatePath("/")
+    return updatedStory;
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
   }
 };
 

@@ -111,6 +111,7 @@ model Story {
   createdAt DateTime @default(now())
   expiresAt DateTime
   img       String
+  desc      String?
   user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId    String   
 }

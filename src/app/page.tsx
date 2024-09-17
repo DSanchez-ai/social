@@ -7,7 +7,6 @@ import { LeftMenu } from "@/components/LeftMenu"
 import { ProfileCard } from "@/components/ProfileCard"
 import { RightMenu } from "@/components/RightMenu"
 import { Stories } from "@/components/Stories"
-import { auth } from "@clerk/nextjs/server"
 
 const Homepage = () => {
 

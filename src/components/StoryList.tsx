@@ -1,12 +1,12 @@
 "use client";
 
-import { use, useEffect, useOptimistic, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useOptimistic, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Story, User } from "@prisma/client";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { addStory } from "@/lib/actions";
-import { set } from "zod";
 
 type StoryWithUser = Story & {
   user: User;
@@ -17,6 +17,7 @@ export const StoryList = ({stories, userId}:{stories: StoryWithUser[], userId: s
   const { user, isLoaded } = useUser();
   const [storyList, setStoryList] = useState(stories);
   const [img, setImg] = useState<any>();
+  const router = useRouter();
 
   const add = async () => {
     if(!img?.secure_url) return;
@@ -24,6 +25,7 @@ export const StoryList = ({stories, userId}:{stories: StoryWithUser[], userId: s
     addOptimisticStory({
       id: "",
       img: img.secure_url,
+      desc: "",
       createdAt: new Date(Date.now()),
       expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
       userId: userId,
@@ -106,7 +108,8 @@ export const StoryList = ({stories, userId}:{stories: StoryWithUser[], userId: s
             alt=""
             width={80}
             height={80}
-            className="w-20 h-20 rounded-full ring-2"
+            className="w-20 h-20 rounded-full ring-2 cursor-pointer"
+            onClick={() => router.push(`/stories/${story.id}`)}
           />
           <span className="font-medium">{story.user.surname || story.user.username}</span>
         </div>      
