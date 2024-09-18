@@ -22,7 +22,13 @@ export const EditPost = ({post}:{post: Post}) => {
 
 
   const handleUpdatePost = (formData: FormData) => {
-    updatePost(formData, img?.secure_url, post);
+    let url = "";
+    if(!img?.secure_url) {
+      url = post.video || post.img || "";
+    } else {
+      url = img.secure_url;
+    }
+    updatePost(formData, url, post);
     router.refresh();
   };
 
@@ -45,14 +51,40 @@ export const EditPost = ({post}:{post: Post}) => {
           {({ open }) => { 
             return (  
               <div className="w-full relative">
-                <Image 
-                  onClick={() => open()}
-                  src={post.img || img?.secure_url || "/noAvatar.png"}
-                  alt=""
-                  width={670}
-                  height={670}
-                  className="object-contain rounded-md cursor-pointer mb-2 hover:opacity-80"
-                />
+                {post.video ? (
+                  <div
+                    className="w-full relative"
+                  >
+                    <video
+                      controls
+                      loop
+                      preload="auto"
+                      playsInline
+                    >
+                      <source src={post.video} type="video/mp4" />
+                    </video>
+                    <span 
+                      onClick={() => open()}
+                      className="text-blue-500 text-xs hover:underline cursor-pointer">Change</span>
+                  </div>
+                ) : (
+                  <>
+                    {post.img ? (
+                      <Image 
+                        onClick={() => open()}
+                        src={post.img || ""}
+                        alt=""
+                        width={650}
+                        height={650}
+                        className="object-contain rounded-md cursor-pointer mb-2 hover:opacity-80"
+                      />
+                    ) : (
+                      <span 
+                      onClick={() => open()}
+                      className="text-blue-500 text-xs hover:underline cursor-pointer">Add Photo/Video</span>                      
+                    )}
+                  </>
+                )}
               </div> 
             )}}
           </CldUploadWidget>   
@@ -70,14 +102,24 @@ export const EditPost = ({post}:{post: Post}) => {
       ) : (
         <>
           <div className="w-full relative">
-            <Image 
-              onClick={() => open()}
-              src={post.img || "/noAvatar.png"}
-              alt=""
-              width={650}
-              height={650}
-              className="object-contain rounded-md mb-2"
-          />
+            {post.video ? (
+              <video
+                controls
+                loop
+                preload="auto"
+                playsInline
+              >
+                <source src={post.video} type="video/mp4" />
+              </video>          
+            ) : (
+              <Image 
+                src={post.img || ""}
+                alt=""
+                width={650}
+                height={650}
+                className="object-contain rounded-md"
+              />
+            )}
          </div>           
           <p className="text-sm lg:text-normal xl:text-lg">
             {post.desc}

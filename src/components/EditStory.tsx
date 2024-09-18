@@ -7,10 +7,8 @@ import { CldUploadWidget } from "next-cloudinary";
 import { useAuth } from "@clerk/nextjs";
 import { Story } from "@prisma/client";
 
-import { updatePost, UpdateStory } from "@/lib/actions";
+import { UpdateStory } from "@/lib/actions";
 import { EditPostButton } from "./EditPostButton";
-
-
 
 export const EditStory = ({story}:{story: Story}) => {
   const [ img, setImg ] = useState<any>();

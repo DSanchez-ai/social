@@ -10,10 +10,6 @@ import { addPost } from "@/lib/actions";
 
 const Options = [
   {
-    title: "Video",
-    img: "/addVideo.png",
-  },
-  {
     title: "Event",
     img: "/addevent.png",
   },
@@ -106,7 +102,7 @@ export const AddPost = () => {
                   width={20}
                   height={20}
                 />
-                Photo
+                Photo/Video
               </div>
               );
             }}

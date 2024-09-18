@@ -285,11 +285,24 @@ export const addPost = async (formData: FormData, img: string) => {
   }
 
   try {
+    const isVideoUrl = (url: string) => {
+      if (!url) return false;
+      const videoExtensions = ['.mp4', '.webm', '.ogg'];
+      return videoExtensions.some(extension => url.endsWith(extension));
+    };
+
+    const isImageUrl = (url: string) => {
+      if (!url) return false;
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+      return imageExtensions.some(extension => url.endsWith(extension));
+    };
+
     const createdPost = await prisma.post.create({
       data: {
         desc: validatedDesc.data,
         userId,
-        img,
+        img: isImageUrl(img) ? img : null,
+        video: isVideoUrl(img) ? img : null,
       },
     });
     revalidatePath("/")
@@ -315,14 +328,28 @@ export const updatePost = async (formData: FormData, img: string, post: Post) =>
     throw new Error("Invalid description");
   }
 
+  const isVideoUrl = (url: string) => {
+    if (!url) return false;
+    const videoExtensions = ['.mp4', '.webm', '.ogg'];
+    return videoExtensions.some(extension => url.endsWith(extension));
+  };
+
+  const isImageUrl = (url: string) => {
+    if (!url) return false;
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+    return imageExtensions.some(extension => url.endsWith(extension));
+  };
+
   try {
+
     const updatedPost = await prisma.post.update({
       where: {
         id: post.id,
       },
       data: {
         desc: validatedDesc.data,
-        img,
+        img: isImageUrl(img) ? img : null,
+        video: isVideoUrl(img) ? img : null,
       },
     });
     revalidatePath(`/post/${post.id}`)

@@ -1,31 +1,50 @@
-import { EditStory } from "@/components/EditStory";
-import { LeftMenu } from "@/components/LeftMenu";
-import { RightMenu } from "@/components/RightMenu";
-import { UserInfoCard } from "@/components/UserInfoCard";
-import { ViewStory } from "@/components/ViewStory";
 import prisma from "@/lib/client";
 import { auth } from "@clerk/nextjs/server";
-import { Story } from "@prisma/client";
 import Image from "next/image";
 import { Suspense } from "react";
+import { LeftMenu } from "@/components/LeftMenu";
+import { Post } from "@/components/Post";
+import { RightMenu } from "@/components/RightMenu";
+import { UserInfoCard } from "@/components/UserInfoCard";
 
-const StoriesIdPage = async ({params}:{params: {id:string}}) => {
-  const {userId: currentUser} = auth();
-  if(!currentUser) return null
+const VideosPage = async () => {
+  const { userId: currentUserId } = auth();
 
-  const id = params.id;
+  if(!currentUserId) {
+    return null;
+  }
 
-  const story = await prisma.story.findFirst({
+  let posts: any[] = [];
+
+  posts = await prisma.post.findMany({
     where: {
-      id,
+      video: {
+        not: null
+        },
+      },
+      include: {
+        user: true,
+        likes: {
+          select: {
+            userId: true
+          }
+        },
+        _count: {
+          select: {
+            likes: true,
+            comments: true
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc"
+      },
     },
-  });
-
-  if(!story) return null;
+  );
 
   const user = await prisma.user.findFirst({
     where: {
-      userId: story.userId
+      userId: currentUserId 
     },
     include: {
       _count: {
@@ -88,27 +107,9 @@ const StoriesIdPage = async ({params}:{params: {id:string}}) => {
             </Suspense>      
           </div>
           <div className="flex flex-col gap-4">
-            { /* USER */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Image 
-                  src={user.avatar || "/noAvatar.png"}
-                  alt=""
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 rounded-full"
-                />
-                <span className="font-medium">
-                {user.name && user.surname
-                    ? user.surname + " " + user.name
-                    : user.username}
-                </span>
-              </div>
-            </div>
-            { /* DESC */}
-            <div className="flex flex-col gap-4">
-              <EditStory story={story} />
-            </div> 
+          {posts.length ? (posts.map(post=>(
+             <Post key={post.id} post={post}/>
+            ))) : <span className="text-sm">No Videos found!</span>}
           </div>
         </div>
       </div>  
@@ -120,4 +121,4 @@ const StoriesIdPage = async ({params}:{params: {id:string}}) => {
   );
 };
 
-export default StoriesIdPage;
+export default VideosPage;

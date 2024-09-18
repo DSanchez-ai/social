@@ -35,7 +35,7 @@ export const MenuItems = [
     id: 6,
     name: "Videos",
     img: "/videos.png",
-    href: "/"
+    href: "/videos"
   },
   {
     id: 7,

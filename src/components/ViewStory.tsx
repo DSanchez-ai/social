@@ -1,8 +1,6 @@
-"use client";
-
 import { Story, User } from "@prisma/client";
 import Image from "next/image";
-import { EditStory } from "./EditStory";
+import { ShowStory } from "./ShowStory";
 
 type StoryType = {
   story: Story;
@@ -13,7 +11,7 @@ export const ViewStory = ({
   story,
   user,
 }: StoryType) => {
-  return (
+   return (
     <div className="flex flex-col gap-4">
       { /* USER */}
       <div className="flex items-center justify-between">
@@ -34,7 +32,7 @@ export const ViewStory = ({
       </div>
       { /* DESC */}
       <div className="flex flex-col gap-4">
-        <EditStory story={story} />
+        <ShowStory story={story} />
       </div> 
     </div>
   )

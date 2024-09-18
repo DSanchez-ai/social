@@ -39,13 +39,28 @@ export const Post = ({ post }: { post: FeedPostType }) => {
       { /* DESC */}
       <div className="flex flex-col gap-4">
         <div className="w-full relative">
-          <Image 
-            src={post.img || ""}
-            alt=""
-            width={650}
-            height={650}
-            className="object-contain rounded-md"
-          />
+          {post.video ? (
+            <video
+              controls
+              loop
+              preload="auto"
+              playsInline
+            >
+              <source src={post.video} type="video/mp4" />
+            </video>          
+          ) : (
+            <>
+              {post.img && (
+                <Image 
+                  src={post.img || ""}
+                  alt=""
+                  width={650}
+                  height={650}
+                  className="object-contain rounded-md"
+                />
+              )}
+            </>
+          )}
         </div>
         <p className="text-sm lg:text-normal xl:text-lg line-clamp-2">
           {post.desc}
