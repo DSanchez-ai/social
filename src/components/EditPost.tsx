@@ -80,15 +80,18 @@ export const EditPost = ({post}:{post: Post}) => {
                       />
                     ) : (
                       <span 
-                      onClick={() => open()}
-                      className="text-blue-500 text-xs hover:underline cursor-pointer">Add Photo/Video</span>                      
+                        onClick={() => open()}
+                        className="text-blue-500 text-xs hover:underline cursor-pointer"
+                      >
+                        Add Photo/Video
+                      </span>                      
                     )}
                   </>
                 )}
               </div> 
             )}}
           </CldUploadWidget>   
-          <p className="text-sm lg:text-normal xl:text-lg">
+          <p className="text-sm lg:text-normal">
             <textarea
               name="desc"
               defaultValue={post.desc}
@@ -102,6 +105,9 @@ export const EditPost = ({post}:{post: Post}) => {
       ) : (
         <>
           <div className="w-full relative">
+            <p className="text-sm text-pretty font-light lg:text-base mb-4">
+              {post.desc}
+            </p>
             {post.video ? (
               <video
                 controls
@@ -115,15 +121,12 @@ export const EditPost = ({post}:{post: Post}) => {
               <Image 
                 src={post.img || ""}
                 alt=""
-                width={650}
-                height={650}
+                width={670}
+                height={670}
                 className="object-contain rounded-md"
               />
             )}
          </div>           
-          <p className="text-sm lg:text-normal xl:text-lg">
-            {post.desc}
-          </p>
       </>
       )}
     </div>

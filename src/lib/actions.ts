@@ -293,7 +293,7 @@ export const addPost = async (formData: FormData, img: string) => {
 
     const isImageUrl = (url: string) => {
       if (!url) return false;
-      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
       return imageExtensions.some(extension => url.endsWith(extension));
     };
 
@@ -336,7 +336,7 @@ export const updatePost = async (formData: FormData, img: string, post: Post) =>
 
   const isImageUrl = (url: string) => {
     if (!url) return false;
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
     return imageExtensions.some(extension => url.endsWith(extension));
   };
 

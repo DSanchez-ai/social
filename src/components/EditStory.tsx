@@ -54,7 +54,7 @@ export const EditStory = ({story}:{story: Story}) => {
               </div> 
             )}}
           </CldUploadWidget>   
-          <p className="text-sm lg:text-normal xl:text-lg">
+          <p className="text-sm text-pretty font-light lg:text-base">
             <textarea
               name="desc"
               defaultValue={story.desc!}
@@ -68,18 +68,18 @@ export const EditStory = ({story}:{story: Story}) => {
       ) : (
         <>
           <div className="w-full relative">
+            <p className="text-sm text-pretty font-light lg:text-base mb-4">
+              {story.desc}
+            </p>
             <Image 
               onClick={() => open()}
               src={story.img || "/noAvatar.png"}
               alt=""
-              width={650}
-              height={650}
+              width={670}
+              height={670}
               className="object-contain rounded-md mb-2"
           />
          </div>           
-          <p className="text-sm lg:text-normal xl:text-lg">
-            {story.desc}
-          </p>
       </>
       )}
     </div>

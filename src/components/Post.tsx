@@ -6,6 +6,7 @@ import { Comments } from "./Comments";
 import { Suspense } from "react";
 import { PostInteraction } from "./PostInteraction";
 import { PostInfo } from "./PostInfo";
+import { Span } from "next/dist/trace";
 
 
 type FeedPostType = PostType & { user: User } & {
@@ -39,6 +40,11 @@ export const Post = ({ post }: { post: FeedPostType }) => {
       { /* DESC */}
       <div className="flex flex-col gap-4">
         <div className="w-full relative">
+          <p className="text-sm text-pretty font-light lg:text-base mb-4 line-clamp-2">
+            {post.desc}
+          </p>
+        </div>
+        { /* IMAGE / VIDEO */}        
           {post.video ? (
             <video
               controls
@@ -61,16 +67,22 @@ export const Post = ({ post }: { post: FeedPostType }) => {
               )}
             </>
           )}
-        </div>
-        <p className="text-sm lg:text-normal xl:text-lg line-clamp-2">
-          {post.desc}
-        </p>
-        <a 
-          href={`/post/${post.id}`}
-          className="text-sm text-blue-500 hover:underline self-end"
-        >
-          {currentUserId === post.userId ? "Edit" : "View"}
-        </a>
+          <a 
+            href={`/post/${post.id}`}
+            className="text-sm text-blue-500 hover:underline self-end mt-1"
+          >
+            {currentUserId === post.userId ? 
+              "Edit" 
+            : 
+              <Image
+              src="/more.png"
+              alt=""
+              width={16}
+              height={16}
+              className="cursor-pointer"
+            />            
+            }
+          </a>
       </div> 
       { /* INTERACTION */}
       <Suspense fallback="Loading...">
