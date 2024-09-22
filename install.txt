@@ -6,3 +6,4 @@ npm install @prisma/client
 npm install svix // for clerk webhook
 npm install zod
 npm install next-cloudinary
+npm i react-canvas-confetti

@@ -24,7 +24,8 @@ export const StoryList = ({stories, userId}:{stories: StoryWithUser[], userId: s
 
     addOptimisticStory({
       id: "",
-      img: img.secure_url,
+      img: img?.secure_url,
+      video: "",
       desc: "",
       createdAt: new Date(Date.now()),
       expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),

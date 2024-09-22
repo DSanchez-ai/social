@@ -71,7 +71,7 @@ export const ProfileCard = async () => {
           <span className="text-xs text-gray-500">{user._count.followings} Followers</span>
         </div>
         <Link href={`/profile/${user.username}`}>
-          <button className="bg-blue-500 text-white text-xs p-2 rounded-md">My Profile</button>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white text-xs p-2 rounded-md">My Profile</button>
         </Link>
       </div>
     </div>

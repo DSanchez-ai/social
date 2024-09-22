@@ -17,7 +17,7 @@ export const FollowingList = ({requests}:{requests: FollowingWithUser[]}) => {
   const displayedRequests = showAll ? requests : requests.slice(0, 3);
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md text-sm flex flex-col gap-2">
+    <div className="p-4 bg-white text-sm flex flex-col gap-2">
       <div className="flex justify-between items-center font-medium">
         <span className="text-gray-500">Following</span>
         <span 
@@ -45,7 +45,7 @@ export const FollowingList = ({requests}:{requests: FollowingWithUser[]}) => {
           </div>
         <div className="flex gap-2 justify-end text-xs xl:text-sm">
           <Link href={`/profile/${request.following.username}`}>
-            <button className="bg-blue-500 text-white text-xs p-1 xl:p-2 rounded-md">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white text-xs p-1 xl:p-2 rounded-md">
               View Profile
             </button>
           </Link>

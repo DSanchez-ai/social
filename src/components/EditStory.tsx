@@ -20,7 +20,13 @@ export const EditStory = ({story}:{story: Story}) => {
 
 
   const handleUpdatePost = (formData: FormData) => {
-    UpdateStory(formData, img?.secure_url, story);
+    let url = "";
+    if(!img?.secure_url) {
+      url = story.video || story.img || "";
+    } else {
+      url = img.secure_url;
+    }    
+    UpdateStory(formData, url, story);
     router.refresh();
   };
 
@@ -43,14 +49,42 @@ export const EditStory = ({story}:{story: Story}) => {
           {({ open }) => { 
             return (  
               <div className="w-full relative">
-                <Image 
-                  onClick={() => open()}
-                  src={story.img || img?.secure_url || "/noAvatar.png"}
-                  alt=""
-                  width={670}
-                  height={670}
-                  className="object-contain rounded-md cursor-pointer mb-2 hover:opacity-80"
-                />
+                { /* IMAGE / VIDEO */}                  
+                {story.video ? (
+                  <div className="w-full relative">
+                    <video
+                      controls
+                      loop
+                      preload="auto"
+                      playsInline
+                    >
+                      <source src={story.video} type="video/mp4" />
+                    </video> 
+                    <span 
+                      onClick={() => open()}
+                      className="text-blue-500 text-xs hover:underline cursor-pointer">Change</span>                    
+                  </div>         
+                ) : (
+                  <>
+                    {story.img ? (
+                      <Image 
+                        onClick={() => open()}
+                        src={story.img || ""}
+                        alt=""
+                        width={650}
+                        height={650}
+                        className="object-contain rounded-md cursor-pointer mb-2 hover:opacity-80"
+                      />
+                    ) : (
+                      <span 
+                        onClick={() => open()}
+                        className="text-blue-500 text-xs hover:underline cursor-pointer"
+                      >
+                        Add Photo/Video
+                      </span>                      
+                    )}
+                  </>
+                )}
               </div> 
             )}}
           </CldUploadWidget>   
@@ -71,14 +105,24 @@ export const EditStory = ({story}:{story: Story}) => {
             <p className="text-sm text-pretty font-light lg:text-base mb-4">
               {story.desc}
             </p>
-            <Image 
-              onClick={() => open()}
-              src={story.img || "/noAvatar.png"}
-              alt=""
-              width={670}
-              height={670}
-              className="object-contain rounded-md mb-2"
-          />
+            {story.video ? (
+              <video
+                controls
+                loop
+                preload="auto"
+                playsInline
+              >
+                <source src={story.video} type="video/mp4" />
+              </video>          
+            ) : (
+              <Image 
+                src={story.img || ""}
+                alt=""
+                width={670}
+                height={670}
+                className="object-contain rounded-md"
+              />
+            )}
          </div>           
       </>
       )}

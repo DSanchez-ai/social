@@ -21,7 +21,7 @@ export const Birthdays = () => {
             <span className="text-sm">Sarah Lafayette</span>
           </div>
           <div className="flex gap-3 justify-end">
-            <button className="bg-blue-500 text-white text-xs px-2 py-1 rounded-md">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-1 rounded-md">
               Celebrate
             </button>
           </div>

@@ -111,7 +111,8 @@ model Story {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   expiresAt DateTime
-  img       String
+  img       String?
+  video     String?
   desc      String?
   user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId    String   
