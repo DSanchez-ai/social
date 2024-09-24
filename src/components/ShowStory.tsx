@@ -15,19 +15,38 @@ export const ShowStory = ({story}:{story: Story}) => {
     <div>
       { /* STORIES */}
       <div className="flex flex-col gap-4">
+      { /* DESC */}
         <div className="w-full relative">
-          <Image 
-            onClick={() => router.push(`/stories/${story.id}`)}
-            src={story.img || ""}
-            alt=""
-            width={650}
-            height={650}
-            className="object-contain rounded-md mb-2 cursor-pointer hover:opacity-80"
-        />
+          <p className="text-sm text-pretty font-light lg:text-base mb-4 line-clamp-2">
+            {story.desc}
+          </p>
+        </div>        
+        { /* IMAGE / VIDEO */}        
+        <div className="w-full relative">
+          {story.video ? (
+            <video
+              controls
+              loop
+              preload="auto"
+              playsInline
+            >
+              <source src={story.video} type="video/mp4" />
+            </video>          
+          ) : (
+            <>
+              {story.img && (
+                <Image 
+                  onClick={() => router.push(`/stories/${story.id}`)}                
+                  src={story.img || ""}
+                  alt=""
+                  width={670}
+                  height={670}
+                  className="object-contain rounded-md mb-2 cursor-pointer hover:opacity-80"
+                />
+              )}
+            </>
+          )}          
         </div>           
-        <p className="text-sm lg:text-normal xl:text-lg line-clamp-2">
-          {story.desc}
-        </p>
         <a 
           href={`/stories/${story.id}`}
           className="text-sm text-blue-500 hover:underline self-end"  

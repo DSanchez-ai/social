@@ -380,6 +380,15 @@ export const addStory = async (img: string) => {
       });
     }
 
+    // Delete all expired stories
+    await prisma.story.deleteMany({
+      where: {
+        expiresAt: {
+          lt: new Date(),
+        },
+      },
+    });
+
     const isVideoUrl = (url: string) => {
       if (!url) return false;
       const videoExtensions = ['.mp4', '.webm', '.ogg'];
@@ -449,6 +458,16 @@ export const UpdateStory = async (formData: FormData, img: string, story: Story)
         video: isVideoUrl(img) ? img : null,
       },
     });
+
+    // Delete all expired stories
+    await prisma.story.deleteMany({
+      where: {
+        expiresAt: {
+          lt: new Date(),
+        },
+      },
+    });
+        
     revalidatePath("/")
     return updatedStory;
   } catch (err) {
