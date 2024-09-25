@@ -1,3 +1,4 @@
+import { EditStory } from "@/components/EditStory";
 import { LeftMenu } from "@/components/LeftMenu";
 import { RightMenu } from "@/components/RightMenu";
 import { UserInfoCard } from "@/components/UserInfoCard";
