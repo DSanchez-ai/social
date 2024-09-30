@@ -88,6 +88,7 @@ const StoriesIdPage = async ({params}:{params: {id:string}}) => {
             </Suspense>      
           </div>
           <div className="flex flex-col gap-4">
+            <ViewStory story={story} user={user}/>
             { /* DESC */}
             <div className="flex flex-col gap-4">
               <EditStory story={story} user={user}/>

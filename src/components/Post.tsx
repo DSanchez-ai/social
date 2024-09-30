@@ -6,7 +6,6 @@ import { Comments } from "./Comments";
 import { Suspense } from "react";
 import { PostInteraction } from "./PostInteraction";
 import { PostInfo } from "./PostInfo";
-import { Span } from "next/dist/trace";
 
 
 type FeedPostType = PostType & { user: User } & {
