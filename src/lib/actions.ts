@@ -407,7 +407,7 @@ export const addStory = async (img: string) => {
         img: isImageUrl(img) ? img : null,
         video: isVideoUrl(img) ? img : null,
         desc: "",
-        expiresAt: new Date(Date.now() + 96 * 60 * 60 * 1000),
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
       },
       include: {
         user: true,

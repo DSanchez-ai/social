@@ -1,13 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAuth } from "@clerk/nextjs";
 import { Story } from "@prisma/client";
 
 export const ShowStory = ({story}:{story: Story}) => {
   const { userId: currentUserId } = useAuth();
-  const router = useRouter();
 
   if (!currentUserId) return null;
 
@@ -17,7 +15,7 @@ export const ShowStory = ({story}:{story: Story}) => {
       <div className="flex flex-col gap-4">
       { /* DESC */}
         <div className="w-full relative">
-          <p className="text-sm text-pretty font-light lg:text-base mb-4 line-clamp-2">
+          <p className="text-sm text-pretty italic font-light lg:text-base mb-4">
             {story.desc}
           </p>
         </div>        
@@ -36,12 +34,11 @@ export const ShowStory = ({story}:{story: Story}) => {
             <>
               {story.img && (
                 <Image 
-                  onClick={() => router.push(`/stories/${story.id}`)}                
                   src={story.img || ""}
                   alt=""
                   width={670}
                   height={670}
-                  className="object-contain rounded-md mb-2 cursor-pointer hover:opacity-80"
+                  className="object-contain rounded-md mb-2"
                 />
               )}
             </>
@@ -51,7 +48,7 @@ export const ShowStory = ({story}:{story: Story}) => {
           href={`/stories/${story.id}`}
           className="text-sm text-blue-500 hover:underline self-end"  
         >
-            {currentUserId === story.userId ? "Edit" : "View"}
+            {currentUserId === story.userId && "Edit"}
           </a>
       </div>
     </div>

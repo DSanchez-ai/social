@@ -40,7 +40,7 @@ export const EditStory = ({story, user}:{story: Story, user: User}) => {
     <div>
       {open && (
         <div className="absolute w-screen h-screen top-0 left-0 bg-slate-800 bg-opacity-65 flex flex-nowrap items-center justify-center z-50">
-          <div className="p-12 bg-white rounded-lg shadow-md flex flex-col gap-2 w-full lg:w-2/3 xl:w-1/2 relative">
+          <div className="p-12 bg-white rounded-lg shadow-md flex flex-col gap-2 w-[90vw] md:w-2/3 xl:w-1/3 relative">
           { /* USER */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -96,8 +96,8 @@ export const EditStory = ({story, user}:{story: Story, user: User}) => {
                             onClick={() => open()}
                             src={story.img || ""}
                             alt=""
-                            width={650}
-                            height={650}
+                            width={600}
+                            height={600}
                             className="object-contain rounded-md cursor-pointer mb-2 hover:opacity-80"
                           />
                         ) : (
@@ -118,7 +118,7 @@ export const EditStory = ({story, user}:{story: Story, user: User}) => {
                   name="desc"
                   defaultValue={story.desc!}
                   onChange={(e) => setDesc(e.target.value)}
-                  rows={10}
+                  rows={5}
                   className="w-full p-2 border rounded-md"
                 />
               </p>
@@ -143,8 +143,8 @@ export const EditStory = ({story, user}:{story: Story, user: User}) => {
                   <Image 
                     src={story.img || ""}
                     alt=""
-                    width={670}
-                    height={670}
+                    width={600}
+                    height={600}
                     className="object-contain rounded-md"
                   />
                 )}

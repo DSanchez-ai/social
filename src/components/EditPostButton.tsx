@@ -7,7 +7,7 @@ export const EditPostButton = () => {
 
   return (
     <button 
-      className="bg-blue-500 hover:bg-blue-400 p-2 ml-2 mt-2 rounded-md text-white disabled:bg-blue-300 disabled:cursor-not-allowed"
+      className="bg-blue-500 hover:bg-blue-400 p-2 mt-2 rounded-md text-white disabled:bg-blue-300 disabled:cursor-not-allowed"
       disabled={pending}
     >
       {pending ? (
