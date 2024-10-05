@@ -14,6 +14,8 @@
     "@prisma/client": "^5.19.0",
     "@tailwindcss/line-clamp": "^0.4.4",
     "babel-plugin-react-compiler": "^0.0.0-experimental-938cd9a-20240601",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.447.0",
     "next": "15.0.0-rc.0",
     "next-cloudinary": "^6.12.0",
     "prisma": "^5.19.0",
