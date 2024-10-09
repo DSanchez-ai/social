@@ -21,7 +21,7 @@ export const MenuItems = [
     id: 4,
     name: "Events",
     img: "/events.png",
-    href: "/"
+    href: "/events"
   },
   {
     id: 5,

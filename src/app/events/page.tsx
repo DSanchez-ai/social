@@ -1,50 +1,39 @@
-import { AddPost } from "@/components/AddPost"
-import { Followers } from "@/components/Followers"
-import { Following } from "@/components/Following"
-import { FriendRequests } from "@/components/FriendRequests"
-import { LeftMenu } from "@/components/LeftMenu"
-import Pagination from "@/components/Pagination"
-import { Post } from "@/components/Post"
-import { ProfileCard } from "@/components/ProfileCard"
-import { RightMenu } from "@/components/RightMenu"
-import { Stories } from "@/components/Stories"
-import prisma from "@/lib/client"
+import { Event } from "@/components/Event";
+import { Followers } from "@/components/Followers";
+import { Following } from "@/components/Following";
+import { FriendRequests } from "@/components/FriendRequests";
+import { LeftMenu } from "@/components/LeftMenu";
+import Pagination from "@/components/Pagination";
+import { ProfileCard } from "@/components/ProfileCard";
+import { RightMenu } from "@/components/RightMenu";
+import { Stories } from "@/components/Stories";
+import prisma from "@/lib/client";
 
-const numberOfPosts = 5;
+const numberOfItems = 5;
 
 async function getData(searchParams: string) {
   const [count, data] = await prisma.$transaction([
-  prisma.post.count(),
-  prisma.post.findMany({
-    take: numberOfPosts,
-    skip: searchParams ? (Number(searchParams) -1) * numberOfPosts : 0,
-    include: {
-      user: true,
-      likes: {
-        select: {
-          userId: true
-        }
+    prisma.event.count(),
+    prisma.event.findMany({
+      take: numberOfItems,
+      skip: searchParams ? (Number(searchParams) -1) * numberOfItems : 0,
+      include: {
+        user: true,
       },
-      _count: {
-        select: {
-          likes: true,
-          comments: true
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc"
-    },
-  }) 
+      orderBy: {
+        createdAt: "desc"
+      },      
+    })
   ])
   return {count, data}
 }
 
-export default function Homepage({
+export default function EventsPage({
   searchParams,
 }: {
   searchParams: { page: string };
 }) {
+
   return (
     <div className='flex gap-6 pt-6'>
       {/* LEFT SIDE */}
@@ -69,8 +58,7 @@ export default function Homepage({
             </div>    
           </div>
           <Stories />
-          <AddPost />
-          <ShowItems searchParams={searchParams} />
+          <ShowItems searchParams={searchParams} />          
           </div>
       </div>  
       {/* RIGHT SIDE */}
@@ -79,7 +67,7 @@ export default function Homepage({
       </div>          
     </div>
   )
-}
+};
 
 async function ShowItems({
   searchParams,
@@ -90,12 +78,10 @@ async function ShowItems({
 
   return (
     <>
-      {data.length ? (data.map(post=>(
-        // @ts-ignore
-        <Post key={post.id} post={post}/>
+      {data.length ? (data.map(event=>(
+        <Event key={event.id} event={event}/>
       ))) : <span className="text-sm">No posts found!</span>}
-      <Pagination totalPages={Math.ceil(count / numberOfPosts)}/>  
+      <Pagination totalPages={Math.ceil(count / numberOfItems)}/>  
     </>
   )
 }
-

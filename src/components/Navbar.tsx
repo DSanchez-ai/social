@@ -21,6 +21,16 @@ const Links = [
     img: "/stories.png",
     href: "/stories",
   },
+  {
+    name: "Videos",
+    img: "/videos.png",
+    href: "/videos",
+  },
+  {
+    name: "Events",
+    img: "/events.png",
+    href: "/events",
+  },
 ]
 
 const Navbar = async () => {
@@ -38,7 +48,7 @@ const Navbar = async () => {
         {/* LINKS */}    
         <div className="flex gap-6 text-gray-600">
           {Links.map((link, index) => (
-            <Link href={link.href} key={index} className="flex gap-2 items-center">
+            <Link href={link.href} key={index} className="flex pt-1 pb-1 gap-2 items-center hover:bg-slate-100">
               <Image 
                 src={link.img}
                 alt={link.name}

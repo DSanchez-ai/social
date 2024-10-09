@@ -11,6 +11,7 @@ const MobileMenu = () => {
     { title: "Friends", url: "/friends" },
     { title: "Stories", url: "/stories" },
     { title: "Videos", url: "/videos" },
+    { title: "Events", url: "/events" },
     { title: "Login", url: "/login" },
   ]
   
