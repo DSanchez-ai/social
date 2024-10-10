@@ -5,7 +5,6 @@ import Image from "next/image"
 
 import { LeftMenu } from "@/components/LeftMenu"
 import { RightMenu } from "@/components/RightMenu"
-import { ViewEvent } from "@/components/ViewEvent"
 import { UserInfoCard } from "@/components/UserInfoCard"
 import { ShowEvent } from "@/components/ShowEvent"
 
