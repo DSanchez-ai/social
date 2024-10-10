@@ -1,3 +1,4 @@
+import { AddEvent } from "@/components/AddEvent";
 import { Event } from "@/components/Event";
 import { Followers } from "@/components/Followers";
 import { Following } from "@/components/Following";
@@ -58,6 +59,7 @@ export default function EventsPage({
             </div>    
           </div>
           <Stories />
+          <AddEvent />
           <ShowItems searchParams={searchParams} />          
           </div>
       </div>  

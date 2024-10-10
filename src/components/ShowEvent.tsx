@@ -1,33 +1,37 @@
-import { auth } from "@clerk/nextjs/server";
-import { Event as EventType, User } from "@prisma/client";
+"use client";
+
 import Image from "next/image";
-import { PostDesc } from "./PostDesc";
+import { useAuth } from "@clerk/nextjs";
+import { Event, User } from "@prisma/client";
 import { formatDateTime } from "@/lib/utils";
+import { PostDesc } from "./PostDesc";
 
-type FeedEventType = EventType & { user: User }
+export const ShowEvent = ({
+  event, 
+  user}:{
+    event: Event
+    user: User
+  }) => {
+  const { userId: currentUserId } = useAuth();
 
-export const Event = ({
-  event
-}: {
-  event: FeedEventType
-}) => {
-  const { userId: currentUserId } = auth();
+  if (!currentUserId) return null;
+
   return (
     <div className="flex flex-col gap-4">
       { /* USER */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Image 
-            src={event.user.avatar || "/noAvatar.png"}
+            src={user.avatar || "/noAvatar.png"}
             alt=""
             width={40}
             height={40}
             className="w-10 h-10 rounded-full"
           />
           <span className="font-medium">
-          {event.user.name && event.user.surname
-              ? event.user.surname + " " + event.user.name
-              : event.user.username}
+          {user.name && user.surname
+              ? user.surname + " " + user.name
+              : user.username}
           </span>
         </div>
       </div>  
@@ -75,7 +79,11 @@ export const Event = ({
       { /* DESC */}
       <div className="flex flex-col gap-4">
         <div className="w-full relative">
-          {event.desc && <PostDesc desc={event.desc} />}
+          {event.desc && (
+            <p>
+              {event.desc}
+            </p>
+          )}
         </div>
         { /* IMAGE / VIDEO */}        
           {event.video ? (
@@ -104,7 +112,7 @@ export const Event = ({
             href={`/events/${event.id}`}
             className="text-sm text-blue-500 hover:underline self-end mt-1"
           >
-            {currentUserId === event.userId ? "Edit" : "View"}
+            {currentUserId === event.userId && "Edit"}
           </a>
       </div>       
     </div>

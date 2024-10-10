@@ -493,3 +493,47 @@ export const deletePost = async (postId: string) => {
     console.log(err);
   }
 };
+
+export const addEvent = async (formData: FormData, img: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid description");
+  }
+
+  try {
+    const isVideoUrl = (url: string) => {
+      if (!url) return false;
+      const videoExtensions = ['.mp4', '.webm', '.ogg'];
+      return videoExtensions.some(extension => url.endsWith(extension));
+    };
+
+    const isImageUrl = (url: string) => {
+      if (!url) return false;
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+      return imageExtensions.some(extension => url.endsWith(extension));
+    };
+
+    const createdEvent = await prisma.event.create({
+      data: {
+        title: validatedTitle.data,
+        userId,
+        img: isImageUrl(img) ? img : null,
+        video: isVideoUrl(img) ? img : null,
+      },
+    });
+    revalidatePath("/")
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};
