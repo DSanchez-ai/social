@@ -10,3 +10,26 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
+.custom-datepicker {
+  width: 200px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.custom-datepicker input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.custom-datepicker .calendar {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

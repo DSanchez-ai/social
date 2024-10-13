@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "./client";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { Post, Story } from "@prisma/client";
+import { Post, Story, Event } from "@prisma/client";
 
 export const switchFollow = async (userId: string) => {
   const { userId: currentUserId} = auth();
@@ -531,6 +531,74 @@ export const addEvent = async (formData: FormData, img: string) => {
       },
     });
     revalidatePath("/")
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};
+
+export const updateEvent = async (formData: FormData, img: string, event: Event) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid description");
+  }
+
+  const location = formData.get("location") as string;
+  const Location = z.string().max(30);
+  const validatedLocation = Location.safeParse(location);
+
+  const url = formData.get("url") as string;
+  const Url = z.string().max(100);
+  const validatedUrl = Url.safeParse(url);
+
+  const startDate = formData.get("startDate") as string;
+  const endDate = formData.get("endDate") as string;
+  
+  const desc = formData.get("desc") as string;
+  const Desc = z.string().max(1024);
+
+  const validatedDesc = Desc.safeParse(desc);
+
+  const isVideoUrl = (url: string) => {
+    if (!url) return false;
+    const videoExtensions = ['.mp4', '.webm', '.ogg'];
+    return videoExtensions.some(extension => url.endsWith(extension));
+  };
+
+  const isImageUrl = (url: string) => {
+    if (!url) return false;
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    return imageExtensions.some(extension => url.endsWith(extension));
+  };
+
+  try {
+
+    const updatedEvent = await prisma.event.update({
+      where: {
+        id: event.id,
+      },
+      data: {
+        title: validatedTitle.data,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+        desc: validatedDesc.data || "",
+        location: validatedLocation.data || "",
+        url: validatedUrl.data || "",
+        img: isImageUrl(img) ? img : null,
+        video: isVideoUrl(img) ? img : null,
+      },
+    });
+    revalidatePath(`/events/${event.id}`)
     
   } catch (err) {
     console.log(err);
