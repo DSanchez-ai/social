@@ -93,8 +93,8 @@ export const Event = ({
                 <Image 
                   src={event.img || ""}
                   alt=""
-                  width={650}
-                  height={650}
+                  width={670}
+                  height={670}
                   className="object-contain rounded-md"
                 />
               )}

@@ -5,13 +5,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
 import { useAuth } from "@clerk/nextjs";
-import { Event } from "@prisma/client";
 import { TuiDatePicker } from 'nextjs-tui-date-picker';
 
 import { updateEvent } from "@/lib/actions";
 import { EditPostButton } from "./EditPostButton";
 import { formatDateTime } from "@/lib/utils";
-import { PostDesc } from "./PostDesc";
 
 const isValidDate = (date: any) => {
   return !isNaN(Date.parse(date));
@@ -65,8 +63,15 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
 
     const formDataToSend = new FormData();
     formDataToSend.append('title', formData.title);
-    formDataToSend.append('startDate', formData.startDate instanceof Date ? formData.startDate.toISOString() : ''); // Format the date as YYYY-MM-DD
-    formDataToSend.append('endDate', formData.endDate instanceof Date ? formData.endDate.toISOString() : ''); // Format the date as YYYY-MM-DD
+    
+    // Ensure startDate is a valid Date object before formatting
+    const startDate = new Date(formData.startDate);
+    formDataToSend.append('startDate', isNaN(startDate.getTime()) ? '' : startDate.toISOString().split('T')[0]);
+
+    // Ensure endDate is a valid Date object before formatting
+    const endDate = new Date(formData.endDate);
+    formDataToSend.append('endDate', isNaN(endDate.getTime()) ? '' : endDate.toISOString().split('T')[0]);
+
     formDataToSend.append('desc', formData.desc);
     formDataToSend.append('url', formData.url);
     formDataToSend.append('location', formData.location);
@@ -115,8 +120,8 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
                         onClick={() => open()}
                         src={event.img || ""}
                         alt=""
-                        width={650}
-                        height={650}
+                        width={670}
+                        height={670}
                         className="object-contain rounded-md cursor-pointer mb-2 hover:opacity-80"
                       />
                     ) : (
@@ -141,28 +146,51 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               className="w-full p-2 border rounded-md mb-1"
             />
           </p>
-            <div className="flex flex-row text-sm lg:text-base">
+          <p className="text-sm lg:text-base">
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              placeholder="Enter the location"
+              className="w-full p-2 border rounded-md mb-1"
+            />
+          </p>          
+          <div className="flex flex-row text-sm lg:text-base mb-1">
             <input
               type="hidden"
               name="startDate"
               value={formData.startDate instanceof Date ? formData.startDate.toISOString() : ''} // Format the date as YYYY-MM-DD
             />
-            <div className="custom-datepicker">
+            <div className="custom-datepicker flex flex-row items-center">
+              <Image 
+                src="/calendar.svg"
+                alt="Calendar"
+                width={20}
+                height={20}
+                className="ml-2"
+              />
               <TuiDatePicker
-              date={formData.startDate}
-              handleChange={handleChangeStartDate}
-              inputWidth={140}
-              fontSize={16}
+                date={formData.startDate}
+                handleChange={handleChangeStartDate}
+                inputWidth={140}
+                fontSize={16}
               />
             </div>
-            </div>
-          <div className="flex flex-row text-sm lg:text-base">
+            <span className="mx-2 flex items-center justify-center">-</span>
             <input
               type="hidden"
               name="endDate"
               value={formData.endDate instanceof Date ? formData.endDate.toISOString() : ''} // Format the date as YYYY-MM-DD
             />
-            <div className="custom-datepicker">
+            <div className="custom-datepicker flex flex-row items-center">
+            <Image 
+                src="/calendar.svg"
+                alt="Calendar"
+                width={20}
+                height={20}
+                className="ml-2"
+              />              
               <TuiDatePicker
                 date={formData.endDate}
                 handleChange={handleChangeEndDate}
@@ -188,20 +216,10 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               value={formData.url}
               onChange={handleChange}
               placeholder="https://"
-              className="w-full p-2 border rounded-md mb-1"
+              className="w-full p-2 border rounded-md mb-1 text-blue-500"
             />
           </p>
-          <p className="text-sm lg:text-base">
-            <input
-              type="text"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              placeholder="Enter the location"
-              className="w-full p-2 border rounded-md mb-1"
-            />
-          </p>
-          <button type="submit" className="p-2 bg-blue-500 text-white rounded-md">Submit</button>
+          <EditPostButton />
         </form>
       ) : (
         <>
