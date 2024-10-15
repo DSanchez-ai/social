@@ -143,7 +143,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full p-2 border rounded-md mb-1"
+              className="w-full text-sm lg:text-base p-2 border rounded-md mb-1"
             />
           </p>
           <p className="text-sm lg:text-base">
@@ -156,7 +156,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               className="w-full p-2 border rounded-md mb-1"
             />
           </p>          
-          <div className="flex flex-row text-sm lg:text-base mb-1">
+          <div className="flex flex-col lg:flex-row text-sm lg:text-base mb-1">
             <input
               type="hidden"
               name="startDate"
@@ -173,11 +173,11 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               <TuiDatePicker
                 date={formData.startDate}
                 handleChange={handleChangeStartDate}
-                inputWidth={140}
-                fontSize={16}
+                inputWidth={120}
+                fontSize={14}
               />
             </div>
-            <span className="mx-2 flex items-center justify-center">-</span>
+            <span className="hidden lg:block mx-2 items-center justify-center">-</span>
             <input
               type="hidden"
               name="endDate"
@@ -194,8 +194,8 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               <TuiDatePicker
                 date={formData.endDate}
                 handleChange={handleChangeEndDate}
-                inputWidth={140}
-                fontSize={16}
+                inputWidth={120}
+                fontSize={14}
               />
             </div>
           </div>

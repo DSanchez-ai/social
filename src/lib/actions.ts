@@ -510,6 +510,7 @@ export const addEvent = async (formData: FormData, img: string) => {
   }
 
   try {
+    // Check if the URL is a video or image
     const isVideoUrl = (url: string) => {
       if (!url) return false;
       const videoExtensions = ['.mp4', '.webm', '.ogg'];
@@ -521,6 +522,15 @@ export const addEvent = async (formData: FormData, img: string) => {
       const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
       return imageExtensions.some(extension => url.endsWith(extension));
     };
+
+    // Delete all events with endDates in the past
+    await prisma.event.deleteMany({
+      where: {
+        endDate: {
+          lt: new Date(),
+        },
+      },
+    });
 
     const createdEvent = await prisma.event.create({
       data: {
@@ -582,6 +592,14 @@ export const updateEvent = async (formData: FormData, img: string, event: Event)
   };
 
   try {
+    // Delete all events with endDates in the past
+    await prisma.event.deleteMany({
+      where: {
+        endDate: {
+          lt: new Date(),
+        },
+      },
+    });    
 
     const updatedEvent = await prisma.event.update({
       where: {
