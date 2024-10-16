@@ -177,7 +177,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
                 fontSize={14}
               />
             </div>
-            <span className="hidden lg:block mx-2 items-center justify-center">-</span>
+            <span className="hidden lg:flex mx-2 items-center justify-center">-</span>
             <input
               type="hidden"
               name="endDate"

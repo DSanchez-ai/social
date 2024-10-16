@@ -39,6 +39,7 @@ model User {
   blockedBy              Block[]         @relation("BlocksReceived")
   stories                Story[]     
   events                 Event[]
+  projects               Project[]
 }
 
 model Post {
@@ -129,6 +130,18 @@ model Event {
   img       String?
   video     String?
   location  String?
+  url       String?
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    String   
+}
+
+model Project {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  title     String
+  desc      String?
+  img       String?
+  video     String?
   url       String?
   user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId    String   

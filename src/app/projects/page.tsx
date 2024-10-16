@@ -1,5 +1,7 @@
-import { AddEvent } from "@/components/AddEvent";
-import { Event } from "@/components/Event";
+import prisma from "@/lib/client";
+import { Project } from "@/components/Project";
+
+import { AddProject } from "@/components/AddProject";
 import { Followers } from "@/components/Followers";
 import { Following } from "@/components/Following";
 import { FriendRequests } from "@/components/FriendRequests";
@@ -8,14 +10,13 @@ import Pagination from "@/components/Pagination";
 import { ProfileCard } from "@/components/ProfileCard";
 import { RightMenu } from "@/components/RightMenu";
 import { Stories } from "@/components/Stories";
-import prisma from "@/lib/client";
 
 const numberOfItems = 5;
 
 async function getData(searchParams: string) {
   const [count, data] = await prisma.$transaction([
-    prisma.event.count(),
-    prisma.event.findMany({
+    prisma.project.count(),
+    prisma.project.findMany({
       take: numberOfItems,
       skip: searchParams ? (Number(searchParams) -1) * numberOfItems : 0,
       include: {
@@ -29,7 +30,7 @@ async function getData(searchParams: string) {
   return {count, data}
 }
 
-export default function EventsPage({
+export default function ProjectsPage({
   searchParams,
 }: {
   searchParams: { page: string };
@@ -59,7 +60,7 @@ export default function EventsPage({
             </div>    
           </div>
           <Stories />
-          <AddEvent />
+          <AddProject />
           <ShowItems searchParams={searchParams} />          
           </div>
       </div>  
@@ -80,9 +81,9 @@ async function ShowItems({
 
   return (
     <>
-      {data.length ? (data.map(event=>(
-        <Event key={event.id} event={event}/>
-      ))) : <span className="text-sm">No events found!</span>}
+      {data.length ? (data.map(project=>(
+        <Project key={project.id} project={project}/>
+      ))) : <span className="text-sm">No projects found!</span>}
       <Pagination totalPages={Math.ceil(count / numberOfItems)}/>  
     </>
   )

@@ -12,7 +12,7 @@ const MobileMenu = () => {
     { title: "Stories", url: "/stories" },
     { title: "Videos", url: "/videos" },
     { title: "Events", url: "/events" },
-    { title: "Login", url: "/login" },
+    { title: "Projects", url: "/projects" },
   ]
   
   const [isOpen, setIsOpen] = useState(false)

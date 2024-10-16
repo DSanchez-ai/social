@@ -7,9 +7,9 @@ export const MenuItems = [
   },
   {
     id: 2,
-    name: "Activity",
-    img: "/activity.png",
-    href: "/"
+    name: "Projects",
+    img: "/news.png",
+    href: "/projects"
   },
   {
     id: 3,
