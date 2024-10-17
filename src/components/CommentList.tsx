@@ -5,7 +5,8 @@ import { useUser } from "@clerk/nextjs";
 import { Comment, User } from "@prisma/client";
 import Image from "next/image";
 
-import { addComment } from "@/lib/actions";
+import { addComment, deleteComment } from "@/lib/actions";
+import { Trash } from "lucide-react";
 
 
 type CommentWithUser = Comment & { user: User };
@@ -62,6 +63,15 @@ export const CommentList = ({
     commentState,
     (state, value: CommentWithUser) => [value, ...state]
   )
+
+  const handleDelete = async (id: string) => {
+    setCommentState((prev) => prev.filter((comment) => comment.id !== id));
+    try {
+      await deleteComment(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -133,6 +143,15 @@ export const CommentList = ({
                   <span className="text-gray-500">{Math.floor(Math.random() * 100)} Likes</span>
                 </div>
                 <div>Reply</div>
+                <div>
+                  {user && user.id === comment.userId && (
+                    <Trash 
+                      size={16}
+                      className="cursor-pointer"
+                      onClick={() => handleDelete(comment.id)}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>

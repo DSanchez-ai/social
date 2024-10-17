@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "./client";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { Post, Story, Event } from "@prisma/client";
+import { Post, Story, Event, Project } from "@prisma/client";
 
 export const switchFollow = async (userId: string) => {
   const { userId: currentUserId} = auth();
@@ -53,6 +53,24 @@ export const switchFollow = async (userId: string) => {
   } catch (error) {
     console.log(error);
     throw new Error("Failed to switch follow status");
+  }
+};
+
+export const deleteComment = async (commentId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.comment.delete({
+      where: {
+        id: commentId,
+        userId,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
   }
 };
 
@@ -662,6 +680,63 @@ export const addProject = async (formData: FormData, img: string) => {
       },
     });
     revalidatePath("/")
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};
+
+export const updateProject = async (formData: FormData, img: string, project: Project) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid description");
+  }
+
+  const url = formData.get("url") as string;
+  const Url = z.string().max(100);
+  const validatedUrl = Url.safeParse(url);
+ 
+  const desc = formData.get("desc") as string;
+  const Desc = z.string().max(1024);
+
+  const validatedDesc = Desc.safeParse(desc);
+
+  const isVideoUrl = (url: string) => {
+    if (!url) return false;
+    const videoExtensions = ['.mp4', '.webm', '.ogg'];
+    return videoExtensions.some(extension => url.endsWith(extension));
+  };
+
+  const isImageUrl = (url: string) => {
+    if (!url) return false;
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    return imageExtensions.some(extension => url.endsWith(extension));
+  };
+
+  try {
+    const updatedProject = await prisma.project.update({
+      where: {
+        id: project.id,
+      },
+      data: {
+        title: validatedTitle.data,
+        desc: validatedDesc.data || "",
+        url: validatedUrl.data || "",
+        img: isImageUrl(img) ? img : null,
+        video: isVideoUrl(img) ? img : null,
+      },
+    });
+    revalidatePath(`/projects/${project.id}`)
     
   } catch (err) {
     console.log(err);
