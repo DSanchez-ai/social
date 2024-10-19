@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image"
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
@@ -7,15 +8,16 @@ import { CldUploadWidget } from "next-cloudinary";
 import { AddPostButton } from "./AddPostButton";
 import { addPost } from "@/lib/actions";
 
-
 const Options = [
   {
     title: "Event",
     img: "/addevent.png",
+    url: "/events",
   },
   {
-    title: "Poll",
-    img: "/poll.png",
+    title: "Project",
+    img: "/news.png",
+    url: "/projects",
   },
 ]
 
@@ -71,7 +73,6 @@ export const AddPost = () => {
             className="flex-1 bg-slate-100 rounded-lg p-2"
             onChange={(e) => setDesc(e.target.value)}
           >
-
           </textarea>
           <div>
             <Image 
@@ -80,8 +81,10 @@ export const AddPost = () => {
               width={20}
               height={20}
               className="w-5 h-5 cursor-pointer self-end ml-2"
-            />   
-            <AddPostButton /> 
+            />  
+            { desc.length > 0 && (
+              <AddPostButton />
+            )} 
           </div>
         </form>
         { /* POST OPTIONS */}
@@ -118,7 +121,9 @@ export const AddPost = () => {
                 width={20}
                 height={20}
               />
-              {option.title}
+              <Link href={option.url}>
+                {option.title}
+              </Link>
             </div>
           ))}
         </div>        

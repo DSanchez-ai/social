@@ -132,7 +132,9 @@ export const EditProject: React.FC<{ project: any }> = ({ project }) => {
               className="w-full p-2 border rounded-md"
             />
           </p>
-          <EditPostButton />
+          { formData.title.length > 0 && (
+            <EditPostButton />
+          )}
         </form>
       ) : (
         <>

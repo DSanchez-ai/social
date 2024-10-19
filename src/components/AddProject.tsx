@@ -6,16 +6,19 @@ import { useUser } from "@clerk/nextjs";
 import { CldUploadWidget } from "next-cloudinary";
 import { AddPostButton } from "./AddPostButton";
 import { addProject } from "@/lib/actions";
+import Link from "next/link";
 
 
 const Options = [
   {
-    title: "Project",
-    img: "/news.png",
+    title: "Event",
+    img: "/addevent.png",
+    url: "/events",
   },
   {
-    title: "Poll",
-    img: "/poll.png",
+    title: "Post",
+    img: "/posts.png",
+    url: "/",
   },
 ]
 
@@ -29,7 +32,7 @@ export const AddProject = () => {
   }
 
   return (
-    <div className="p-2 md:p-4 bg-white shadow-md rounded-lg flex gap-2 md:gap-4 justify-between text-sm">
+    <div className="p-2 md:p-4 bg-white shadow-md rounded-lg flex gap-1 md:gap-4 justify-between text-sm">
       { /* AVATAR */}
       <Image 
         src={user?.imageUrl || "/noAvatar.png"}
@@ -38,7 +41,6 @@ export const AddProject = () => {
         height={48}
         className="w-12 h-12 object-fill rounded-full "
       />
-      <div className=""></div>
       { /* POST */}
       <div className="flex-1">
         { /* TEXT INPUT */}
@@ -53,7 +55,6 @@ export const AddProject = () => {
             className="flex-1 bg-slate-100 rounded-lg p-2"
             onChange={(e) => setTitle(e.target.value)}
           >
-
           </textarea>
           <div>
             <Image 
@@ -63,7 +64,9 @@ export const AddProject = () => {
               height={20}
               className="w-5 h-5 cursor-pointer self-end ml-2"
             />   
-            <AddPostButton /> 
+            { title.length > 0 && (
+              <AddPostButton /> 
+            )}
           </div>
         </form>
         { /* Project OPTIONS */}
@@ -100,7 +103,9 @@ export const AddProject = () => {
                 width={20}
                 height={20}
               />
-              {option.title}
+              <Link href={option.url}>
+                {option.title}
+              </Link>
             </div>
           ))}
         </div>        

@@ -219,7 +219,9 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               className="w-full p-2 border rounded-md mb-1 text-blue-500"
             />
           </p>
-          <EditPostButton />
+          { formData.title.length > 0 && (
+            <EditPostButton />
+          )}
         </form>
       ) : (
         <>

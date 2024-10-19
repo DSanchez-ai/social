@@ -6,16 +6,19 @@ import { useUser } from "@clerk/nextjs";
 import { CldUploadWidget } from "next-cloudinary";
 import { AddPostButton } from "./AddPostButton";
 import { addEvent } from "@/lib/actions";
+import Link from "next/link";
 
 
 const Options = [
   {
-    title: "Event",
-    img: "/addevent.png",
+    title: "Post",
+    img: "/posts.png",
+    url: "/",
   },
   {
-    title: "Poll",
-    img: "/poll.png",
+    title: "Project",
+    img: "/news.png",
+    url: "/projects",
   },
 ]
 
@@ -29,7 +32,7 @@ export const AddEvent = () => {
   }
 
   return (
-    <div className="p-2 md:p-4 bg-white shadow-md rounded-lg flex gap-2 md:gap-4 justify-between text-sm">
+    <div className="p-2 md:p-4 bg-white shadow-md rounded-lg flex gap-1 md:gap-4 justify-between text-sm">
       { /* AVATAR */}
       <Image 
         src={user?.imageUrl || "/noAvatar.png"}
@@ -38,7 +41,6 @@ export const AddEvent = () => {
         height={48}
         className="w-12 h-12 object-fill rounded-full "
       />
-      <div className=""></div>
       { /* POST */}
       <div className="flex-1">
         { /* TEXT INPUT */}
@@ -53,7 +55,6 @@ export const AddEvent = () => {
             className="flex-1 bg-slate-100 rounded-lg p-2"
             onChange={(e) => setTitle(e.target.value)}
           >
-
           </textarea>
           <div>
             <Image 
@@ -62,8 +63,10 @@ export const AddEvent = () => {
               width={20}
               height={20}
               className="w-5 h-5 cursor-pointer self-end ml-2"
-            />   
-            <AddPostButton /> 
+            />  
+            { title.length > 0 && (
+              <AddPostButton /> 
+            )} 
           </div>
         </form>
         { /* Event OPTIONS */}
@@ -100,7 +103,9 @@ export const AddEvent = () => {
                 width={20}
                 height={20}
               />
-              {option.title}
+              <Link href={option.url}>
+                {option.title}
+              </Link>
             </div>
           ))}
         </div>        

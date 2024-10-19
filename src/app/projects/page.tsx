@@ -45,21 +45,6 @@ export default function ProjectsPage({
       {/* CENTER */}
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
-          <div className="xl:hidden">
-            <ProfileCard />
-          </div>
-          <div className="lg:hidden">
-            <div className="mt-2">
-              <FriendRequests />
-            </div>
-            <div className="mt-2">
-              <Followers />
-            </div>
-            <div className="mt-2">
-              <Following />
-            </div>    
-          </div>
-          <Stories />
           <AddProject />
           <ShowItems searchParams={searchParams} />          
           </div>

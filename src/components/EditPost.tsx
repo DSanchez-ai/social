@@ -14,7 +14,7 @@ import { EditPostButton } from "./EditPostButton";
 
 export const EditPost = ({post}:{post: Post}) => {
   const [ img, setImg ] = useState<any>();
-  const [ desc, setDesc ] = useState("");  
+  const [ desc, setDesc ] = useState(post.desc);  
   const { userId: currentUserId } = useAuth();
   const router = useRouter();
 
@@ -100,7 +100,9 @@ export const EditPost = ({post}:{post: Post}) => {
               className="w-full p-2 border rounded-md"
             />
           </p>
-          <EditPostButton />
+          {desc.length > 0 && (
+            <EditPostButton />
+          )}
         </form>
       ) : (
         <>
