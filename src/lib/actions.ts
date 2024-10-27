@@ -263,7 +263,7 @@ export const switchLike = async (postId: string) => {
   }
 };
 
-export const addComment = async (desc: string, postId: string) => {
+export const addComment = async (desc: string, postId?: string, projectId?: string) => {
   const { userId } = auth();
 
   if (!userId) throw new Error("User is not authenticated!");
@@ -273,7 +273,8 @@ export const addComment = async (desc: string, postId: string) => {
       data: {
         desc,
         userId,
-        postId,
+        postId: postId || null,
+        projectId: projectId || null,
       },
       include: {
         user: true,

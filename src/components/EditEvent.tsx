@@ -70,6 +70,10 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
 
     // Ensure endDate is a valid Date object before formatting
     const endDate = new Date(formData.endDate);
+    // If endDate is earlier than startDate, set it to startDate
+    if (endDate < startDate) {
+      endDate.setTime(startDate.getTime());
+    }
     formDataToSend.append('endDate', isNaN(endDate.getTime()) ? '' : endDate.toISOString().split('T')[0]);
 
     formDataToSend.append('desc', formData.desc);

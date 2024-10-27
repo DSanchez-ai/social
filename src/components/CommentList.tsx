@@ -11,12 +11,14 @@ import { Trash } from "lucide-react";
 
 type CommentWithUser = Comment & { user: User };
 
-export const CommentList = ({ 
+export const CommentList = ({
   comments,
   postId,
- }: { 
+  projectId,
+}: {
   comments: CommentWithUser[];
-  postId: string;
+  postId?: string;
+  projectId?: string;
 }) => {
   
   const { user } = useUser();
@@ -34,7 +36,8 @@ export const CommentList = ({
       createdAt: new Date(Date.now()),
       updatedAt: new Date(Date.now()),
       userId: user.id,
-      postId,
+      postId: postId ?? null,
+      projectId: projectId ?? null,
       user: {
         id: user.id,
         userId: user.id,
@@ -53,7 +56,7 @@ export const CommentList = ({
     });
 
     try {
-      const createdComment = await addComment(desc, postId);
+      const createdComment = await addComment(desc, postId ?? undefined, projectId ?? undefined);
       setCommentState((prev) => [createdComment, ...prev]);
     } catch (error) {
       console.log(error);

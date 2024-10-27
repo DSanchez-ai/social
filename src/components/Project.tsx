@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { Project as ProjectType, User } from "@prisma/client";
 import Image from "next/image";
 import { PostDesc } from "./PostDesc";
+import { Comments } from "./Comments";
 
 type FeedProjectType = ProjectType & { user: User }
 
@@ -48,6 +49,7 @@ export const Project = ({
         <div className="w-full relative">
           {project.desc && <PostDesc desc={project.desc} />}
         </div>
+        <div className="shadow-md rounded-md">
         { /* IMAGE / VIDEO */}        
           {project.video ? (
             <video
@@ -71,13 +73,15 @@ export const Project = ({
               )}
             </>
           )}
-          <a 
-            href={`/projects/${project.id}`}
-            className="text-sm text-blue-500 hover:underline self-end mt-1"
-          >
-            {currentUserId === project.userId ? "Edit" : "View"}
-          </a>
-      </div>       
+        </div>
+        <a 
+          href={`/projects/${project.id}`}
+          className="text-sm text-blue-500 hover:underline self-end mt-1"
+        >
+          {currentUserId === project.userId ? "Edit" : "View"}
+        </a>
+      </div> 
+      <Comments projectId={project.id} />      
     </div>
   )
 };

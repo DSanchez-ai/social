@@ -42,7 +42,8 @@ export const Post = ({ post }: { post: FeedPostType }) => {
         <div className="w-full relative">
           <PostDesc desc={post.desc} />
         </div>
-        { /* IMAGE / VIDEO */}        
+        { /* IMAGE / VIDEO */}
+        <div className="shadow-md">        
           {post.video ? (
             <video
               controls
@@ -58,19 +59,20 @@ export const Post = ({ post }: { post: FeedPostType }) => {
                 <Image 
                   src={post.img || ""}
                   alt=""
-                  width={650}
-                  height={650}
+                  width={670}
+                  height={670}
                   className="object-contain rounded-md"
                 />
               )}
             </>
           )}
-          <a 
-            href={`/post/${post.id}`}
-            className="text-sm text-blue-500 hover:underline self-end mt-1"
-          >
-            {currentUserId === post.userId && "Edit"}
-          </a>
+        </div>
+        <a 
+          href={`/post/${post.id}`}
+          className="text-sm text-blue-500 hover:underline self-end mt-1"
+        >
+          {currentUserId === post.userId && "Edit"}
+        </a>
       </div> 
       { /* INTERACTION */}
       <Suspense fallback="Loading...">

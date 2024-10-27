@@ -1,6 +1,7 @@
 import { EditStory } from "@/components/EditStory";
 import { LeftMenu } from "@/components/LeftMenu";
 import { RightMenu } from "@/components/RightMenu";
+import { Stories } from "@/components/Stories";
 import { UserInfoCard } from "@/components/UserInfoCard";
 import { ViewStory } from "@/components/ViewStory";
 import prisma from "@/lib/client";
@@ -86,6 +87,7 @@ const StoriesPage = async () => {
               </div>              
             </div>
           </div>
+          <Stories />
           <div className="lg:hidden">
             <Suspense fallback={<div>Loading...</div>} >
               <UserInfoCard user={user} />

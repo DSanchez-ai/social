@@ -2,14 +2,9 @@ import prisma from "@/lib/client";
 import { Project } from "@/components/Project";
 
 import { AddProject } from "@/components/AddProject";
-import { Followers } from "@/components/Followers";
-import { Following } from "@/components/Following";
-import { FriendRequests } from "@/components/FriendRequests";
 import { LeftMenu } from "@/components/LeftMenu";
 import Pagination from "@/components/Pagination";
-import { ProfileCard } from "@/components/ProfileCard";
 import { RightMenu } from "@/components/RightMenu";
-import { Stories } from "@/components/Stories";
 
 const numberOfItems = 5;
 
