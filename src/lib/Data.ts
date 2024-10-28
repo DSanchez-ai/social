@@ -15,7 +15,7 @@ export const MenuItems = [
     id: 3,
     name: "Marketplace",
     img: "/market.png",
-    href: "/"
+    href: "/market"
   },
   {
     id: 4,

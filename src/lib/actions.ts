@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "./client";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { Post, Story, Event, Project } from "@prisma/client";
+import { Post, Story, Event, Project, Item } from "@prisma/client";
 
 export const switchFollow = async (userId: string) => {
   const { userId: currentUserId} = auth();
@@ -355,7 +355,7 @@ export const updatePost = async (formData: FormData, img: string, post: Post) =>
 
   const isImageUrl = (url: string) => {
     if (!url) return false;
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
     return imageExtensions.some(extension => url.endsWith(extension));
   };
 
@@ -416,7 +416,7 @@ export const addStory = async (img: string) => {
   
     const isImageUrl = (url: string) => {
       if (!url) return false;
-      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
       return imageExtensions.some(extension => url.endsWith(extension));
     };
 
@@ -462,7 +462,7 @@ export const UpdateStory = async (formData: FormData, img: string, story: Story)
 
   const isImageUrl = (url: string) => {
     if (!url) return false;
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
     return imageExtensions.some(extension => url.endsWith(extension));
   };
 
@@ -538,7 +538,7 @@ export const addEvent = async (formData: FormData, img: string) => {
 
     const isImageUrl = (url: string) => {
       if (!url) return false;
-      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
       return imageExtensions.some(extension => url.endsWith(extension));
     };
 
@@ -606,7 +606,7 @@ export const updateEvent = async (formData: FormData, img: string, event: Event)
 
   const isImageUrl = (url: string) => {
     if (!url) return false;
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
     return imageExtensions.some(extension => url.endsWith(extension));
   };
 
@@ -668,7 +668,7 @@ export const addProject = async (formData: FormData, img: string) => {
 
     const isImageUrl = (url: string) => {
       if (!url) return false;
-      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
       return imageExtensions.some(extension => url.endsWith(extension));
     };
 
@@ -720,7 +720,7 @@ export const updateProject = async (formData: FormData, img: string, project: Pr
 
   const isImageUrl = (url: string) => {
     if (!url) return false;
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
     return imageExtensions.some(extension => url.endsWith(extension));
   };
 
@@ -738,6 +738,51 @@ export const updateProject = async (formData: FormData, img: string, project: Pr
       },
     });
     revalidatePath(`/projects/${project.id}`)
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};
+
+export const addItem = async (formData: FormData, img: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid title");
+  }
+
+  try {
+    // Check if the URL is a video or image
+    const isVideoUrl = (url: string) => {
+      if (!url) return false;
+      const videoExtensions = ['.mp4', '.webm', '.ogg'];
+      return videoExtensions.some(extension => url.endsWith(extension));
+    };
+
+    const isImageUrl = (url: string) => {
+      if (!url) return false;
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+      return imageExtensions.some(extension => url.endsWith(extension));
+    };
+
+    const createdItem = await prisma.item.create({
+      data: {
+        title: validatedTitle.data,
+        userId,
+        img: isImageUrl(img) ? img : null,
+        video: isVideoUrl(img) ? img : null,
+      },
+    });
+    revalidatePath("/")
     
   } catch (err) {
     console.log(err);

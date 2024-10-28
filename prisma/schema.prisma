@@ -40,6 +40,8 @@ model User {
   stories                Story[]     
   events                 Event[]
   projects               Project[]
+  items                  Item[]
+  carts                  Cart[]
 }
 
 model Post {
@@ -148,4 +150,29 @@ model Project {
   user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId    String
   comments  Comment[]   
+}
+
+model Item {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  title     String
+  desc      String?
+  img       String?
+  video     String?
+  url       String?
+  prize     Float?
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    String
+  carts     Cart[]   @relation("cartitems")
+}
+
+model Cart {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  quantity  Int      @default(1)
+  prize     Float    @default(0)
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    String
+  item      Item     @relation("cartitems", fields: [itemId], references: [id], onDelete: Cascade)
+  itemId    String   @db.ObjectId
 }
