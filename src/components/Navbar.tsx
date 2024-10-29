@@ -7,7 +7,7 @@ import prisma from "@/lib/client"
 
 const Links = [
   {
-    name: "Homepage",
+    name: "Home",
     img: "/home.png",
     href: "/",
   },
@@ -35,6 +35,11 @@ const Links = [
     name: "Projects",
     img: "/news.png",
     href: "/projects",
+  },
+  {
+    name: "Market",
+    img: "/market.png",
+    href: "/market",
   },
 ]
 

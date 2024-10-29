@@ -51,7 +51,7 @@ export const MarketItem = ({
         { item.prize && (
           <a
             href={`/items/${item.id}`} 
-            className="text-sm text-green-800 font-semibold bg-green-200 p-2 rounded-xl shadow-md w-[120px] cursor-pointer"
+            className="text-sm text-green-800 font-semibold bg-green-200 p-2 rounded-xl shadow-md w-[120px] cursor-pointer hover:bg-green-300 flex items-center justify-center"
           >
             Prize: ${item.prize.toFixed(2)}
           </a>
