@@ -1,42 +1,37 @@
-import { EditStory } from "@/components/EditStory";
-import { LeftMenu } from "@/components/LeftMenu";
-import { RightMenu } from "@/components/RightMenu";
-import { Stories } from "@/components/Stories";
-import { UserInfoCard } from "@/components/UserInfoCard";
-import { ViewStory } from "@/components/ViewStory";
-import prisma from "@/lib/client";
-import { auth } from "@clerk/nextjs/server";
-import { Story, User } from "@prisma/client";
-import Image from "next/image";
-import { Suspense } from "react";
+import { Suspense } from "react"
+import prisma from "@/lib/client"
+import { auth } from "@clerk/nextjs/server"
+import Image from "next/image"
 
-const StoriesPage = async () => {
-  const { userId: currentUserId } = auth();
+import { LeftMenu } from "@/components/LeftMenu"
+import { RightMenu } from "@/components/RightMenu"
+import { UserInfoCard } from "@/components/UserInfoCard"
+import { ShowItem } from "@/components/ShowItem"
 
-  if(!currentUserId) {
-    return null;
-  }
+const MarketIdPage = async ({params}:{params:{id:string}}) => {
+  const {userId: currentUser} = auth();
+  if(!currentUser) return null
 
-  const stories = await prisma.story.findMany({
+  const itemId = params.id;
+
+  const item = await prisma.item.findFirst({
     where: {
-      expiresAt: {
-        gt: new Date(),
-      },
-    },
-    include: {
-      user: true,
+      id: itemId,
     },
   });
 
+  if(!item) return null;
+
   const user = await prisma.user.findFirst({
     where: {
-      userId: currentUserId 
+      userId: item.userId
     },
     include: {
       _count: {
         select: {
           followers: true,
           followings: true,
+          events: true,
           posts: true
         }
       }
@@ -62,7 +57,7 @@ const StoriesPage = async () => {
                 fill
                 className=" bg-white rounded-md object-fill"
               />
-              <Image
+              <Image 
                 src={user.avatar || "/noAvatar.png"}
                 alt=""
                 width={128}
@@ -92,14 +87,7 @@ const StoriesPage = async () => {
               <UserInfoCard user={user} />
             </Suspense>      
           </div>
-          <Stories />
-          <div className="flex flex-col gap-4">
-            {stories.map((story) => (
-              <div key={story.id}>
-                <ViewStory story={story as Story} user={story.user as User}/>
-              </div>
-            ))}
-          </div>
+          <ShowItem item={item} user={user}/>
         </div>
       </div>  
       {/* RIGHT SIDE */}
@@ -107,7 +95,7 @@ const StoriesPage = async () => {
         <RightMenu user={user}/>
       </div>          
     </div>
-  );
-};
+  )
+}
 
-export default StoriesPage;
+export default MarketIdPage

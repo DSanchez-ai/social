@@ -789,3 +789,64 @@ export const addItem = async (formData: FormData, img: string) => {
     throw new Error("Something went wrong!");
   }
 };
+
+export const updateItem = async (formData: FormData, img: string, item: Item) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid title");
+  }
+
+  const url = formData.get("url") as string;
+  const Url = z.string().max(100);
+  const validatedUrl = Url.safeParse(url);
+ 
+  const desc = formData.get("desc") as string;
+  const Desc = z.string().max(1024);
+
+  const validatedDesc = Desc.safeParse(desc);
+
+  const prize = formData.get("prize") as string;
+  const Prize = z.number().min(0);
+
+  const isVideoUrl = (url: string) => {
+    if (!url) return false;
+    const videoExtensions = ['.mp4', '.webm', '.ogg'];
+    return videoExtensions.some(extension => url.endsWith(extension));
+  };
+
+  const isImageUrl = (url: string) => {
+    if (!url) return false;
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+    return imageExtensions.some(extension => url.endsWith(extension));
+  };
+
+  try {
+    const updatedItem = await prisma.item.update({
+      where: {
+        id: item.id,
+      },
+      data: {
+        title: validatedTitle.data,
+        desc: validatedDesc.data || "",
+        url: validatedUrl.data || "",
+        img: isImageUrl(img) ? img : null,
+        video: isVideoUrl(img) ? img : null,
+        prize: Prize.safeParse(Number(prize)).data || 0,
+      },
+    });
+    revalidatePath(`/market/${item.id}`)
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};

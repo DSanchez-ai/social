@@ -50,7 +50,7 @@ export const MarketItem = ({
         </div>
         { item.prize && (
           <a
-            href={`/items/${item.id}`} 
+            href={`/market/${item.id}`} 
             className="text-sm text-green-800 font-semibold bg-green-200 p-2 rounded-xl shadow-md w-[120px] cursor-pointer hover:bg-green-300 flex items-center justify-center"
           >
             Prize: ${item.prize.toFixed(2)}
@@ -83,7 +83,7 @@ export const MarketItem = ({
           )}
         </div>
         <a 
-          href={`/items/${item.id}`}
+          href={`/market/${item.id}`}
           className="text-sm text-blue-500 hover:underline self-end mt-1"
         >
           {currentUserId === item.userId ? "Edit" : "View"}
