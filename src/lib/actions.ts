@@ -700,7 +700,7 @@ export const updateProject = async (formData: FormData, img: string, project: Pr
 
   if (!validatedTitle.success) {
     console.log(validatedTitle.error.flatten().fieldErrors);
-    throw new Error("Invalid description");
+    throw new Error("Invalid title");
   }
 
   const url = formData.get("url") as string;

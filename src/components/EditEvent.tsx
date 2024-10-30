@@ -259,7 +259,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
                     {event.endDate && formatDateTime(event.endDate).dateOnly}
                   </p>
                 </div>
-              )} 
+              )}
               {event.url && (
                 <a 
                   href={event.url}
