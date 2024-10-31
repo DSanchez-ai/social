@@ -6,8 +6,9 @@ import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
 import { useAuth } from "@clerk/nextjs";
 
-import { updateItem } from "@/lib/actions";
+import { addCartItem, updateItem } from "@/lib/actions";
 import { EditPostButton } from "./EditPostButton";
+import { OrderButton } from "./OrderButton";
 
 export const EditItem: React.FC<{ item: any }> = ({ item }) => {
   const { userId: currentUserId } = useAuth();
@@ -20,6 +21,10 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
     prize: item.prize || 0,
   });
 
+  const [orderData, setOrderData] = useState({
+    quantity: 1,
+  });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -28,7 +33,16 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
     }));
   };
 
-   const handleSubmit = (e: React.FormEvent) => {
+  const handleOrder = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formDataToSend = new FormData();
+    formDataToSend.append('quantity', orderData.quantity.toString());
+
+    addCartItem(formDataToSend, item);
+    router.refresh();
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   
     let url = "";
@@ -149,7 +163,7 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
           )}
         </form>
       ) : (
-        <>
+        <form onSubmit={handleOrder}>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4">
               <h2 className="text-sm md:text-lg xl:text-xl">{item.title}</h2>
@@ -196,16 +210,21 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
                     <Image 
                       src={item.img || ""}
                       alt=""
-                      width={650}
-                      height={650}
+                      width={670}
+                      height={670}
                       className="object-contain rounded-md"
                     />
                   )}
                 </>
               )}                          
             </div>
+            { item.prize && (
+              <div className="mb-4 flex items-center justify-center">
+                <OrderButton />
+              </div>
+            )}            
           </div>
-        </>
+        </form>
       )}
     </div>
   );

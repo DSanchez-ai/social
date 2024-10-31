@@ -850,3 +850,48 @@ export const updateItem = async (formData: FormData, img: string, item: Item) =>
     throw new Error("Something went wrong!");
   }
 };
+
+export const addCartItem = async (formData: FormData, item: Item) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const quantity = formData.get("quantity") as string;
+  const Quantity = z.number().min(1);
+
+  const validatedQuantity = Quantity.safeParse(Number(quantity));
+
+  try {
+    const existingCartItem = await prisma.cart.findFirst({
+      where: {
+        userId,
+        itemId: item.id,
+      },
+    });
+
+    if (existingCartItem) {
+      await prisma.cart.update({
+        where: {
+          id: existingCartItem.id,
+        },
+        data: {
+          quantity: existingCartItem.quantity + validatedQuantity.data! || 1,
+        },
+      });
+    } else {
+      await prisma.cart.create({
+        data: {
+          userId,
+          itemId: item.id,
+          quantity: validatedQuantity.data,
+          prize: Number(item.prize),
+        },
+      });
+    }
+    revalidatePath("/cart")
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};
