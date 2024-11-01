@@ -57,17 +57,6 @@ export default function Homepage({
           <div className="xl:hidden">
             <ProfileCard />
           </div>
-          <div className="lg:hidden">
-            <div className="mt-2">
-              <FriendRequests />
-            </div>
-            <div className="mt-2">
-              <Followers />
-            </div>
-            <div className="mt-2">
-              <Following />
-            </div>    
-          </div>
           <Stories />
           <AddPost />
           <ShowItems searchParams={searchParams} />

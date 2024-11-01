@@ -888,10 +888,28 @@ export const addCartItem = async (formData: FormData, item: Item) => {
         },
       });
     }
-    revalidatePath("/cart")
+    revalidatePath("/")
     
   } catch (err) {
     console.log(err);
     throw new Error("Something went wrong!");
   }
 };
+
+export const deleteCartItem = async (cartId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.cart.delete({
+      where: {
+        id: cartId,
+        userId,
+      },
+    });
+    revalidatePath("/market")
+  } catch (err) {
+    console.log(err);
+  }
+}

@@ -7,6 +7,7 @@ import { LeftMenu } from "@/components/LeftMenu"
 import { RightMenu } from "@/components/RightMenu"
 import { UserInfoCard } from "@/components/UserInfoCard"
 import { ShowItem } from "@/components/ShowItem"
+import { Cart } from "@/components/Cart"
 
 const MarketIdPage = async ({params}:{params:{id:string}}) => {
   const {userId: currentUser} = auth();
@@ -87,11 +88,17 @@ const MarketIdPage = async ({params}:{params:{id:string}}) => {
               <UserInfoCard user={user} />
             </Suspense>      
           </div>
+          <div className="lg:hidden mb-2">
+            <Cart />
+          </div>              
           <ShowItem item={item} user={user}/>
         </div>
       </div>  
       {/* RIGHT SIDE */}
       <div className="hidden lg:block w-[30%]">
+        <div className="mb-2">
+          <Cart />
+        </div>
         <RightMenu user={user}/>
       </div>          
     </div>

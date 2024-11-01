@@ -5,6 +5,7 @@ import Pagination from "@/components/Pagination";
 import { RightMenu } from "@/components/RightMenu";
 import { AddItem } from "@/components/AddItem";
 import { MarketItem } from "@/components/MarketItem";
+import { Cart } from "@/components/Cart";
 
 const numberOfItems = 5;
 
@@ -39,6 +40,9 @@ export default function MarketPage({
       </div>
       {/* CENTER */}
       <div className="w-full lg:w-[70%] xl:w-[50%]">
+        <div className="lg:hidden mb-2">
+          <Cart />
+        </div>        
         <div className="flex flex-col gap-6">
           <AddItem />
           <ShowItems searchParams={searchParams} />          
@@ -46,6 +50,9 @@ export default function MarketPage({
       </div>  
       {/* RIGHT SIDE */}
       <div className="hidden lg:block w-[30%]">
+        <div className="mb-2">
+          <Cart />
+        </div>
         <RightMenu />
       </div>          
     </div>

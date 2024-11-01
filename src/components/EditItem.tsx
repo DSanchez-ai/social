@@ -180,8 +180,7 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
             </div>
             { item.prize && (
               <a
-                href={`/market/${item.id}`} 
-                className="text-sm text-green-800 font-semibold bg-green-200 p-2 rounded-xl shadow-md w-[120px] cursor-pointer hover:bg-green-300 flex items-center justify-center"
+                className="text-sm text-green-800 font-semibold bg-green-200 p-2 rounded-xl shadow-md w-[120px] flex items-center justify-center"
               >
                 Prize: ${item.prize.toFixed(2)}
               </a>
@@ -219,8 +218,22 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
               )}                          
             </div>
             { item.prize && (
-              <div className="mb-4 flex items-center justify-center">
+              <div className="mb-4 flex flex-row items-center justify-center">
                 <OrderButton />
+                <span className="text-sm ml-2">Quantity:</span>
+                <input
+                  type="number"
+                  name="quantity"
+                  value={orderData.quantity}
+                  onChange={(e) => setOrderData({ quantity: parseInt(e.target.value) })}
+                  className="w-[60px] text-sm p-2 border rounded-md ml-4"
+                  min="1"
+                />
+              <a
+                className="ml-2 text-sm text-green-800 font-semibold bg-green-200 p-2 rounded-xl shadow-md w-[120px] flex items-center justify-center"
+              >
+                Total: ${(item.prize * orderData.quantity).toFixed(2)}
+              </a>                
               </div>
             )}            
           </div>
