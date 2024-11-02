@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-
 import { Cart, Item } from "@prisma/client";
-import { Trash } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 import { deleteCartItem } from "@/lib/actions";
-import { useRouter } from "next/navigation";
 
 
 export type CartWithItems = Cart & {
@@ -16,7 +15,6 @@ export type CartWithItems = Cart & {
 
 export const CartItems = ({items}: {items: CartWithItems[]}) => {
   const [showAll, setShowAll] = useState(false);
-  const [itemsState, setItemsState] = useState(items);
   const router = useRouter();
 
   if(items.length === 0) return null;
@@ -24,7 +22,6 @@ export const CartItems = ({items}: {items: CartWithItems[]}) => {
   const displayedRequests = showAll ? items : items.slice(0, 3);
 
   const handleDelete = async (id: string) => {
-    setItemsState((prev) => prev.filter((item) => item.id !== id));
     try {
       await deleteCartItem(id);
       router.refresh();
@@ -35,8 +32,8 @@ export const CartItems = ({items}: {items: CartWithItems[]}) => {
 
   return (
     <div className="p-4 bg-white text-sm flex flex-col gap-2">
-      <div className="flex justify-between items-center font-medium">
-        <span className="text-gray-500">Cart</span>
+      <div className="flex justify-between items-center font-medium mb-2">
+        <span className="text-gray-500 text-xs xl:text-sm">Cart({items.length})</span>
         <span 
           className="text-blue-500 text-xs cursor-pointer"
           onClick={() => setShowAll(!showAll)}
@@ -46,14 +43,15 @@ export const CartItems = ({items}: {items: CartWithItems[]}) => {
       </div>
       {displayedRequests.map((request) => (
         <div className="flex items-center justify-between" key={request.id}>
-          <div className="flex items-center gap-4 mb-1">
+          <div className="flex items-center gap-2 mb-1">
             <Image
               src={request.item.img || "/noAvatar.png"}
               alt=""
               width={40}
               height={40}
-              className="w-10 h-10 rounded-full object-fill"
+              className="w-10 h-10 object-fill"
             />
+            <span className="text-xs xl:text-sm">{request.quantity}</span>
             <span className="text-xs xl:text-sm truncate">
               {request.item.title}
             </span>
@@ -66,8 +64,8 @@ export const CartItems = ({items}: {items: CartWithItems[]}) => {
               ${(request.prize * request.quantity).toFixed(2)}
             </a>
           )}
-          <div className="flex justify-center items-center text-red-500">
-           <Trash 
+          <div className="flex justify-center items-center text-red-500 hover:text-red-800">
+           <Trash2 
             size={16}
             className="cursor-pointer"
             onClick={() => handleDelete(request.id)}           
