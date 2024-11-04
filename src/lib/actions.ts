@@ -611,15 +611,6 @@ export const updateEvent = async (formData: FormData, img: string, event: Event)
   };
 
   try {
-    // Delete all events with endDates in the past
-    await prisma.event.deleteMany({
-      where: {
-        endDate: {
-          lt: new Date(),
-        },
-      },
-    });    
-
     const updatedEvent = await prisma.event.update({
       where: {
         id: event.id,
@@ -635,6 +626,14 @@ export const updateEvent = async (formData: FormData, img: string, event: Event)
         video: isVideoUrl(img) ? img : null,
       },
     });
+    // Delete all events with endDates in the past
+    await prisma.event.deleteMany({
+      where: {
+        endDate: {
+          lt: new Date(),
+        },
+      },
+    });        
     revalidatePath(`/events/${event.id}`)
     
   } catch (err) {
@@ -848,6 +847,41 @@ export const updateItem = async (formData: FormData, img: string, item: Item) =>
   } catch (err) {
     console.log(err);
     throw new Error("Something went wrong!");
+  }
+};
+
+export const deleteItem = async (itemId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.item.delete({
+      where: {
+        id: itemId,
+        userId,
+      },
+    });
+    revalidatePath("/")
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteAllCartItems = async () => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.cart.deleteMany({
+      where: {
+        userId,
+      },
+    });
+    revalidatePath("/")
+  } catch (err) {
+    console.log(err);
   }
 };
 

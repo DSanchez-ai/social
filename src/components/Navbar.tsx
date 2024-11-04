@@ -54,9 +54,9 @@ const Navbar = async () => {
         </Link>
       </div>
       {/* CENTER */}
-      <div className="hidden md:flex w-[50%] text-sm items-center justify-between">
+      <div className="hidden md:flex w-[52%] text-sm items-center justify-between">
         {/* LINKS */}    
-        <div className="flex gap-6 text-gray-600">
+        <div className="flex gap-4 xl:gap-6 text-gray-600">
           {Links.map((link, index) => (
             <Link href={link.href} key={index} className="flex pt-1 pb-1 gap-2 items-center hover:bg-slate-100">
               <Image 
@@ -72,21 +72,14 @@ const Navbar = async () => {
         </div>
       </div>
       {/* RIGHT */}
-      <div className="w-[30%] flex items-center gap-4 xl:gap-8 justify-end">
+      <div className="w-[28%] flex items-center gap-4 xl:gap-8 justify-end">
         <ClerkLoading>
           <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white" />          
         </ClerkLoading>
         <ClerkLoaded>
           <SignedIn>
             <div className="hidden md:flex gap-4">
-              <div className="cursor-pointer">
-                <Image 
-                  src="/people.png"
-                  alt="People"
-                  width={24}
-                  height={24}
-                />
-              </div>
+
               <div className="cursor-pointer">
                 <Image 
                   src="/messages.png"

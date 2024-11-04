@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { Item as ItemType, User } from "@prisma/client";
 import Image from "next/image";
 import { PostDesc } from "./PostDesc";
+import { ItemInfo } from "./ItemInfo";
 
 type FeedItemType = ItemType & { user: User }
 
@@ -29,6 +30,7 @@ export const MarketItem = ({
               : item.user.username}
           </span>
         </div>
+        {currentUserId === item.userId && <ItemInfo itemId={item.id} />}        
       </div>  
       <div className="flex flex-col gap-4">
           <h2 className="text-sm md:text-lg xl:text-xl">{item.title}</h2>
