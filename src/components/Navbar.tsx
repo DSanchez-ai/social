@@ -44,6 +44,16 @@ const Links = [
 ]
 
 const Navbar = async () => {
+  const {userId: currentUserId} = auth();
+
+  if(!currentUserId) return null;
+
+  const messageCount = await prisma.message.count({
+    where: {
+      userId: currentUserId,
+      read: false
+    }
+  });
 
   return (
     <div className="h-24 flex items-center justify-between">
@@ -72,31 +82,35 @@ const Navbar = async () => {
         </div>
       </div>
       {/* RIGHT */}
-      <div className="w-[28%] flex items-center gap-4 xl:gap-8 justify-end">
+      <div className="w-[28%] flex items-center gap-4 justify-end">
         <ClerkLoading>
           <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white" />          
         </ClerkLoading>
         <ClerkLoaded>
           <SignedIn>
-            <div className="hidden md:flex gap-4">
-
-              <div className="cursor-pointer">
+            <div className="cursor-pointer relative">
+              <Link href="/messages">
                 <Image 
                   src="/messages.png"
                   alt="Messages"
                   width={20}
                   height={20}
                 />
-              </div>
-              <div className="cursor-pointer">
-                <Image 
-                  src="/notifications.png"
-                  alt="Notifications"
-                  width={20}
-                  height={20}
-                />
-              </div>  
+                {messageCount > 0 && (
+                  <div className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                    {messageCount}
+                  </div>
+                )}
+              </Link>
             </div>
+            <div className="hidden md:flex cursor-pointer">
+              <Image 
+                src="/notifications.png"
+                alt="Notifications"
+                width={20}
+                height={20}
+              />
+            </div>  
             <UserButton />                      
           </SignedIn>
           <SignedOut>

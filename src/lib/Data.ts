@@ -37,9 +37,9 @@ export const MenuItems = [
   },
   {
     id: 7,
-    name: "News",
-    img: "/news.png",
-    href: "/"
+    name: "Messages",
+    img: "/messages.png",
+    href: "/messages"
   },
   {
     id: 8,

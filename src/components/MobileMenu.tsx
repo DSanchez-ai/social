@@ -14,6 +14,7 @@ const MobileMenu = () => {
     { title: "Events", url: "/events" },
     { title: "Projects", url: "/projects" },
     { title: "Market", url: "/market" },
+    { title: "Messages", url: "/messages" },
   ]
   
   const [isOpen, setIsOpen] = useState(false)
@@ -31,7 +32,8 @@ const MobileMenu = () => {
         <div className={`w-6 h-1 bg-blue-500 rounded-sm ${isOpen ? "-rotate-45" : ""} origin-left ease-in-out duration-500`} />    
       </div>
       {isOpen && (
-        <div className="absolute left-0 top-24 w-full h-[calc(100vh-96px)] bg-white flex flex-col items-center justify-center gap-8 font-medium text-xl z-20">
+        <div className="absolute left-0 top-24 w-full h-[calc(100vh-96px)] bg-white flex flex-col items-center font-medium text-xl z-20">
+          <div className="flex flex-col gap-6 mt-10">
           {NavbarItems.map((item, index) => (
             <Link 
               key={index} 
@@ -41,6 +43,7 @@ const MobileMenu = () => {
               {item.title}
             </Link>
           ))}
+          </div>
         </div>
       )}
     </div>

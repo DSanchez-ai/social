@@ -6,7 +6,7 @@ import { Comment, User } from "@prisma/client";
 import Image from "next/image";
 
 import { addComment, deleteComment } from "@/lib/actions";
-import { Trash } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 
 type CommentWithUser = Comment & { user: User };
@@ -148,9 +148,9 @@ export const CommentList = ({
                 <div>Reply</div>
                 <div>
                   {user && user.id === comment.userId && (
-                    <Trash 
+                    <Trash2 
                       size={16}
-                      className="cursor-pointer"
+                      className="cursor-pointer text-red-500 hover:text-red-800"
                       onClick={() => handleDelete(comment.id)}
                     />
                   )}
