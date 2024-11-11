@@ -43,10 +43,19 @@ export const FollowersList = ({requests}: {requests: FollowersWithFollower[]}) =
                 : request.follower.username}
             </span>
           </div>
-        <div className="flex gap-2 justify-end text-xs xl:text-sm">
+        <div className="flex gap-2 justify-end items-center text-xs xl:text-sm">
+          <Link href={`/messages/create/${request.follower.username}`}>
+            <Image 
+              src="/messages.png"
+              alt="Messages"
+              width={20}
+              height={20}
+              className="cursor-pointer"
+            />
+          </Link>
           <Link href={`/profile/${request.follower.username}`}>
             <button className="bg-blue-500 hover:bg-blue-600 text-white text-xs p-1 xl:p-2 rounded-md">
-              View Profile
+              View
             </button>
           </Link>
         </div>

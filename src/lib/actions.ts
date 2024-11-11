@@ -947,3 +947,64 @@ export const deleteCartItem = async (cartId: string) => {
     console.log(err);
   }
 }
+
+export const createMessage = async (formData: FormData) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid title");
+  }
+
+  const desc = formData.get("desc") as string;
+  const Desc = z.string().max(1024);
+
+  const validatedDesc = Desc.safeParse(desc);
+
+  const receiverId = formData.get("receiverId") as string;
+  const ReceiverId = z.string().min(1);
+
+  const validatedReceiverId = ReceiverId.safeParse(receiverId);
+
+  try {
+    const createdMessage = await prisma.message.create({
+      data: {
+        title: validatedTitle.data,
+        desc: validatedDesc.data || "",
+        senderId: userId,
+        userId: validatedReceiverId.data!,
+      },
+    });
+    revalidatePath("/messages")
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};
+
+export const setMessageRead = async (messageId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.message.update({
+      where: {
+        id: messageId,
+      },
+      data: {
+        read: true,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

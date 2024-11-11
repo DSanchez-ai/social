@@ -1,6 +1,7 @@
 import { LeftMenu } from "@/components/LeftMenu";
 import { MessageStatus } from "@/components/MessageStatus";
 import { RightMenu } from "@/components/RightMenu";
+import { SentMessages } from "@/components/SentMessages";
 import { UserMessages } from "@/components/UserMessages";
 
 import prisma from "@/lib/client";
@@ -9,17 +10,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 
-const MessagesPage = async () => {
+const SentMessagesPage = async () => {
   const {userId: currentUserId} = auth();
 
   if(!currentUserId) return null
 
   const messages = await prisma.message.findMany({
     where: {
-      userId: currentUserId
+      senderId: currentUserId
     },
     include: {
-      sender: true
+      user: true
     },
     orderBy: {
       createdAt: "desc"
@@ -89,12 +90,12 @@ const MessagesPage = async () => {
           </div>
           <div className="p-4 bg-white rounded-lg shadow-md text-sm flex flex-col gap-2">
             <div className="flex justify-between items-center font-medium">
-              <span className="text-gray-500">Incoming Messages</span>
-              <Link href="/messages/sent">
+              <span className="text-gray-500">Sent Messages</span>
+              <Link href="/messages">
                 <button className="bg-blue-500 hover:bg-blue-600 text-white text-xs p-1 xl:p-2 rounded-md">
-                  Sent Messages
+                  Incoming Messages
                 </button>
-              </Link>
+              </Link>              
             </div>
             {messages.map((request) => (
                 <div
@@ -108,34 +109,37 @@ const MessagesPage = async () => {
                   <div className="flex items-center justify-between" >
                     <div className="flex items-center gap-2 mb-1">
                       <Image
-                        src={request.sender.avatar || "/noAvatar.png"}
+                        src={request.user.avatar || "/noAvatar.png"}
                         alt=""
                         width={40}
                         height={40}
                         className="w-10 h-10 rounded-full object-fill"
                       />
                       <span className="text-xs xl:text-sm">
-                        {request.sender.name && request.sender.surname
-                        ? request.sender.surname + " " + request.sender.name
-                        : request.sender.username}
+                        {request.user.name && request.user.surname
+                        ? request.user.surname + " " + request.user.name
+                        : request.user.username}
                       </span>
                     </div>
                     <div className="flex gap-2 justify-end items-center text-xs xl:text-sm">
-                      <MessageStatus message={request}/>
-                      <Link href={`/messages/create/${request.sender.username}`}>
-                      <button className="text-slate-500 text-xs p-1 xl:p-2 hover:underline">
-                        reply
-                      </button>
-                      </Link>                    
-                      <Link href={`/profile/${request.sender.username}`}>
+                      {request.read ? (
+                        <span className="text-xs text-green-600 bg-green-200 rounded-md">
+                          read
+                        </span>
+                      ): (
+                        <span className="text-xs text-blue-600">
+                          unread
+                        </span>
+                      )}    
+                      <Link href={`/profile/${request.user.username}`}>
                       <button className="text-green-500 text-xs p-1 xl:p-2 hover:underline">
-                        {request.sender.username}
+                        {request.user.username}
                       </button>
                       </Link>
                     </div>
                   </div>
                   <div className="" >
-                    <UserMessages user={request.sender} id={request.id}/>
+                    <SentMessages user={request.user} id={request.id}/>
                   </div>
                 </div>
             ))}
@@ -150,4 +154,4 @@ const MessagesPage = async () => {
   )
 }
 
-export default MessagesPage
+export default SentMessagesPage

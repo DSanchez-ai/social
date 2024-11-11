@@ -68,6 +68,17 @@ export const UserInfoCard = async ({user}: {user:User}) => {
             {(user.name && user.surname ? user.surname + " " + user.name : user.username)}
           </span>
           <span className="text-sm">@{user.username}</span>
+          {currentUserId && currentUserId !== user.userId && (
+            <Link href={`/messages/create/${user.username}`}>
+              <Image 
+                src="/messages.png"
+                alt="Messages"
+                width={20}
+                height={20}
+                className="cursor-pointer"
+              />
+            </Link>           
+          )}
         </div>
         {user.description && <p>{user.description}</p>}
         {user.city && (

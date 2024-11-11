@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import prisma from "@/lib/client";
 
-export const UserMessages = async ({
+export const SentMessages = async ({
   user,
   id
 }: {user:User, id:string}) => {
@@ -9,10 +9,10 @@ export const UserMessages = async ({
   const messages = await prisma.message.findMany({
     where: {
       id,
-      senderId: user.userId
+      userId: user.userId
     },
     include: {
-      sender: true
+      user: true
     },
     orderBy: {
       createdAt: "desc"
