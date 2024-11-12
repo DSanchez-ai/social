@@ -1,12 +1,13 @@
+import prisma from "@/lib/client";
+import { auth } from "@clerk/nextjs/server";
+import Image from "next/image";
+import Link from "next/link";
+
 import { LeftMenu } from "@/components/LeftMenu";
 import { MessageStatus } from "@/components/MessageStatus";
 import { RightMenu } from "@/components/RightMenu";
 import { UserMessages } from "@/components/UserMessages";
 
-import prisma from "@/lib/client";
-import { auth } from "@clerk/nextjs/server";
-import Image from "next/image";
-import Link from "next/link";
 
 
 const MessagesPage = async () => {
@@ -121,16 +122,11 @@ const MessagesPage = async () => {
                       </span>
                     </div>
                     <div className="flex gap-2 justify-end items-center text-xs xl:text-sm">
-                      <MessageStatus message={request}/>
-                      <Link href={`/messages/create/${request.sender.username}`}>
-                      <button className="text-slate-500 text-xs p-1 xl:p-2 hover:underline">
-                        reply
-                      </button>
-                      </Link>                    
+                      <MessageStatus message={request} username={request.sender.username}/>
                       <Link href={`/profile/${request.sender.username}`}>
-                      <button className="text-green-500 text-xs p-1 xl:p-2 hover:underline">
-                        {request.sender.username}
-                      </button>
+                        <button className="text-green-500 text-xs p-1 xl:p-2 hover:underline">
+                          {request.sender.username}
+                        </button>
                       </Link>
                     </div>
                   </div>

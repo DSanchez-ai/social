@@ -982,7 +982,8 @@ export const createMessage = async (formData: FormData) => {
         userId: validatedReceiverId.data!,
       },
     });
-    revalidatePath("/messages")
+    revalidatePath("/")
+    revalidatePath("/messages/sent")
     
   } catch (err) {
     console.log(err);

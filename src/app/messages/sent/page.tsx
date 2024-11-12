@@ -6,6 +6,7 @@ import { UserMessages } from "@/components/UserMessages";
 
 import prisma from "@/lib/client";
 import { auth } from "@clerk/nextjs/server";
+import { Check, CheckCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -93,7 +94,7 @@ const SentMessagesPage = async () => {
               <span className="text-gray-500">Sent Messages</span>
               <Link href="/messages">
                 <button className="bg-blue-500 hover:bg-blue-600 text-white text-xs p-1 xl:p-2 rounded-md">
-                  Incoming Messages
+                  Inbox
                 </button>
               </Link>              
             </div>
@@ -123,12 +124,12 @@ const SentMessagesPage = async () => {
                     </div>
                     <div className="flex gap-2 justify-end items-center text-xs xl:text-sm">
                       {request.read ? (
-                        <span className="text-xs text-green-600 bg-green-200 rounded-md">
-                          read
+                        <span className="text-xs text-blue-600">
+                          <CheckCheck size={16} />
                         </span>
                       ): (
-                        <span className="text-xs text-blue-600">
-                          unread
+                        <span className="text-xs text-slate-500">
+                          <Check size={16} />
                         </span>
                       )}    
                       <Link href={`/profile/${request.user.username}`}>

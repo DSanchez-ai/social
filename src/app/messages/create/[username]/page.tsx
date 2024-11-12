@@ -11,6 +11,7 @@ import { FriendRequests } from "@/components/FriendRequests"
 import { Followers } from "@/components/Followers"
 import { Following } from "@/components/Following"
 import { UserMediaCard } from "@/components/UserMediaCard"
+import { CreateMessage } from "@/components/CreateMessage"
 
 const CreateMessagePage = async ({params}:{params:{username:string}}) => {
   const {userId: currentUser} = auth();
@@ -110,7 +111,7 @@ const CreateMessagePage = async ({params}:{params:{username:string}}) => {
               </>
             )}
           </div>
-        {/*  <Feed username={user.username}/> */}
+          <CreateMessage user={user}/>
         </div>
       </div>  
       {/* RIGHT SIDE */}

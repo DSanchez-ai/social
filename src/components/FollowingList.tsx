@@ -43,7 +43,7 @@ export const FollowingList = ({requests}:{requests: FollowingWithUser[]}) => {
                 : request.following.username}
             </span>
           </div>
-        <div className="flex gap-2 justify-end text-xs xl:text-sm">
+        <div className="flex gap-2 justify-end items-center text-xs xl:text-sm">
         <Link href={`/messages/create/${request.following.username}`}>
             <Image 
               src="/messages.png"
