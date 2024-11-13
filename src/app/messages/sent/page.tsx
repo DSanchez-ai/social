@@ -1,3 +1,4 @@
+import { DeleteMessage } from "@/components/DeleteMessage";
 import { LeftMenu } from "@/components/LeftMenu";
 import { MessageStatus } from "@/components/MessageStatus";
 import { RightMenu } from "@/components/RightMenu";
@@ -131,11 +132,12 @@ const SentMessagesPage = async () => {
                         <span className="text-xs text-slate-500">
                           <Check size={16} />
                         </span>
-                      )}    
+                      )}  
+                      <DeleteMessage  message={request}/>  
                       <Link href={`/profile/${request.user.username}`}>
-                      <button className="text-green-500 text-xs p-1 xl:p-2 hover:underline">
-                        {request.user.username}
-                      </button>
+                        <button className="text-green-500 text-xs p-1 xl:p-2 hover:underline">
+                          {request.user.username}
+                        </button>
                       </Link>
                     </div>
                   </div>

@@ -7,12 +7,20 @@ import { User } from "@prisma/client";
 import { createMessage } from "@/lib/actions";
 import { SendMessageButton } from "./SendMessageButton";
 
-export const CreateMessage: React.FC<{ user: User }> = ({ user }) => {
+export const CreateMessage: React.FC<{ 
+  user: User,
+  reply?: boolean,
+  title?: string,
+}> = ({ 
+  user,
+  reply,
+  title, 
+}) => {
   const  receiverId  = user.userId;
   const router = useRouter();
   
   const [formData, setFormData] = useState({
-    title: '',
+    title: reply ? 'RE: ' + title : '',
     desc: '',
   });
 

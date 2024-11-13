@@ -7,28 +7,13 @@ import { Message } from "@prisma/client";
 import { deleteMessage, setMessageRead } from "@/lib/actions";
 import Link from "next/link";
 
-export const MessageStatus = ({
+export const DeleteMessage = ({
   message,
-  username,
 }: {
   message: Message,
-  username: string,
 }) => {
   const [loadingId, setLoadingId] = useState<string | null>(null);  
   const router = useRouter();
-
-  const handleClick = async () => {
-    setLoadingId(message.id);
-    try {
-      await setMessageRead(message.id);
-      router.refresh();
-      
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingId(null);
-    }
-  };
 
   const handleDelete = async (id: string) => {
     setLoadingId(id);
@@ -44,26 +29,6 @@ export const MessageStatus = ({
 
   return (
     <div className="flex gap-2 justify-end items-center text-xs xl:text-sm">
-      {message.read ? (
-      <span className="text-blue-600 text-xs p-1 xl:p-2">
-        <CheckCheck size={16} />
-      </span>
-      ) : (
-      <span 
-        className={`text-green-600 bg-green-200 cursor-pointer rounded-md text-xs p-1 xl:p-2 ${loadingId === message.id ? "animate-pulse" : ""}`}
-        onClick={handleClick}
-        >
-          new
-        </span>
-      )}
-      <Link href={`/messages/reply/${message.id}`}>
-        <button 
-          className="text-slate-500 text-xs p-1 xl:p-2 hover:underline"
-          onClick={handleClick}
-        >
-          reply
-        </button>
-      </Link>
       <div className="flex justify-center items-center text-red-500 hover:text-red-800">
         <Trash2 
         size={16}

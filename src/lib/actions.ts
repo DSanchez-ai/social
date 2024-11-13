@@ -1009,3 +1009,22 @@ export const setMessageRead = async (messageId: string) => {
     console.log(err);
   }
 };
+
+export const deleteMessage = async (messageId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.message.delete({
+      where: {
+        id: messageId,
+      },
+    });
+    revalidatePath("/")
+    revalidatePath("/messages")
+    revalidatePath("/messages/sent")
+  } catch (err) {
+    console.log(err);
+  }
+};
