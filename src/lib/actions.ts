@@ -991,7 +991,7 @@ export const createMessage = async (formData: FormData) => {
   }
 };
 
-export const setMessageRead = async (messageId: string) => {
+export const setMessageRead = async (messageId: string, reply?: Boolean) => {
   const { userId } = auth();
 
   if (!userId) throw new Error("User is not authenticated!");
@@ -1003,6 +1003,7 @@ export const setMessageRead = async (messageId: string) => {
       },
       data: {
         read: true,
+        reply: !!reply,
       },
     });
   } catch (err) {

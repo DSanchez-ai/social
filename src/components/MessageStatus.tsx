@@ -20,7 +20,7 @@ export const MessageStatus = ({
   const handleClick = async () => {
     setLoadingId(message.id);
     try {
-      await setMessageRead(message.id);
+      await setMessageRead(message.id, message.reply? false : true);
       router.refresh();
       
     } catch (error) {
@@ -56,14 +56,16 @@ export const MessageStatus = ({
           new
         </span>
       )}
-      <Link href={`/messages/reply/${message.id}`}>
-        <button 
-          className="text-slate-500 text-xs p-1 xl:p-2 hover:underline"
-          onClick={handleClick}
-        >
-          reply
-        </button>
-      </Link>
+      {!message.reply && (
+        <Link href={`/messages/reply/${message.id}`}>
+          <button 
+            className="text-slate-500 text-xs p-1 xl:p-2 hover:underline"
+            onClick={() => setMessageRead(message.id, true)}
+          >
+            reply
+          </button>
+        </Link>
+      )}
       <div className="flex justify-center items-center text-red-500 hover:text-red-800">
         <Trash2 
         size={16}

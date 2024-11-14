@@ -189,4 +189,5 @@ model Message {
   userId    String
   sender    User     @relation("senderId", fields: [senderId], references: [userId], onDelete: Cascade)
   senderId  String
+  reply     Boolean  @default(false)
 }

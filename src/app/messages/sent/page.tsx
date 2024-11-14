@@ -46,8 +46,6 @@ const SentMessagesPage = async () => {
 
   if(!user) return null;
 
-  if(messages.length === 0) return null;
-
   return (
     <div className='flex gap-6 pt-6'>
       {/* LEFT SIDE */}
