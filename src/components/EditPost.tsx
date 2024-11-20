@@ -74,8 +74,8 @@ export const EditPost = ({post}:{post: Post}) => {
                         onClick={() => open()}
                         src={post.img || ""}
                         alt=""
-                        width={650}
-                        height={650}
+                        width={670}
+                        height={670}
                         className="object-contain rounded-md cursor-pointer mb-2 hover:opacity-80"
                       />
                     ) : (

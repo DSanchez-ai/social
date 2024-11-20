@@ -44,6 +44,7 @@ model User {
   carts                  Cart[]
   messages               Message[] @relation("reciverId")
   senders                Message[] @relation("senderId")
+  lists                  List[]
 }
 
 model Post {
@@ -191,3 +192,25 @@ model Message {
   senderId  String
   reply     Boolean  @default(false)
 }
+
+model List {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  title     String
+  desc      String?
+  img       String?
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    String
+  items     ToDoItem[]
+}
+
+model ToDoItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  title     String
+  desc      String?
+  days      Int      @default(7)
+  done      Boolean  @default(false)
+  list      List     @relation(fields: [listId], references: [id], onDelete: Cascade)
+  listId    String   @db.ObjectId
+} 

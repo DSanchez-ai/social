@@ -176,8 +176,8 @@ export const EditProject: React.FC<{ project: any }> = ({ project }) => {
                     <Image 
                       src={project.img || ""}
                       alt=""
-                      width={650}
-                      height={650}
+                      width={670}
+                      height={670}
                       className="object-contain rounded-md"
                     />
                   )}

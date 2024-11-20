@@ -41,6 +41,11 @@ const Links = [
     img: "/market.png",
     href: "/market",
   },
+  {
+    name: "Lists",
+    img: "/lists.png",
+    href: "/lists",
+  },
 ]
 
 const Navbar = async () => {
@@ -64,7 +69,7 @@ const Navbar = async () => {
         </Link>
       </div>
       {/* CENTER */}
-      <div className="hidden md:flex w-[52%] text-sm items-center justify-between">
+      <div className="hidden md:flex w-[56%] text-sm items-center justify-between">
         {/* LINKS */}    
         <div className="flex gap-4 xl:gap-6 text-gray-600">
           {Links.map((link, index) => (
@@ -76,13 +81,13 @@ const Navbar = async () => {
                 height={16}
                 className="cursor-pointer w-4 h-4"
               />
-              <span>{link.name}</span>
+              <span className="mr-1">{link.name}</span>
             </Link>
           ))}
         </div>
       </div>
       {/* RIGHT */}
-      <div className="w-[28%] flex items-center gap-4 justify-end">
+      <div className="w-[24%] flex items-center gap-4 justify-end">
         <ClerkLoading>
           <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white" />          
         </ClerkLoading>

@@ -1029,3 +1029,128 @@ export const deleteMessage = async (messageId: string) => {
     console.log(err);
   }
 };
+
+export const createList = async (formData: FormData, img: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid title");
+  }
+
+  try {
+    const createdList = await prisma.list.create({
+      data: {
+        title: validatedTitle.data,
+        img: img || null,
+        userId,
+      },
+    });
+    revalidatePath("/")
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};
+
+export const deleteList = async (listId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.list.delete({
+      where: {
+        id: listId,
+        userId,
+      },
+    });
+    revalidatePath("/")
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const addToDoItem = async (formData: FormData, listId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid title");
+  }
+
+  try {
+    const createdListItem = await prisma.toDoItem.create({
+      data: {
+        title: validatedTitle.data,
+        listId,
+      },
+    });
+    revalidatePath("/")
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+}
+
+export const deleteToDoItem = async (itemId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    await prisma.toDoItem.delete({
+      where: {
+        id: itemId,
+      },
+    });
+    revalidatePath("/")
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const toggleDone = async (itemId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  try {
+    const item = await prisma.toDoItem.findFirst({
+      where: {
+        id: itemId,
+      },
+    });
+
+    if (!item) throw new Error("Item not found!");
+
+    await prisma.toDoItem.update({
+      where: {
+        id: itemId,
+      },
+      data: {
+        done: !item.done,
+      },
+    });
+
+    revalidatePath("/")
+  } catch (err) {
+    console.log(err);
+  }
+}

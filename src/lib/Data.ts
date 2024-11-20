@@ -51,7 +51,7 @@ export const MenuItems = [
     id: 9,
     name: "Lists",
     img: "/lists.png",
-    href: "/"
+    href: "/lists"
   },
   {
     id: 10,
