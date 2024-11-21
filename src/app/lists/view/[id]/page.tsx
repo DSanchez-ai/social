@@ -111,9 +111,18 @@ const ListViewPage = async ({params}:{params:{id:string}}) => {
               {items && items.map((item) => (
                 <div 
                   key={item.id}
-                  className={`flex flex-col text-sm gap-2 bg-slate-200 w-[90%] lg:w-[70%] p-2 rounded-md m-2 shadow-md ${item.done ? 'bg-green-300' : ''}`}
+                  className={`flex flex-col text-sm gap-1 w-[90%] lg:w-[70%] p-2 rounded-md m-1 shadow-md ${item.done ? ' bg-green-300' : ' bg-slate-200'}`}
                   >
-                  <div className="flex flex-row justify-between">
+                  <div className="w-[90%] lg:w-[70%] flex justify-start">
+                    {!item.done ? (
+                        <span className="text-xs bg-slate-400 text-white p-1 rounded-md">
+                          {new Date(new Date(item.createdAt).getTime() + item.days * 24 * 60 * 60 * 1000).toLocaleDateString()}
+                        </span>
+                    ) : (
+                      <span className="text-xs text-white bg-green-600 rounded-md p-1">Done</span>
+                    )}
+                  </div>
+                  <div className="flex flex-row justify-between items-center">
                     <span>{item.title}</span>
                     <div className="flex flex-row ml-auto">
                       <ToDoItemInteraction itemId={item.id}/>

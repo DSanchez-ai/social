@@ -13,28 +13,25 @@ export const List = ({
   const { userId: currentUserId } = auth();
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col">
-          <span 
-            className="text-xs md:text-sm text-gray-800 bg-blue-200 p-2 w-40 2xl:w-48 rounded-t-md border border-blue-600"
-          >
-            {list.title}
-          </span>
-      </div>    
-      <div className="flex flex-col gap-2">
-        <div className="">
-          { /* IMAGE / VIDEO */}        
-          {list.img && (
-            <Link href={`/lists/view/${list.id}`} className="cursor-pointer hover:opacity-80">
-              <Image 
-                src={list.img || ""}
-                alt=""
-                width={200}
-                height={200}
-                className="object-cover w-40 2xl:w-48 h-36 rounded-b-md border border-blue-600 shadow-md"
-              />
-            </Link>
-          )}
-        </div>
+      <div className="flex flex-col w-40">
+        <span 
+          className="text-xs md:text-sm text-gray-800 bg-blue-200 p-2 rounded-t-md border border-blue-600"
+        >
+          {list.title}
+        </span>
+        {list.img && (
+          <Link href={`/lists/view/${list.id}`} className="cursor-pointer hover:opacity-80">
+            <Image 
+              src={list.img || ""}
+              alt=""
+              width={200}
+              height={200}
+              className="object-cover w-full h-36 rounded-b-md border border-blue-600 shadow-md"
+            />
+          </Link>
+        )}
+      </div>
+      <div className="flex flex-col gap-2 w-40">
         <a 
           href={`/lists/edit/${list.id}`}
           className="text-sm text-blue-500 hover:underline mt-1"
