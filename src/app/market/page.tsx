@@ -46,7 +46,7 @@ export default function MarketPage({
         <div className="flex flex-col gap-6">
           <AddItem />
           <ShowItems searchParams={searchParams} />          
-          </div>
+        </div>
       </div>  
       {/* RIGHT SIDE */}
       <div className="hidden lg:block w-[30%]">

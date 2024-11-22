@@ -1,4 +1,5 @@
 import prisma from "@/lib/client";
+import { auth } from "@clerk/nextjs/server";
 
 import { List } from "@/components/List";
 import { AddList } from "@/components/AddList";
@@ -6,13 +7,23 @@ import { AddList } from "@/components/AddList";
 import { LeftMenu } from "@/components/LeftMenu";
 import Pagination from "@/components/Pagination";
 import { RightMenu } from "@/components/RightMenu";
+import { UserCard } from "@/components/UserCard";
+import { ProfileCard } from "@/components/ProfileCard";
 
 const numberOfItems = 6;
-
 async function getData(searchParams: string) {
+  const { userId: currentUserId } = auth();
+  
   const [count, data] = await prisma.$transaction([
-    prisma.list.count(),
+    prisma.list.count({
+      where: {
+        userId: currentUserId!
+      }
+    }),
     prisma.list.findMany({
+      where: {
+        userId: currentUserId!
+      },
       take: numberOfItems,
       skip: searchParams ? (Number(searchParams) -1) * numberOfItems : 0,
       include: {
@@ -40,6 +51,9 @@ export default function ListsPage({
       </div>
       {/* CENTER */}
       <div className="w-full lg:w-[70%] xl:w-[50%] flex flex-col gap-6">
+        <div className="xl:hidden">
+          <ProfileCard />
+        </div>
         <AddList />
         <div className="w-full">
           <ShowItems searchParams={searchParams} />          

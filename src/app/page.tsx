@@ -8,7 +8,10 @@ import { Post } from "@/components/Post"
 import { ProfileCard } from "@/components/ProfileCard"
 import { RightMenu } from "@/components/RightMenu"
 import { Stories } from "@/components/Stories"
+import { UserCard } from "@/components/UserCard"
 import prisma from "@/lib/client"
+import { auth } from "@clerk/nextjs/server"
+import { User } from "lucide-react"
 
 const numberOfPosts = 5;
 
@@ -40,11 +43,33 @@ async function getData(searchParams: string) {
   return {count, data}
 }
 
-export default function Homepage({
+export default async function Homepage({
   searchParams,
 }: {
   searchParams: { page: string };
 }) {
+  const { userId: currentUserId } = auth(); 
+
+  if(!currentUserId) {
+    return null;
+  }
+  const user = await prisma.user.findFirst({
+    where: {
+      userId: currentUserId
+    },
+    include: {
+      _count: {
+        select: {
+          followers: true,
+          followings: true,
+          posts: true
+        }
+      }
+    },
+  });
+
+  if(!user) return null;
+
   return (
     <div className='flex gap-6 pt-6'>
       {/* LEFT SIDE */}
@@ -54,6 +79,9 @@ export default function Homepage({
       {/* CENTER */}
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
+          <div className="hidden xl:block">
+            <UserCard user={user} />
+          </div>
           <div className="xl:hidden">
             <ProfileCard />
           </div>
