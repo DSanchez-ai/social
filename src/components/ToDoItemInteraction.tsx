@@ -5,12 +5,15 @@ import { useState } from "react";
 import { Check, Edit3Icon, Trash2 } from "lucide-react";
 
 import { deleteToDoItem, toggleDone } from "@/lib/actions";
+import { UpdateToDoItem } from "./UpdateToDoItem";
+import { ToDoItem } from "@prisma/client";
 
-export const ToDoItemInteraction = ({itemId}:{itemId: string}) => {
+export const ToDoItemInteraction = ({item}:{item: ToDoItem}) => {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [loadingToggleId, setLoadingToggleId] = useState<string | null>(null);
   const router = useRouter();
-
+  const { id: itemId } = item;
+  
   const handleDelete = async (id: string) => {
     setLoadingId(id);
 
@@ -42,12 +45,7 @@ export const ToDoItemInteraction = ({itemId}:{itemId: string}) => {
       <button onClick={() => handleDone(itemId)}>
         <Check size={16} className={`w-5 h-5 cursor-pointer text-green-600 ${loadingToggleId === itemId ? 'animate-spin' : ''}`} />
       </button>
-      <button>
-        <Edit3Icon
-          size={16}
-          className="w-5 h-5 cursor-pointer text-slate-500"
-        />
-      </button>
+      <UpdateToDoItem item={item} />
       <button onClick={() => handleDelete(itemId)}>
         <Trash2 
           size={16}

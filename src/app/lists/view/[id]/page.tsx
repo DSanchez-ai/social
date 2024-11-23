@@ -86,7 +86,7 @@ const ListViewPage = async ({params}:{params:{id:string}}) => {
                   >
                   <div className="w-[90%] lg:w-[70%] flex justify-start">
                     {!item.done ? (
-                        <span className="text-xs bg-slate-400 text-white p-1 rounded-md">
+                        <span className="text-xs bg-blue-300 text-gray-800 p-1 rounded-md">
                           {new Date(new Date(item.createdAt).getTime() + item.days * 24 * 60 * 60 * 1000).toLocaleDateString()}
                         </span>
                     ) : (
@@ -96,7 +96,7 @@ const ListViewPage = async ({params}:{params:{id:string}}) => {
                   <div className="flex flex-row justify-between items-center">
                     <span>{item.title}</span>
                     <div className="flex flex-row ml-auto">
-                      <ToDoItemInteraction itemId={item.id}/>
+                      <ToDoItemInteraction item={item}/>
                     </div>
                   </div>
                 </div>

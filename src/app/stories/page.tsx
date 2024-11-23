@@ -62,11 +62,6 @@ const StoriesPage = async () => {
           <div className="xl:hidden">
             <ProfileCard />
           </div>          
-          <div className="lg:hidden">
-            <Suspense fallback={<div>Loading...</div>} >
-              <UserInfoCard user={user} />
-            </Suspense>      
-          </div>
           <Stories />
           <div className="flex flex-col gap-4">
             {stories.map((story) => (

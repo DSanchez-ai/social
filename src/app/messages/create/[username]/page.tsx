@@ -62,9 +62,6 @@ const CreateMessagePage = async ({params}:{params:{username:string}}) => {
             <UserCard user={user} />
           </div>
           <div className="lg:hidden">
-            <Suspense fallback={<div>Loading...</div>} >
-              <UserMediaCard user={user}/>
-            </Suspense>                
             {currentUser === user.userId && (
               <>
                 <div className="mt-2">

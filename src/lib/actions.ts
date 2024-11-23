@@ -1154,3 +1154,46 @@ export const toggleDone = async (itemId: string) => {
     console.log(err);
   }
 }
+
+export const updateToDoItem = async (formData: FormData) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid title");
+  }
+
+  const desc = formData.get("desc") as string;
+  const Desc = z.string().max(1024);
+
+  const validatedDesc = Desc.safeParse(desc);
+
+  const itemId = formData.get("id") as string;
+
+  const days = formData.get("days") as string;
+  
+  try {
+    await prisma.toDoItem.update({
+      where: {
+        id: itemId,
+      },
+      data: {
+        title: validatedTitle.data,
+        desc: validatedDesc.data || "",
+        days: Number(days),
+      },
+    });
+    revalidatePath("/")
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+}
