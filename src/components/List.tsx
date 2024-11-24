@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { List as ListType, User } from "@prisma/client";
 import  Link from "next/link";
 import Image from "next/image";
+import { ListInteraction } from "./ListInteraction";
 
 type FeedListType = ListType & { user: User }
 
@@ -14,11 +15,12 @@ export const List = ({
   return (
     <div className="flex flex-col">
       <div className="flex flex-col w-40">
-        <span 
-          className="text-xs md:text-sm text-gray-800 bg-blue-200 p-2 rounded-t-md border border-blue-600"
-        >
-          {list.title}
-        </span>
+        <div className="flex flex-row justify-between items-center text-xs md:text-sm text-gray-800 bg-blue-200 p-2 rounded-t-md border border-blue-600">
+          <span>{list.title}</span>
+          <div className="flex flex-row">
+            <ListInteraction listId={list.id} />
+          </div>
+        </div>
         {list.img && (
           <Link href={`/lists/view/${list.id}`} className="cursor-pointer hover:opacity-80">
             <Image 

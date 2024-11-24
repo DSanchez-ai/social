@@ -63,7 +63,7 @@ const Navbar = async () => {
   return (
     <div className="h-24 flex items-center justify-between">
       {/* LEFT */}
-      <div className="md:hidden lg:block w-[20%]">
+      <div className="md:hidden lg:block w-[15%]">
         <Link href="/" className="font-bold text-xl text-blue-600">
           SLSOCIAL
         </Link>

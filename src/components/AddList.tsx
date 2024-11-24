@@ -9,19 +9,6 @@ import { createList } from "@/lib/actions";
 import Link from "next/link";
 
 
-const Options = [
-  {
-    title: "Project",
-    img: "/news.png",
-    url: "/projects",
-  },
-  {
-    title: "Post",
-    img: "/posts.png",
-    url: "/",
-  },
-]
-
 export const AddList = () => {
   const { user, isLoaded } = useUser();
   const [ title, setTitle ] = useState("");
@@ -87,27 +74,11 @@ export const AddList = () => {
                   width={20}
                   height={20}
                 />
-                Photo/Video
+                Photo
               </div>
               );
             }}
           </CldUploadWidget>  
-          {Options.map((option, index) => (
-            <div 
-              key={index}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <Image 
-                src={option.img}
-                alt=""
-                width={20}
-                height={20}
-              />
-              <Link href={option.url}>
-                {option.title}
-              </Link>
-            </div>
-          ))}
         </div>        
       </div>      
     </div>

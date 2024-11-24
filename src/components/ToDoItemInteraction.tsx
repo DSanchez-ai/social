@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Check, Edit3Icon, Trash2 } from "lucide-react";
+import { Check, Trash2 } from "lucide-react";
 
 import { deleteToDoItem, toggleDone } from "@/lib/actions";
 import { UpdateToDoItem } from "./UpdateToDoItem";

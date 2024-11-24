@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs/server";
 import { User as PrismaUser } from "@prisma/client";
 
 interface User extends PrismaUser {
@@ -11,7 +12,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const UserCard = ({ user }: { user: User }) => {
-
+  const { userId: currentUserId } = auth();
+ 
   return (
     <div className="flex flex-col items-center justify-center">
     <div className="w-full h-32 md:h-64 relative">
@@ -33,15 +35,17 @@ export const UserCard = ({ user }: { user: User }) => {
       <h1 className="text-xl md:text-2xl font-medium">
         {(user.name && user.surname ? user.surname + " " + user.name : user.username)}
       </h1>
-      <Link href={`/messages/create/${user.username}`}>
-        <Image 
-          src="/messages.png"
-          alt="Messages"
-          width={20}
-          height={20}
-          className="cursor-pointer"
-        />
-      </Link>
+      {user.userId !== currentUserId && (
+        <Link href={`/messages/create/${user.username}`}>
+          <Image 
+            src="/messages.png"
+            alt="Messages"
+            width={20}
+            height={20}
+            className="cursor-pointer"
+          />
+        </Link>
+      )}
     </div>
     <div className="flex items-center justify-center gap-12 mb-4">
       <div className="flex flex-col items-center">

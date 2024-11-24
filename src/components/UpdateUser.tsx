@@ -36,7 +36,7 @@ export const UpdateUser = ({user}: {user: User}) => {
             action={(formData) => 
               formAction({formData, cover: cover?.secure_url || ""})
             }
-            className="p-12 bg-white rounded-lg shadow-md flex flex-col gap-2 w-full lg:w-2/3 xl:w-1/2 relative"
+            className="p-12 bg-white rounded-lg shadow-md flex flex-col gap-2 w-[90%] lg:w-2/3 xl:w-1/2 relative"
           >
             { /* TITLE */}
             <h1 className="text-normal md:text-xl">Update Profile</h1>
@@ -65,71 +65,73 @@ export const UpdateUser = ({user}: {user: User}) => {
             { /* WRAPPER */}
             <div className="flex flex-wrap justify-between gap-2 xl:gap-4">
               { /* INPUTS */}
-              <div className="flex flex-col gap-2">
-                <label htmlFor="" className="text-xs text-gray-600">First Name</label>
-                <input 
-                  type="text" 
-                  defaultValue={user.surname ?? "John"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
-                  name="surname" 
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="" className="text-xs text-gray-600">Last Name</label>
-                <input 
-                  type="text" 
-                  defaultValue={user.name || "Spencer"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
-                  name="name"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="" className="text-xs text-gray-600">Description</label>
-                <textarea 
-                  defaultValue={user.description || "Life is a journey..."}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600" 
-                  rows={4}
-                  name="description"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="" className="text-xs text-gray-600">City</label>
-                <input 
-                  type="text" 
-                  defaultValue={user.city || "New York"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600" 
-                  name="city"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="" className="text-xs text-gray-600">School</label>
-                <input 
-                  type="text" 
-                  defaultValue={user.school || "Harvard University"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
-                  name="school"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="" className="text-xs text-gray-600">Work</label>
-                <input 
-                  type="text" 
-                  defaultValue={user.work || "Software Engineer"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
-                  name="work"
-                />
+              <div className="flex flex-col w-full gap-2 xl:gap-4">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="" className="text-xs text-gray-600">First Name</label>
+                  <input 
+                    type="text" 
+                    defaultValue={user.surname ?? "John"}
+                    className="ring-1 ring-blue-400 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
+                    name="surname" 
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="" className="text-xs text-gray-600">Last Name</label>
+                  <input 
+                    type="text" 
+                    defaultValue={user.name || "Spencer"}
+                    className="ring-1 ring-blue-400 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
+                    name="name"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="" className="text-xs text-gray-600">Description</label>
+                  <textarea 
+                    defaultValue={user.description || "Life is a journey..."}
+                    className="ring-1 ring-blue-400 p-[13px] rounded-md text-xs md:text-sm text-slate-600" 
+                    rows={4}
+                    name="description"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="" className="text-xs text-gray-600">City</label>
+                  <input 
+                    type="text" 
+                    defaultValue={user.city || "New York"}
+                    className="ring-1 ring-blue-400 p-[13px] rounded-md text-xs md:text-sm text-slate-600" 
+                    name="city"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="" className="text-xs text-gray-600">School</label>
+                  <input 
+                    type="text" 
+                    defaultValue={user.school || "Harvard University"}
+                    className="ring-1 ring-blue-400 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
+                    name="school"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="" className="text-xs text-gray-600">Work</label>
+                  <input 
+                    type="text" 
+                    defaultValue={user.work || "Software Engineer"}
+                    className="ring-1 ring-blue-400 p-[13px] rounded-md text-xs md:text-sm text-slate-600"
+                    name="work"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="" className="text-xs text-gray-600">Website</label>
+                  <input 
+                    type="text" 
+                    defaultValue={user.website || "https://www.example.com"}
+                    className="ring-1 ring-blue-400 p-[13px] rounded-md text-xs md:text-sm text-slate-600" 
+                    name="website"
+                  />
+                </div>
               </div>
             </div>  
             <div className="flex flex-wrap justify-between gap-2 xl:gap-4">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="" className="text-xs text-gray-600">Website</label>
-                <input 
-                  type="text" 
-                  defaultValue={user.website || "https://www.example.com"}
-                  className="ring-1 ring-gray-300 p-[13px] rounded-md text-xs md:text-sm text-slate-600" 
-                  name="website"
-                />
-              </div>
             </div>  
             <UpdateButton />  
             {state.success && (
