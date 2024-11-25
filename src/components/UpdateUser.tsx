@@ -1,12 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { CldUploadWidget } from "next-cloudinary";
 import { useActionState, useState } from "react";
 import Image from "next/image";
 import { User } from "@prisma/client";
 
 import { updateProfile } from "@/lib/actions";
-import { useRouter } from "next/navigation";
 import { UpdateButton } from "./UpdateButton";
 
 export const UpdateUser = ({user}: {user: User}) => {
@@ -36,7 +36,7 @@ export const UpdateUser = ({user}: {user: User}) => {
             action={(formData) => 
               formAction({formData, cover: cover?.secure_url || ""})
             }
-            className="p-12 bg-white rounded-lg shadow-md flex flex-col gap-2 w-[90%] lg:w-2/3 xl:w-1/2 relative"
+            className="p-12 bg-white rounded-lg shadow-md flex flex-col w-[90%] lg:w-2/3 xl:w-1/2 relative"
           >
             { /* TITLE */}
             <h1 className="text-normal md:text-xl">Update Profile</h1>

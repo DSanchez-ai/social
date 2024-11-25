@@ -113,7 +113,7 @@ export const EditStory = ({story, user}:{story: Story, user: User}) => {
                   </div> 
                 )}}
               </CldUploadWidget>   
-              <p className="text-sm text-pretty font-light lg:text-base">
+              <p className="text-sm text-pretty font-light lg:text-base ring-1 ring-blue-400">
                 <textarea
                   name="desc"
                   defaultValue={story.desc!}

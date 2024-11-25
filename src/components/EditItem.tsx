@@ -125,7 +125,7 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full text-sm lg:text-base p-2 border rounded-md mb-1"
+              className="w-full text-sm lg:text-base p-2 ring-1 ring-blue-400 rounded-md mb-1"
             />
           </p>
           <p className="text-sm lg:text-base">
@@ -135,7 +135,7 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
               value={formData.url}
               onChange={handleChange}
               placeholder="https://"
-              className="w-full p-2 border text-blue-500 rounded-md mb-1"
+              className="w-full p-2 ring-1 ring-blue-400 text-blue-500 rounded-md mb-1"
             />
           </p> 
           <p>
@@ -145,7 +145,7 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
               value={formData.prize}
               onChange={handleChange}
               placeholder="Prize"
-              className="w-[140px] text-sm lg:text-base p-2 border rounded-md mb-1"
+              className="w-[140px] text-sm lg:text-base p-2 ring-1 ring-blue-400 rounded-md mb-1"
             />
           </p>         
           <p className="text-sm lg:text-base">
@@ -155,7 +155,7 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
               onChange={handleChange}
               placeholder="Enter the description"
               rows={10}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 ring-1 ring-blue-400 rounded-md"
             />
           </p>
           { formData.title.length > 0 && (
@@ -226,7 +226,7 @@ export const EditItem: React.FC<{ item: any }> = ({ item }) => {
                   name="quantity"
                   value={orderData.quantity}
                   onChange={(e) => setOrderData({ quantity: parseInt(e.target.value) })}
-                  className="w-[60px] text-sm p-2 border rounded-md ml-4"
+                  className="w-[60px] text-sm p-2 ring-1 ring-blue-400 rounded-md ml-4"
                   min="1"
                 />
               <a

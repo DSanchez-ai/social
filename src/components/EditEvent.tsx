@@ -147,7 +147,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full text-sm lg:text-base p-2 border rounded-md mb-1"
+              className="w-full text-sm lg:text-base p-2 ring-1 ring-blue-400 rounded-md mb-1"
             />
           </p>
           <p className="text-sm lg:text-base">
@@ -157,7 +157,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               value={formData.location}
               onChange={handleChange}
               placeholder="Enter the location"
-              className="w-full p-2 border rounded-md mb-1"
+              className="w-full p-2 ring-1 ring-blue-400 rounded-md mb-1"
             />
           </p>          
           <div className="flex flex-col lg:flex-row text-sm lg:text-base mb-1">
@@ -203,14 +203,14 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               />
             </div>
           </div>
-          <p className="text-sm lg:text-base">
+          <p className="text-sm lg:text-base mb-1">
             <textarea
               name="desc"
               value={formData.desc}
               onChange={handleChange}
               placeholder="Enter the description"
               rows={10}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 ring-1 ring-blue-400 rounded-md"
             />
           </p>
           <p className="text-sm lg:text-base">
@@ -220,7 +220,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
               value={formData.url}
               onChange={handleChange}
               placeholder="https://"
-              className="w-full p-2 border rounded-md mb-1 text-blue-500"
+              className="w-full p-2 ring-1 ring-blue-400 rounded-md mb-1 text-blue-500"
             />
           </p>
           { formData.title.length > 0 && (

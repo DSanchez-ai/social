@@ -97,7 +97,7 @@ export const EditPost = ({post}:{post: Post}) => {
               defaultValue={post.desc}
               onChange={(e) => setDesc(e.target.value)}
               rows={10}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 ring-1 ring-blue-400 rounded-md"
             />
           </p>
           {desc.length > 0 && (

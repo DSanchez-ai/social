@@ -1079,6 +1079,50 @@ export const deleteList = async (listId: string) => {
   }
 }
 
+export const updateList = async (formData: FormData, img: string, listId: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated!");
+
+  const title = formData.get("title") as string;
+  const Title = z.string().min(1).max(255);
+
+  const validatedTitle = Title.safeParse(title);
+
+  if (!validatedTitle.success) {
+    console.log(validatedTitle.error.flatten().fieldErrors);
+    throw new Error("Invalid title");
+  }
+
+  const desc = formData.get("desc") as string;
+  const Desc = z.string().max(1024);
+
+  const validatedDesc = Desc.safeParse(desc);
+
+  if (!validatedDesc.success) {
+    console.log(validatedDesc.error.flatten().fieldErrors);
+    throw new Error("Invalid description");
+  }
+
+  try {
+    const updatedList = await prisma.list.update({
+      where: {
+        id: listId,
+      },
+      data: {
+        title: validatedTitle.data,
+        desc: validatedDesc.data || "",
+        img: img || null,
+      },
+    });
+    revalidatePath("/")
+    
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};
+
 export const addToDoItem = async (formData: FormData, listId: string) => {
   const { userId } = auth();
 
