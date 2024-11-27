@@ -50,16 +50,17 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
       endDate: date,
     }));
   };
+  
+  let url = "";
+  if(!img?.secure_url) {
+    url = event.video || event.img || "";
+  } else {
+    url = img.secure_url;
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   
-    let url = "";
-    if(!img?.secure_url) {
-      url = event.video || event.img || "";
-    } else {
-      url = img.secure_url;
-    }
 
     const formDataToSend = new FormData();
     formDataToSend.append('title', formData.title);
@@ -119,10 +120,10 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
                   </div>
                 ) : (
                   <>
-                    {event.img ? (
+                    {url ? (
                       <Image 
                         onClick={() => open()}
-                        src={event.img || ""}
+                        src={url || ""}
                         alt=""
                         width={670}
                         height={670}

@@ -26,9 +26,6 @@ export const EditProject: React.FC<{ project: any }> = ({ project }) => {
       [name]: value,
     }));
   };
-
-   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
   
     let url = "";
     if(!img?.secure_url) {
@@ -36,6 +33,9 @@ export const EditProject: React.FC<{ project: any }> = ({ project }) => {
     } else {
       url = img.secure_url;
     }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
     const formDataToSend = new FormData();
     formDataToSend.append('title', formData.title);
@@ -81,10 +81,10 @@ export const EditProject: React.FC<{ project: any }> = ({ project }) => {
                   </div>
                 ) : (
                   <>
-                    {project.img ? (
+                    {url ? (
                       <Image 
                         onClick={() => open()}
-                        src={project.img || ""}
+                        src={url || ""}
                         alt=""
                         width={670}
                         height={670}

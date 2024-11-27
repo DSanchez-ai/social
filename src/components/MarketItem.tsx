@@ -91,6 +91,6 @@ export const MarketItem = ({
           {currentUserId === item.userId ? "Edit" : "View"}
         </a>
       </div> 
-      </div>
+    </div>
   )
 };

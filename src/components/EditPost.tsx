@@ -20,14 +20,14 @@ export const EditPost = ({post}:{post: Post}) => {
 
   if (!currentUserId) return null;
 
+  let url = "";
+  if(!img?.secure_url) {
+    url = post.video || post.img || "";
+  } else {
+    url = img.secure_url;
+  }
 
   const handleUpdatePost = (formData: FormData) => {
-    let url = "";
-    if(!img?.secure_url) {
-      url = post.video || post.img || "";
-    } else {
-      url = img.secure_url;
-    }
     updatePost(formData, url, post);
     router.refresh();
   };
@@ -69,10 +69,10 @@ export const EditPost = ({post}:{post: Post}) => {
                   </div>
                 ) : (
                   <>
-                    {post.img ? (
+                    {url ? (
                       <Image 
                         onClick={() => open()}
-                        src={post.img || ""}
+                        src={url || ""}
                         alt=""
                         width={670}
                         height={670}

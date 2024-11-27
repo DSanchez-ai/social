@@ -26,15 +26,16 @@ export const EditList: React.FC<{ list: any }> = ({ list }) => {
     }));
   };
 
-   const handleSubmit = (e: React.FormEvent) => {
+  let url = "";
+  if(!img?.secure_url) {
+    url = list.img || "";
+  } else {
+    url = img.secure_url;
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   
-    let url = "";
-    if(!img?.secure_url) {
-      url = list.img || "";
-    } else {
-      url = img.secure_url;
-    }
 
     const formDataToSend = new FormData();
     formDataToSend.append('title', formData.title);
@@ -62,10 +63,10 @@ export const EditList: React.FC<{ list: any }> = ({ list }) => {
             return (  
               <div className="w-full relative">
                   <>
-                    {list.img ? (
+                    {url ? (
                       <Image 
                         onClick={() => open()}
-                        src={list.img || ""}
+                        src={url || ""}
                         alt=""
                         width={670}
                         height={670}

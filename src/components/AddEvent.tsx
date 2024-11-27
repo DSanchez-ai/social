@@ -56,16 +56,27 @@ export const AddEvent = () => {
             onChange={(e) => setTitle(e.target.value)}
           >
           </textarea>
-          <div>
-            <Image 
-              src="/emoji.png"
-              alt=""
-              width={20}
-              height={20}
-              className="w-5 h-5 cursor-pointer self-end ml-2"
-            />  
+          <div className="flex items-center flex-col justify-center">
+            {!img?.secure_url ? (
+              <Image 
+                src="/emoji.png"
+                alt=""
+                width={20}
+                height={20}
+                className="w-5 h-5 cursor-pointer"
+              />  
+
+            ): (
+              <Image 
+                src={img.secure_url}
+                alt=""
+                width={20}
+                height={20}
+                className="w-10 h-10 rounded-md object-fill"
+              />
+            )}
             { title.length > 0 && (
-              <AddPostButton /> 
+              <AddPostButton />
             )} 
           </div>
         </form>
