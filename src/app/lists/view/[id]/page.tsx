@@ -65,12 +65,12 @@ const ListViewPage = async ({params}:{params:{id:string}}) => {
           </div>
           <AddToDoItem listId={listId}/>
           <div 
-            className="flex flex-col gap-2 bg-no-repeat bg-cover bg-center h-screen"
+            className="flex flex-col gap-2 bg-no-repeat bg-cover bg-center h-screen rounded-md"
             style={{backgroundImage: `url(${list.img || "/noCover.png"})`}}
           >
             <div className="flex flex-col items-center w-full">
               <span 
-                className="w-full text-center font-semibold text-sm text-gray-800 bg-blue-200 p-2 border border-blue-600 mb-5"
+                className="w-full text-center font-semibold text-sm text-gray-800 bg-blue-200 p-2 border rounded-t-md border-blue-600 mb-5"
                 >
                 {list.title}
               </span>

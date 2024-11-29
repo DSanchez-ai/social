@@ -58,6 +58,18 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
     url = img.secure_url;
   }
 
+  const isVideoUrl = (url: string) => {
+    if (!url) return false;
+    const videoExtensions = ['.mp4', '.webm', '.ogg'];
+    return videoExtensions.some(extension => url.endsWith(extension));
+  };
+
+  const isImageUrl = (url: string) => {
+    if (!url) return false;
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+    return imageExtensions.some(extension => url.endsWith(extension));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   
@@ -102,7 +114,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
           {({ open }) => { 
             return (  
               <div className="w-full relative">
-                {event.video ? (
+                {isVideoUrl(url) || event.video ? (
                   <div
                     className="w-full relative"
                   >
@@ -112,7 +124,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
                       preload="auto"
                       playsInline
                     >
-                      <source src={event.video} type="video/mp4" />
+                      <source src={url} type="video/mp4" />
                     </video>
                     <span 
                       onClick={() => open()}
@@ -120,7 +132,7 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
                   </div>
                 ) : (
                   <>
-                    {url ? (
+                    {isImageUrl(url) ? (
                       <Image 
                         onClick={() => open()}
                         src={url || ""}
