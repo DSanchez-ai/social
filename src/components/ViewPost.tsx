@@ -46,9 +46,9 @@ export const ViewPost = async ({ post }: { post: ViewPostType }) => {
             alt=""
             width={40}
             height={40}
-            className="w-10 h-10 rounded-full"
+            className="w-10 h-10 rounded-full cursor-pointer"
           />
-          <span className="font-medium">
+          <span className="font-medium cursor-pointer">
           {user.name && user.surname
               ? user.surname + " " + user.name
               : user.username}

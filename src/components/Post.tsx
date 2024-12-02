@@ -71,7 +71,7 @@ export const Post = ({ post }: { post: FeedPostType }) => {
           href={`/post/${post.id}`}
           className="text-sm text-blue-500 hover:underline self-end mt-1"
         >
-          {currentUserId === post.userId && "Edit"}
+          {currentUserId === post.userId ? "Edit" : "View"}
         </a>
       </div> 
       { /* INTERACTION */}

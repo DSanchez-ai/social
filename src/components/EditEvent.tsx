@@ -73,7 +73,6 @@ export const EditEvent: React.FC<{ event: any }> = ({ event }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   
-
     const formDataToSend = new FormData();
     formDataToSend.append('title', formData.title);
     

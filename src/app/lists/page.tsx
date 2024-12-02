@@ -37,11 +37,32 @@ async function getData(searchParams: string) {
   return {count, data}
 }
 
-export default function ListsPage({
+export default async function ListsPage({
   searchParams,
 }: {
   searchParams: { page: string };
 }) {
+  const { userId: currentUserId } = auth(); 
+
+  if(!currentUserId) {
+    return null;
+  }
+  const user = await prisma.user.findFirst({
+    where: {
+      userId: currentUserId
+    },
+    include: {
+      _count: {
+        select: {
+          followers: true,
+          followings: true,
+          posts: true
+        }
+      }
+    },
+  });
+
+  if(!user) return null;  
 
   return (
     <div className='flex gap-6 pt-6'>
@@ -51,8 +72,11 @@ export default function ListsPage({
       </div>
       {/* CENTER */}
       <div className="w-full lg:w-[70%] xl:w-[50%] flex flex-col gap-6">
-        <div className="xl:hidden">
+        <div className="lg:hidden">
           <ProfileCard />
+        </div>
+        <div className="hidden lg:block">
+          <UserCard user={user} />
         </div>
         <AddList />
         <div className="w-full">

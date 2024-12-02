@@ -64,11 +64,11 @@ const PostIdPage = async ({params}:{params:{id:string}}) => {
       {/* CENTER */}
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
-          <div className="hidden xl:block">
-            <ProfileCard />
-          </div>
-          <div className="hidden xl:block">
+          <div className="">
             <UserCard user={user} />
+          </div>
+          <div className="lg:hidden">
+            <UserInfoCard user={user} />
           </div>
           <ViewPost post={{ ...post, likes: post.likes }}/>
         </div>
